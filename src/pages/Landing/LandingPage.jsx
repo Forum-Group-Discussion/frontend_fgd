@@ -1,8 +1,15 @@
+import Features from "./component/Features";
 import Footer from "./component/Footer";
+import Hello from "./component/Hello";
 
 
-export default function(){
+export default function LandingPage(){
     return(
-        <Footer />
+        <>
+            <Hello />
+            <img src="" alt="" />
+            <Features />
+            <Footer />
+        </>
     )
 }

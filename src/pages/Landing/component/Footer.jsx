@@ -14,7 +14,7 @@ import "aos/dist/aos.css";
 
 export default function(){
     return(
-        <div className="footer bg-primary-black">
+        <div className="footer bg-primary-black p-10">
             <div className='max-w-[1240px] mx-auto py-16 px-4 grid lg:grid-cols-5 grid-cols-3 gap-8 text-white'>
                 <div className="lg:col-span-2 col-span-3">
                     <div>
@@ -49,7 +49,7 @@ export default function(){
                 </div>
             </div>
             <div>
-                <h6 className="text-white text-center mt-10">Temukan Kami Di</h6>
+                <h6 className="text-white text-center mt-10 font-bold">Temukan Kami Di</h6>
                 <div className='flex justify-between mx-auto lg:w-[30%] md:w-[40%] w-[50%] my-6 mt-10'>
                     <FaFacebookSquare size={30} className='fill-secondary-red' />
                     <FaInstagram size={30} className='fill-secondary-red' />
