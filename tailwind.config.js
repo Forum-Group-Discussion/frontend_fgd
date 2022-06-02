@@ -9,7 +9,7 @@ module.exports = {
           purple: '#1C1734',
           blue: '#3718C9'
         },
-        secondary: {
+        'secondary': {
           blue: '#2A8DFE',
           red: '#D91E11',
           orange: '#FF3D00',
