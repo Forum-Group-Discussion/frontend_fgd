@@ -9,8 +9,6 @@ import {
     FaLinkedin,
     FaYoutubeSquare
 } from 'react-icons/fa';
-import AOS from "aos";
-import "aos/dist/aos.css";
 
 export default function(){
     return(
@@ -50,7 +48,7 @@ export default function(){
             </div>
             <div>
                 <h6 className="text-white text-center mt-10 font-bold">Temukan Kami Di</h6>
-                <div className='flex justify-between mx-auto lg:w-[30%] md:w-[40%] w-[50%] my-6 mt-10'>
+                <div className='flex justify-between mx-auto lg:w-[30%] md:w-[50%] w-full my-6 mt-10'>
                     <FaFacebookSquare size={30} className='fill-secondary-red' />
                     <FaInstagram size={30} className='fill-secondary-red' />
                     <FaTwitterSquare size={30} className='fill-secondary-red' />
