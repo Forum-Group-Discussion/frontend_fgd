@@ -10,7 +10,7 @@ export default function Hello(){
                         <div className="text-white text-5xl font-bold">One Place for</div>
                         <div className="mt-5 text-white text-5xl font-bold"><span className="uppercase text-secondary-yellow">unlimited</span> Discussion</div>
                         <div className="text-white max-w-[500px] mt-10">Find interests and topics that you like to discuss with your online friends. Only with Foru you can grasp information from some of the topics you choose</div>
-                        <Link to='' className="mt-10 text-white font-semibold text-2xl tracking-wider p-5 inline-block rounded-full bg-secondary-orange">Get Started</Link>
+                        <Link to='' className="mt-10 text-white font-semibold text-2xl tracking-wider p-5 inline-block rounded-full bg-secondary-orange border-secondary-orange hover:text-secondary-orange border hover:bg-primary-black ease-in-out duration-300 ">Get Started</Link>
                     </div>
                     <img src="./Saly-38.png" alt="logo" className="lg:h-[500px] hidden lg:block"/>
                 </div>
