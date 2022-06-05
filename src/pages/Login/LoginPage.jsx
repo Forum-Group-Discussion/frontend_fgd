@@ -32,7 +32,7 @@ function LoginPage() {
   };
 
   let navigate = useNavigate();
-  const [error, setError] = useState("");
+  
   const handleLogin = (e) => {
     e.preventDefault();
     axios
@@ -89,7 +89,7 @@ function LoginPage() {
                 <div className="text-2xl top-3 right-5 absolute ">{showPassword === false ? <AiOutlineEye onClick={toggleShowPassword} /> : <AiOutlineEyeInvisible onClick={toggleShowPassword} />}</div>
               </div>
             </div>
-            <a className="self-end text-white lg:text-sm text-xs">Forgot Password?</a>
+            <a href='/#' className="self-end text-white lg:text-sm text-xs">Forgot Password?</a>
             <button id="loginBtn" className="buttonLogin text-white h-11 font-bold lg:text-xl text-sm">
               Continue
             </button>

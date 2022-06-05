@@ -3,7 +3,7 @@ import { IoIosCreate, IoIosTrendingUp } from 'react-icons/io'
 import { AiFillLike } from 'react-icons/ai'
 import { RiUserFollowFill } from 'react-icons/ri'
 
-export default function(){
+export default function Features(){
     return(
         <section id='features' className="bg-primary-black p-[5%]">
             <div className="max-w-[1240px] mx-auto flex flex-col md:gap-20 gap-10">
