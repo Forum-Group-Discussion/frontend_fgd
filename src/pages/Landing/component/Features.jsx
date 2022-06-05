@@ -5,7 +5,7 @@ import { RiUserFollowFill } from "react-icons/ri";
 
 export default function Features() {
   return (
-    <section id="features" className="bg-primary-black p-[10%]">
+    <section id="features" className="bg-primary-black p-[15%]">
       <div className="max-w-[1240px] mx-auto flex flex-col md:gap-20 gap-10">
         <div id="features-title" className="text-white font-bold md:text-4xl md:mx-[0] text-3xl mx-auto">
           Features
