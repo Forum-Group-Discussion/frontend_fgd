@@ -1,14 +1,10 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-<<<<<<< Updated upstream
-import LoginPage from "./pages/Login/LoginPage";
-=======
 import LoginPage from "./user/pages/Login/LoginPage";
 import RegisterPage from "./user/pages/Register/RegisterPage";
 import LandingPage from "./user/pages/Landing/LandingPage";
 import HomePage from "./admin/pages/Home/HomePage";
 import AdminRoute from "./routes/AdminRoute";
->>>>>>> Stashed changes
 
 function App() {
   return (
