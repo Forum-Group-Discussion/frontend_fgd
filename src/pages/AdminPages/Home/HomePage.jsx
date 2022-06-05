@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { removeUserSession, getUser } from "../../utils/helpers";
+import { removeUserSession, getUser } from "../../../utils/helpers";
 
 function HomePage() {
   const user = getUser();
@@ -13,7 +13,7 @@ function HomePage() {
 
   return (
     <div>
-      Welcome {user}!<br />
+      Admin Page, Welcome {user}!<br />
       <br />
       <input type="button" onClick={handleLogout} value="Logout" />
     </div>
