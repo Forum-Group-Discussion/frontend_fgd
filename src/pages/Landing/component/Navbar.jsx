@@ -34,15 +34,15 @@ const Navbar = () => {
         </ul>
       </div>
       <ul id="nav-side" className={nav ? "bg-primary-black fixed left-0 w-[60%] h-full border-r border-r-primary-grey ease-in-out duration-500 top-14 sm:hidden" : "ease-in-out duration-500 fixed left-[-100%]"}>
-        <li className="p-4 border-b border-gray-600 text-white">
-          <a href="#about">About</a>
-        </li>
-        <li className="p-4 border-b border-gray-600 text-white">
-          <a href="#features">Features</a>
-        </li>
-        <li className="p-4 text-white">
-          <a href="#review">Review</a>
-        </li>
+        <a href="#about">
+          <li className="p-4 border-b border-gray-600 text-white">About</li>
+        </a>
+        <a href="#features">
+          <li className="p-4 border-b border-gray-600 text-white">Features</li>
+        </a>
+        <a href="#review">
+          <li className="p-4 text-white">Review</li>
+        </a>
       </ul>
     </div>
   );

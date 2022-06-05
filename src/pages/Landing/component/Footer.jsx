@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { FaDribbbleSquare, FaFacebookSquare, FaGithubSquare, FaInstagram, FaTwitterSquare, FaLinkedin, FaYoutubeSquare } from "react-icons/fa";
 import Logo from "../../../assets/img/logo.png";
 
-export default function () {
+export default function Footer() {
   return (
     <div id="footer" className="footer bg-primary-black p-10">
       <div className="max-w-[1240px] mx-auto py-16 px-4 grid lg:grid-cols-5 sm:grid-cols-3 grid-cols-2 gap-8 text-white">
