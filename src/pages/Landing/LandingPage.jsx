@@ -5,16 +5,15 @@ import Hello from "./component/Hello";
 import Navbar from "./component/Navbar";
 import Review from "./component/Review";
 
-
-export default function LandingPage(){
-    return(
-        <>
-            <Navbar />
-            <Hello />
-            <AboutUs />
-            <Features />
-            <Review />
-            <Footer />
-        </>
-    )
+export default function LandingPage() {
+  return (
+    <>
+      <Navbar />
+      <Hello />
+      <AboutUs />
+      <Features />
+      <Review />
+      <Footer />
+    </>
+  );
 }
