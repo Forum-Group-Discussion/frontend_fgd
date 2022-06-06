@@ -7,7 +7,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { setUserSession } from "../../utils/helpers";
+import { getIsAdmin, setUserSession } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
@@ -32,7 +32,7 @@ function LoginPage() {
   };
 
   let navigate = useNavigate();
-  
+
   const handleLogin = (e) => {
     e.preventDefault();
     axios
@@ -45,11 +45,15 @@ function LoginPage() {
           showConfirmButton: false,
           timer: 1500,
         });
-        setUserSession(response.data.data.token, users.email);
-        navigate("/admin/home");
+        setUserSession(response.data.data.token, response.data.data.name, response.data.data.isAdmin);
+        if (getIsAdmin() === "true") {
+          navigate("/admin/home");
+        } else {
+          navigate("/user/home");
+        }
       })
       .catch((error) => {
-        if (error.response.status === 401) {
+        if (error.response.responseCode === 401) {
           Swal.fire({
             position: "center",
             icon: "error",
@@ -69,10 +73,6 @@ function LoginPage() {
       });
   };
 
-  useEffect(() => {
-    console.log(users);
-  }, [users]);
-
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -89,7 +89,9 @@ function LoginPage() {
                 <div className="text-2xl top-3 right-5 absolute ">{showPassword === false ? <AiOutlineEye onClick={toggleShowPassword} /> : <AiOutlineEyeInvisible onClick={toggleShowPassword} />}</div>
               </div>
             </div>
-            <a href='/#' className="self-end text-white lg:text-sm text-xs">Forgot Password?</a>
+            <a href="/#" className="self-end text-white lg:text-sm text-xs">
+              Forgot Password?
+            </a>
             <button id="loginBtn" className="buttonLogin text-white h-11 font-bold lg:text-xl text-sm">
               Continue
             </button>
