@@ -8,11 +8,13 @@ import { thumbsDown } from 'react-icons-kit/feather/thumbsDown'
 import { arrowBackOutline } from 'react-icons-kit/typicons/arrowBackOutline'
 import { commentingO } from 'react-icons-kit/fa/commentingO'
 import { exclamationCircle } from 'react-icons-kit/fa/exclamationCircle'
+import Navbar from "../components/Navbar";
 
 export default function Home() {
 
     return (
         <>
+        <Navbar />
             <div id="home" className="flex justify-center">
                 <div id="container" className="flex w-4/5">
                     <div id="box-1" className="flex relative w-1/4 mr-8">

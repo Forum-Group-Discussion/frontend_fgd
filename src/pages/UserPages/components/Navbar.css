@@ -1,0 +1,17 @@
+#navbar #nav-box ul a::after {
+    content: '';
+    background-color: white;
+    width: 0%;
+    height: 2px;
+    display: block;
+    margin: auto;
+    transition: 0.3s;
+}
+
+#navbar #nav-box ul a:hover::after {
+    width: 100%;
+} 
+
+#navbar #nav-box ul a:hover {
+    transition: 0.5s;
+}
