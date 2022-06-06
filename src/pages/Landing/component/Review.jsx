@@ -44,8 +44,8 @@ export default function Review() {
             {reviews[counter]}
           </div>
           <img id="review-content-identity" src={photos[counter]} className="w-[200px] mx-auto sm:mt-[5%] mt-[10%]" alt="" />
-          <img id="review-quotation-1" src={Petik1} className="petik1 sm:absolute sm:block hidden" alt="gambar-review" />
-          <img id="review-quotation-2" src={Petik2} className="petik2 sm:absolute sm:block hidden" alt="gambar-review" />
+          <img id="review-quotation-1" src={Petik1} className="petik1 sm:absolute sm:block hidden" alt="" />
+          <img id="review-quotation-2" src={Petik2} className="petik2 sm:absolute sm:block hidden" alt="" />
           <div id="review-dot-1" src="" className="dot plot1 absolute"></div>
           <div id="review-dot-2" src="" className="dot plot3 absolute"></div>
           <div id="review-dot-3" src="" className="dot plot4 absolute"></div>

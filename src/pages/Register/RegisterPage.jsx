@@ -100,10 +100,6 @@ function RegisterPage() {
     }
   };
 
-  useEffect(() => {
-    console.log(users);
-  }, [users]);
-
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
