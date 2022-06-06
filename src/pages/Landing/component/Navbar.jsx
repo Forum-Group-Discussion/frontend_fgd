@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import Logo from "../../../assets/img/logo.png";
 
@@ -16,7 +15,7 @@ const Navbar = () => {
         <div id="nav-toggler" onClick={handleNav} className="sm:hidden flex flex-col justify-center">
           {nav ? <AiOutlineClose size={25} /> : <AiOutlineMenu size={25} />}
         </div>
-        <a href="#">
+        <a href="/#">
           <div id="nav-logo" className="flex flex-col justify-center col-span-2">
             <img src={Logo} className="sm:h-[60px] sm:max-h-[none] max-h-[40px] mx-auto sm:mx-[0]" alt="logo found" />
           </div>

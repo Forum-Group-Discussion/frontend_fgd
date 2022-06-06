@@ -42,6 +42,7 @@ export default function Footer() {
         <h6 id="footer-socmed-title" className="text-white text-center mt-10 font-bold">
           Find Us
         </h6>
+
         <div id="footer-socmed" className="flex justify-between mx-auto lg:w-[30%] md:w-[50%] w-full my-6 mt-10">
           <FaFacebookSquare size={30} className="fill-secondary-red" />
           <FaInstagram size={30} className="fill-secondary-red" />

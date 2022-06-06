@@ -1,20 +1,30 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/Landing/LandingPage";
-import HomePage from "./pages/AdminPages/Home/HomePage";
 import AdminRoute from "./routes/AdminRoute";
 import ErrorPage from "./pages/Error/ErrorPage";
 import LoginPage from "./pages/Login/LoginPage";
 import RegisterPage from "./pages/Register/RegisterPage";
+import HasSignInRoute from "./routes/HasSignInRoute";
+import UserRoute from "./routes/UserRoute";
+import HomeAdminPage from "./pages/AdminPages/Home/HomeAdminPage";
+import HomeUserPage from "./pages/UserPages/Home/HomeUserPage";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
+      <Route element={<HasSignInRoute />}>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+      </Route>
+
       <Route element={<AdminRoute />}>
-        <Route path="/admin/home" element={<HomePage />} />
+        <Route path="/admin/home" element={<HomeAdminPage />} />
+      </Route>
+
+      <Route element={<UserRoute />}>
+        <Route path="/user/home" element={<HomeUserPage />} />
       </Route>
 
       <Route path="*" element={<ErrorPage code="404" title="Ooopss Page Not Found" />} />
