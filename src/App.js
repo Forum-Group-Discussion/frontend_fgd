@@ -6,6 +6,7 @@ import AdminRoute from "./routes/AdminRoute";
 import ErrorPage from "./pages/Error/ErrorPage";
 import LoginPage from "./pages/Login/LoginPage";
 import RegisterPage from "./pages/Register/RegisterPage";
+import Home from "./pages/UserPages/Home/Home"
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/home" element={<Home /> } />
       <Route element={<AdminRoute />}>
         <Route path="/admin/home" element={<HomePage />} />
       </Route>

@@ -51,7 +51,7 @@ function LoginPage() {
       .catch((error) => {
         if (error.response.status === 401) {
           Swal.fire({
-            position: "top-end",
+            position: "center",
             icon: "error",
             title: error,
             showConfirmButton: false,
@@ -59,7 +59,7 @@ function LoginPage() {
           });
         } else {
           Swal.fire({
-            position: "top-end",
+            position: "center",
             icon: "error",
             title: "Username or Password is Wrong",
             showConfirmButton: false,
