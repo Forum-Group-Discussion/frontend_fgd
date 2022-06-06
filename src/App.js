@@ -8,7 +8,7 @@ import RegisterPage from "./pages/Register/RegisterPage";
 import HasSignInRoute from "./routes/HasSignInRoute";
 import UserRoute from "./routes/UserRoute";
 import HomeAdminPage from "./pages/AdminPages/Home/HomeAdminPage";
-import Home from "./pages/UserPages/Home/Home"
+import HomeUserPage from "./pages/UserPages/Home/HomeUserPage";
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
       </Route>
 
       <Route element={<UserRoute />}>
-      <Route path="/user/home" element={<Home /> } />
+        <Route path="/user/home" element={<HomeUserPage />} />
       </Route>
 
       <Route path="*" element={<ErrorPage code="404" title="Ooopss Page Not Found" />} />
