@@ -108,22 +108,22 @@ function RegisterPage() {
       <div className="mainRegister flex justify-center items-center fixed">
         <div className="box lg:p-5 p-1 py-5 lg:w-1/2 w-4/5  max-h-max flex flex-col items-center justify-center gap-y-6" data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-duration="1000">
           <h1 className="title text-center text-white lg:text-3xl md:text-2xl text-xl">Sign Up</h1>
-          <form action="" onSubmit={handleSubmit} className="flex flex-col gap-y-3 self-center w-3/4">
+          <form action="" onSubmit={handleSubmit} className="flex flex-col gap-y-3 self-center w-4/5">
             <div className="flex flex-col gap-y-7">
               <div className="flex flex-col">
                 <input id="name" name="name" type="text" className="h-11 rounded-xl p-2 outline-none border-none lg:text-sm md:text-sm text-xs" placeholder="Username" value={users.name} onChange={handleOnChange} required />
-                <div className="h-1 p-1">{users.name.length >= 1 && <span className="text-secondary-orange">{nameValidation}</span>}</div>
+                <div className="h-1 p-1">{users.name.length >= 1 && <span className="text-secondary-orange first-letter lg:text-xs text-[10px]">{nameValidation}</span>}</div>
               </div>
               <div className="flex flex-col">
                 <input id="email" name="email" type="email" className="h-11 rounded-xl p-2 outline-none border-none lg:text-sm md:text-sm text-xs" placeholder="Email" value={users.email} onChange={handleOnChange} required />
-                <div className="h-1 p-1">{users.email.length >= 1 && <span className="mt-1 text-secondary-orange">{emailValidation}</span>}</div>
+                <div className="h-1 p-1">{users.email.length >= 1 && <span className="mt-1 text-secondary-orange lg:text-xs text-[10px]">{emailValidation}</span>}</div>
               </div>
               <div className="flex flex-col">
                 <div className="relative">
                   <input id="password" name="password" type={showPassword === false ? "password" : "text"} placeholder="Password" className="w-full h-11 rounded-xl p-2 outline-none border-none lg:text-sm md:text-sm text-xs" value={users.password} onChange={handleOnChange} required />
                   <div className="text-2xl top-3 right-5 absolute ">{showPassword === false ? <AiOutlineEye onClick={toggleShowPassword} /> : <AiOutlineEyeInvisible onClick={toggleShowPassword} />}</div>
                 </div>
-                <div className="h-1 p-1">{users.password.length >= 1 && <span className="mt-1 text-secondary-orange text-xs">{passwordValidation}</span>}</div>
+                <div className="h-1 p-1">{users.password.length >= 1 && <span className="mt-1 text-secondary-orange lg:text-[10px] text-[5px]">{passwordValidation}</span>}</div>
               </div>
               <div className="flex flex-col">
                 <div className="relative">
@@ -139,7 +139,7 @@ function RegisterPage() {
                   />
                   <div className="text-2xl top-3 right-5 absolute ">{showPassword === false ? <AiOutlineEye onClick={toggleShowPassword} /> : <AiOutlineEyeInvisible onClick={toggleShowPassword} />}</div>
                 </div>
-                <div className="h-1 p-1">{users.confirmpassword !== users.password && <span className="mt-1 text-secondary-orange">{confirmPasswordValidation}</span>}</div>
+                <div className="h-1 p-1">{users.confirmpassword !== users.password && <span className="mt-1 text-secondary-orange lg:text-xs text-[8px]">{confirmPasswordValidation}</span>}</div>
               </div>
             </div>
 
