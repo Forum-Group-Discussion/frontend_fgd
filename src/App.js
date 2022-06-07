@@ -22,10 +22,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
       </Route>
 
-      <Route element={<AdminRoute/>}>
-      </Route>
-
-      <Route>
+      <Route element={<AdminRoute />}>
           <Route path="dashboard" element={<Dashboard/>}/>
           <Route path="KelolaThread" element={<KelolaThread/>}/>
           <Route path="KelolaUser" element={<KelolaUSer/>}/>

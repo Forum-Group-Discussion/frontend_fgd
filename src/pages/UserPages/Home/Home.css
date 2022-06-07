@@ -1,0 +1,70 @@
+#home {
+    background-color: #151921;
+}
+
+#home #container {
+    margin-top: 100px;
+}
+
+#home #container #box-1 #kategori-list {
+    width: 100%;
+}
+
+#home #container #box-1 ul {
+    background-color: #222834;
+    width: inherit;
+    border-radius: 10px;
+}
+
+#home #container #box-2 #thread {
+    border: 1px solid rgb(217, 217, 217, 0.1);
+    margin-bottom: 42px;
+    border-radius: 10px;
+    padding: 20px 44px 30px 44px;
+}
+
+#home #container #kategori li {
+    padding: 25px 0px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #FFFFFF;
+    border-bottom: 1px solid rgb(217, 217, 217, 0.1);
+}
+
+#home #container #kategori li:nth-child(6) {
+    border: none;
+}
+
+#home #container #kategori li:hover {
+    background-color: #FF3D00;
+}
+
+#home #box-2 #thread #thread-header div:nth-child(1) img {
+    width: 80px;
+}
+
+#home #box-2 #thread #thread-button {
+    background-color: #FF3D00;
+    padding: 10px 35px;
+    border-radius: 40px;
+    font-weight: bold;
+    color: white;
+    letter-spacing: 1px;
+}
+
+#home #box-2 #thread #thread-icon svg {
+    width: 30px;
+    height: 30px;
+    color: white;
+    margin-right: 10px;
+}
+
+#home #box-2 #thread #thread-icon span {
+    font-size: 18px;
+    color: white;
+    font-weight: 500;
+}
+
+#home #box-2 #thread #thread-icon div:nth-child(5) svg {
+    color: #DE1508;
+}
