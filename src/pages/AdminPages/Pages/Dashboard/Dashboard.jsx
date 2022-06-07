@@ -1,15 +1,17 @@
 import Sidebar from "../../Components/Sidebar";
-import "../Pages.css"
+import Graphic from "../../Home/Graphic";
+import "../Pages.css";
 
-export default function Dashboard () {
-    return (
-        <div className="bg-primary-black h-screen">
-            <Sidebar/>
-           <div >
-                <div className="menu-content bg-primary-grey text-white p-5 h-[540px]">
-                    <p>Dashboard</p>
-                </div>
-           </div>
+export default function Dashboard() {
+  return (
+    <div className="bg-primary-black h-max">
+      <Sidebar />
+      <div>
+        <div className="menu-content bg-primary-grey text-white p-5 h-[540px]">
+          <p>Dashboard</p>
+          <Graphic />
         </div>
-    )
+      </div>
+    </div>
+  );
 }
