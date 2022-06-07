@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import HomeAdminPage from "../pages/AdminPages/Home/HomeAdminPage";
+import Dashboard from "../pages/AdminPages/Pages/Dashboard/Dashboard";
 import HomeUserPage from "../pages/UserPages/Home/HomeUserPage";
 import { getIsAdmin, getToken } from "../utils/helpers";
 
@@ -9,7 +9,7 @@ function HasSignInRoute() {
     return <Outlet />;
   } else {
     if (getIsAdmin() === "true") {
-      return <HomeAdminPage />;
+      return <Dashboard/>;
     } else {
       return <HomeUserPage />;
     }
