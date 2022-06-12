@@ -1,16 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Home.css";
 import gambarProfile from "../../../assets/img/home/dashicons_games.png";
 import gambarThread from "../../../assets/img/home/image7.png";
 import { Icon } from "react-icons-kit";
 import { thumbsUp } from "react-icons-kit/feather/thumbsUp";
 import { thumbsDown } from "react-icons-kit/feather/thumbsDown";
-import { arrowBackOutline } from "react-icons-kit/typicons/arrowBackOutline";
+import { bookmark } from 'react-icons-kit/feather/bookmark'
 import { commentingO } from "react-icons-kit/fa/commentingO";
-import { exclamationCircle } from "react-icons-kit/fa/exclamationCircle";
+import { moreVertical } from 'react-icons-kit/feather/moreVertical'
 import Navbar from "../components/Navbar";
+import TrendingSlider from "./components/trendingSlider";
 
 export default function HomeUserPage() {
+  const [more, setMore] = useState(false)
+
+  const showMoreMenu = () => {
+    if (more === false) {
+      setMore(true)
+    } else {
+      setMore(false)
+    }
+  }
+
   return (
     <>
       <Navbar />
@@ -31,6 +42,9 @@ export default function HomeUserPage() {
             </div>
           </div>
           <div id="box-2" className="flex-1 relative">
+            <div className="trending-slider">
+              <TrendingSlider />
+            </div>
             <div id="thread" className="">
               <div id="thread-box" className="flex">
                 <div id="thread-header" className="flex">
@@ -64,16 +78,18 @@ export default function HomeUserPage() {
                   <span>100K</span>
                 </div>
                 <div>
-                  <Icon icon={arrowBackOutline} />
-                  <span>100K</span>
-                </div>
-                <div>
                   <Icon icon={commentingO} />
                   <span>100K</span>
                 </div>
                 <div>
-                  <Icon icon={exclamationCircle} />
-                  <span>100K</span>
+                  <Icon icon={bookmark} />
+                </div>
+                <div onClick={showMoreMenu}>
+                  <Icon icon={moreVertical} />
+                  <div className={more ? 'more active' : 'more'}>
+                    <span>Share</span>
+                    <span>Report</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -110,16 +126,14 @@ export default function HomeUserPage() {
                   <span>100K</span>
                 </div>
                 <div>
-                  <Icon icon={arrowBackOutline} />
-                  <span>100K</span>
-                </div>
-                <div>
                   <Icon icon={commentingO} />
                   <span>100K</span>
                 </div>
                 <div>
-                  <Icon icon={exclamationCircle} />
-                  <span>100K</span>
+                  <Icon icon={bookmark} />
+                </div>
+                <div>
+                  <Icon icon={moreVertical} />
                 </div>
               </div>
             </div>
