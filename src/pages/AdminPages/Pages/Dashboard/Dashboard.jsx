@@ -1,5 +1,5 @@
 import Sidebar from "../../Components/Sidebar";
-import Graphic from "../../Home/Graphic";
+import Graphic from "../../Components/Graphic";
 import "../Pages.css";
 
 export default function Dashboard() {

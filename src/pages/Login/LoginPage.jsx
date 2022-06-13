@@ -5,10 +5,10 @@ import "./LoginPage.css";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { getIsAdmin, setUserSession } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
+import { axiosInstance } from "../../networks/api";
 
 function LoginPage() {
   useEffect(() => {
@@ -35,8 +35,8 @@ function LoginPage() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    axios
-      .post("http://34.125.26.208/v1/auth/login", { email: users.email, password: users.password })
+    axiosInstance
+      .post("/auth/login", { email: users.email, password: users.password })
       .then((response) => {
         Swal.fire({
           position: "top-end",
