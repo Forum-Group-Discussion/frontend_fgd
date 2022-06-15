@@ -10,9 +10,37 @@ import { commentingO } from "react-icons-kit/fa/commentingO";
 import { moreVertical } from 'react-icons-kit/feather/moreVertical'
 import Navbar from "../components/Navbar";
 import TrendingSlider from "./components/trendingSlider";
+import PopupShare from "./components/PopupShare";
+import PopupReport from "./components/PopupReport";
 
 export default function HomeUserPage() {
   const [more, setMore] = useState(false)
+  const [popupShare, setPopupShare] = useState(false)
+  const [popupReport, setPopupReport] = useState(false)
+
+  const showPopupShare = () => {
+    if (popupShare === false) {
+      setPopupShare(true)
+    }
+  }
+
+  const closePopupShare = () => {
+    if(popupShare === true) {
+      setPopupShare(false)
+    }
+  }
+
+  const showPopupReport = () => {
+    if (popupReport === false) {
+      setPopupReport(true)
+    }
+  }
+
+  const closePopupReport = () => {
+    if(popupReport === true) {
+      setPopupReport(false)
+    }
+  }
 
   const showMoreMenu = () => {
     if (more === false) {
@@ -87,12 +115,29 @@ export default function HomeUserPage() {
                 <div onClick={showMoreMenu}>
                   <Icon icon={moreVertical} />
                   <div className={more ? 'more active' : 'more'}>
-                    <span>Share</span>
-                    <span>Report</span>
+                    <span className="cursor-pointer" onClick={showPopupShare}>Share</span>
+                    <span className="cursor-pointer" onClick={showPopupReport}>Report</span>
                   </div>
                 </div>
               </div>
             </div>
+
+            <div className={popupShare ? 'popupShare active' : 'popupShare'} id="popup-share">
+              <div>
+                <div className="flex absolute inset-0 m-auto justify-center p-4">
+                  <PopupShare closePopupShare={closePopupShare} />
+                </div>
+              </div>
+            </div>
+
+            <div className={popupReport ? 'popupReport active' : 'popupReport'} id="popup-report">
+              <div>
+                <div className="flex absolute inset-0 m-auto justify-center p-4">
+                  <PopupReport closePopupReport={closePopupReport}/>
+                </div>
+              </div>
+            </div>
+
             <div id="thread" className="">
               <div id="thread-box" className="flex">
                 <div id="thread-header" className="flex">

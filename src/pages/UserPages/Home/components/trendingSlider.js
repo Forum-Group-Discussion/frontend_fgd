@@ -21,6 +21,7 @@ function TrendingSlider() {
                         return (
                             <motion.div className="item mr-4">
                                 <img src={data} alt="gambar" />
+                                <h5 className="text-center text-white mt-1">Johny</h5>
                             </motion.div>
                         )
                     })}
