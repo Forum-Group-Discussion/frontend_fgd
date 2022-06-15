@@ -9,8 +9,11 @@ import Swal from "sweetalert2";
 import { getIsAdmin, setUserSession } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../networks/api";
+import { useDispatch } from "react-redux";
+import { USER_NAME } from "../../redux/userSlice";
 
 function LoginPage() {
+  const dispatch = useDispatch();
   useEffect(() => {
     AOS.init();
     AOS.refresh();
@@ -46,6 +49,8 @@ function LoginPage() {
           timer: 1500,
         });
         setUserSession(response.data.data.token, response.data.data.name, response.data.data.isAdmin);
+        console.log(response.data.data.name);
+        dispatch(USER_NAME(response.data.data.name));
         if (getIsAdmin() === "true") {
           navigate("/admin/home");
         } else {

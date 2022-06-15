@@ -1,9 +1,11 @@
 import React from "react";
 import { RiNotificationLine } from "react-icons/ri";
-import { getUser } from "../../../utils/helpers";
+import { useSelector } from "react-redux";
 
 function HomeAdminPage() {
-  const user = getUser();
+  const user = useSelector((state) => state.user.name);
+
+  console.log(user);
 
   return (
     <div>
