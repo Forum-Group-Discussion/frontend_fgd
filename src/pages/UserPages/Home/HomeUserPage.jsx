@@ -19,7 +19,11 @@ export default function HomeUserPage() {
           <div id="box-1" className="flex relative w-1/4 mr-8">
             <div className="fixed w-1/5">
               <div id="kategori-list" className="flex absolute">
+<<<<<<< HEAD
                 <ul id="kategori" className=" text-center">
+=======
+                <ul id="kategori" className="text-center">
+>>>>>>> master
                   <li>Trending Topic</li>
                   <li>Games</li>
                   <li>Health</li>
