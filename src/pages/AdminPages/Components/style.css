@@ -9,12 +9,6 @@ li:hover {
 /*end Css Sidebar*/
 
 /*Css Navbar Admin*/
-<<<<<<< HEAD
-.Search {
-  margin-left: 400px;
-}
-=======
->>>>>>> master
 .Search input {
   background: none;
   border: solid 1px;
@@ -22,12 +16,11 @@ li:hover {
   padding: 7px;
   width: 400px;
 }
-<<<<<<< HEAD
-=======
 
 .Navbar-admin {
-    margin-left: 280px;
+  margin-left: 280px;
 }
 
->>>>>>> master
-/*end Css Navbar Admin*/
+.Navbar-admin {
+  margin-left: 280px;
+}

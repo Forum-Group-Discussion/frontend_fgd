@@ -7,8 +7,7 @@ import { removeUserSession } from "../../../utils/helpers";
 import Swal from "sweetalert2";
 import "./style.css";
 
-export default function Sidebar (props) {
-
+export default function Sidebar(props) {
   const navigate = useNavigate();
 
   // handle click event of logout button
@@ -33,12 +32,12 @@ export default function Sidebar (props) {
       }
     });
   };
-
-       <div>
-           <HomeAdminPage/>
-            <div className="h-screen bg-primary-grey fixed top-0 flex-row w-[250px] ">
-            <div className="flex-col ">
-            <div className="p-5">
+  return (
+    <div>
+      <HomeAdminPage />
+      <div className="h-screen bg-primary-grey fixed top-0 flex-row w-[250px] ">
+        <div className="flex-col ">
+          <div className="p-5">
             <img src={Logo} className="sm:h-[50px] ml-5" alt="logo found" />
           </div>
           <div className="flex flex-col ">
@@ -86,9 +85,6 @@ export default function Sidebar (props) {
             </ul>
           </div>
         </div>
-       </div>
-    )
-}
       </div>
     </div>
   );

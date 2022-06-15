@@ -5,7 +5,7 @@ const { faker } = require("@faker-js/faker");
 
 const labels = ["Monday", "Tuesday", "Wednesday", "Thusday", "Friday", "Saturday", "Sunday"];
 const data1 = [0, 10, 5, 2, 20, 30, 45];
-const data2 = [15, 50, 15, 35, 18 , 10, 5];
+const data2 = [15, 50, 15, 35, 18, 10, 5];
 
 // const data = {[
 
@@ -44,8 +44,8 @@ export default function ThreadStatistic() {
   };
 
   return (
-    <div className="rounded-md border-gray-500/10 border-2 p-3 w-3/4">
-       <p className="text-xl font-bold">Thread Statistic</p>
+    <div className="rounded-md border-gray-500/10 border-2 p-3">
+      <p className="text-xl font-bold">Thread Statistic</p>
       <Line options={options} data={data} />
     </div>
   );
