@@ -1,26 +1,26 @@
 /*Css Sidebar*/
-li:hover{
-    background-color: #ff3d00 ;
+li:hover {
+  background-color: #ff3d00;
 }
 
 .side-menu {
-    margin-left: 35px;
+  margin-left: 35px;
 }
 /*end Css Sidebar*/
 
 /*Css Navbar Admin*/
 <<<<<<< HEAD
 .Search {
-    margin-left: 400px;
+  margin-left: 400px;
 }
 =======
 >>>>>>> master
 .Search input {
-    background: none;
-    border: solid 1px;
-    border-radius: 20px;
-    padding: 7px;
-    width: 400px;
+  background: none;
+  border: solid 1px;
+  border-radius: 20px;
+  padding: 7px;
+  width: 400px;
 }
 <<<<<<< HEAD
 =======
@@ -31,7 +31,3 @@ li:hover{
 
 >>>>>>> master
 /*end Css Navbar Admin*/
-
-
-
-

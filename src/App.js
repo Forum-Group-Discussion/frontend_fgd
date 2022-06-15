@@ -23,7 +23,6 @@ function App() {
       </Route>
 
       <Route element={<AdminRoute />}>
-<<<<<<< HEAD
           <Route path="dashboard" element={<Dashboard/>}/>
           <Route path="KelolaThread" element={<KelolaThread/>}/>
           <Route path="KelolaUser" element={<KelolaUSer/>}/>
@@ -36,23 +35,6 @@ function App() {
 
       <Route path="*" element={<ErrorPage code="404" title="Ooopss Page Not Found" />} />
     </Routes>
-
-=======
-      
-      </Route>
-
-      <Route path="/admin/home" element={<Dashboard />} />
-      <Route path="KelolaThread" element={<KelolaThread />} />
-      <Route path="Setting" element={<Setting />} />
-      <Route path="KelolaUser" element={<KelolaUSer />} />
-      
-      <Route element={<UserRoute />}>
-      <Route path="/user/home" element={<HomeUserPage />} />
-      </Route>
-      
-      <Route path="*" element={<ErrorPage code="404" title="Ooopss Page Not Found" />} />
-    </Routes>
->>>>>>> master
   );
 }
 

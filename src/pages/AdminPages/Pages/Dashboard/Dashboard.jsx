@@ -1,20 +1,4 @@
-import Sidebar from "../../Components/Sidebar";
-<<<<<<< HEAD
-import "../Pages.css"
 
-export default function Dashboard () {
-    return (
-        <div className="bg-primary-black h-screen">
-            <Sidebar/>
-           <div >
-                <div className="menu-content bg-primary-grey text-white p-5 h-[540px]">
-                    <p>Dashboard</p>
-                </div>
-           </div>
-        </div>
-    )
-}
-=======
 import ThreadStatistic from "../../Components/ThreadStatistic"
 import TotalUser from "../../Components/TotalUser"
 import OnlineUser from "../../Components/OnlineUser";
@@ -55,4 +39,3 @@ export default function Dashboard() {
     </div>
   );
 }
->>>>>>> master
