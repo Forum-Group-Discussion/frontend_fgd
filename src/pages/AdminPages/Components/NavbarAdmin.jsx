@@ -1,22 +1,23 @@
 import React from "react";
-import {RiNotification3Line} from "react-icons/ri";
-import { getUser } from "../../../utils/helpers";
+import { RiNotificationLine } from "react-icons/ri";
+import { useSelector } from "react-redux";
 
 function HomeAdminPage() {
-  const user = getUser();
+  const user = useSelector((state) => state.user.name);
+
+  console.log(user);
 
   return (
     <div>
-      <div className="ml-64 text-white p-7 ">
-      <div className="flex flex-row items-center">  
-        Admin Page, Welcome {user}!
-        <div className="Search"><input type="search" /></div>
-        <RiNotification3Line size={30} className="ml-5"/>
+      <div className="Navbar-admin text-white pt-7 pb-7 ">
+        <div className="flex flex-row items-center justify-between">
+          <div className="">Admin Page, Welcome {user}!</div>
+          <div className="flex flex-row items-center Search ">
+            <input type="search" />
+            <RiNotificationLine size={30} className="ml-5" />
+          </div>
+        </div>
       </div>
-
-      </div>
-
-      
     </div>
   );
 }

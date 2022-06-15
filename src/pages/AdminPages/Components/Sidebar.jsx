@@ -7,7 +7,7 @@ import { removeUserSession } from "../../../utils/helpers";
 import Swal from "sweetalert2";
 import "./style.css";
 
-export default function Sidebar() {
+export default function Sidebar(props) {
   const navigate = useNavigate();
 
   // handle click event of logout button
@@ -32,7 +32,6 @@ export default function Sidebar() {
       }
     });
   };
-
   return (
     <div>
       <HomeAdminPage />
