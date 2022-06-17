@@ -122,7 +122,7 @@ export default function HomeUserPage() {
               </div>
             </div>
 
-            <div className={popupShare ? 'popupShare active' : 'popupShare'} id="popup-share">
+            <div id='close-popup' className={popupShare ? 'popupShare active' : 'popupShare'}>
               <div>
                 <div className="flex absolute inset-0 m-auto justify-center p-4">
                   <PopupShare closePopupShare={closePopupShare} />
@@ -130,7 +130,7 @@ export default function HomeUserPage() {
               </div>
             </div>
 
-            <div className={popupReport ? 'popupReport active' : 'popupReport'} id="popup-report">
+            <div id='close-popup' className={popupReport ? 'popupReport active' : 'popupReport'}>
               <div>
                 <div className="flex absolute inset-0 m-auto justify-center p-4">
                   <PopupReport closePopupReport={closePopupReport}/>

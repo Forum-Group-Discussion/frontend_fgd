@@ -8,7 +8,7 @@ function PopupReport({closePopupReport}) {
         <div className="flex w-2/5 justify-center items-center">
             <div className="bg-[#222834] py-6 px-8 rounded-[8px] relative">
                 <div onClick={closePopupReport} className="absolute top-0 right-0 p-1 text-red-600">
-                    <Icon className="bg-white " icon={x} />
+                    <Icon icon={x} />
                 </div>
                 <h4 className="text-center text-white mb-4 font-bold tracking-[1px]">Report</h4>
                 <p className="text-white text-center mb-4">why did you report this thread or account?</p>

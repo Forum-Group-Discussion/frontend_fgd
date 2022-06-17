@@ -8,12 +8,12 @@ function PopupShare({closePopupShare}) {
         <div className="flex w-2/5 justify-center items-center">
             <div className="bg-[#222834] py-6 px-8 rounded-[8px] relative">
                 <div onClick={closePopupShare} className="absolute top-0 right-0 p-1 text-red-600">
-                    <Icon className="bg-white " icon={x} />
+                    <Icon icon={x} />
                 </div>
                 <h4 className="text-center text-white mb-4 font-bold tracking-[1px]">Share</h4>
                 <div className="flex justify-center">
-                    <div className="text-dark bg-white px-4 py-2">https://www.found.com</div>
-                    <button className="bg-[#3718C9] px-4 text-white font-bold tracking-[1px]">Copy</button>
+                    <div className="rounded-tl-[4px] rounded-bl-[4px] text-dark bg-white px-4 py-2">https://www.found.com</div>
+                    <button className="bg-[#3718C9] rounded-tr-[4px] rounded-br-[4px] px-4 text-white font-bold tracking-[1px]">Copy</button>
                 </div>
             </div>
         </div>
