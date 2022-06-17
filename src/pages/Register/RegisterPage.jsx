@@ -34,15 +34,18 @@ function RegisterPage() {
   const [users, setUsers] = useState(DEFAULT_USER);
 
   const handleOnChange = (e) => {
+    const values = e.target.value
     const NAME = e.target.name;
     if (NAME === "name") {
-      setUsers({ ...users, name: e.target.value });
-      if (users.name.length >= 5) {
+      setUsers({name: values });
+      console.log(users.name)
+      if (values.length >= 5) {
         setNameValidation("");
-      } else if (users.name.length < 5) {
+      } else if (values.length < 5) {
         setNameValidation("Username must be longer than 4 characters");
       }
     } else if (NAME === "email") {
+      console.log(users.name)
       setUsers({ ...users, email: e.target.value });
       if (regexEmail.test(users.email)) {
         setEmailValidation("");
@@ -112,18 +115,18 @@ function RegisterPage() {
             <div className="flex flex-col gap-y-7">
               <div className="flex flex-col">
                 <input id="name" name="name" type="text" className="h-11 rounded-xl p-2 outline-none border-none lg:text-sm md:text-sm text-xs" placeholder="Username" value={users.name} onChange={handleOnChange} required />
-                <div className="h-1 p-1">{users.name.length >= 1 && <span className="text-secondary-orange first-letter lg:text-xs text-[10px]">{nameValidation}</span>}</div>
+                <div className="h-1 p-1"><span className="text-secondary-orange first-letter lg:text-xs text-[10px]">{nameValidation}</span></div>
               </div>
               <div className="flex flex-col">
                 <input id="email" name="email" type="email" className="h-11 rounded-xl p-2 outline-none border-none lg:text-sm md:text-sm text-xs" placeholder="Email" value={users.email} onChange={handleOnChange} required />
-                <div className="h-1 p-1">{users.email.length >= 1 && <span className="mt-1 text-secondary-orange lg:text-xs text-[10px]">{emailValidation}</span>}</div>
+                <div className="h-1 p-1"><span className="mt-1 text-secondary-orange lg:text-xs text-[10px]">{emailValidation}</span></div>
               </div>
               <div className="flex flex-col">
                 <div className="relative">
                   <input id="password" name="password" type={showPassword === false ? "password" : "text"} placeholder="Password" className="w-full h-11 rounded-xl p-2 outline-none border-none lg:text-sm md:text-sm text-xs" value={users.password} onChange={handleOnChange} required />
                   <div className="text-2xl top-3 right-5 absolute ">{showPassword === false ? <AiOutlineEye onClick={toggleShowPassword} /> : <AiOutlineEyeInvisible onClick={toggleShowPassword} />}</div>
                 </div>
-                <div className="h-1 p-1">{users.password.length >= 1 && <span className="mt-1 text-secondary-orange lg:text-[10px] text-[5px]">{passwordValidation}</span>}</div>
+                <div className="h-1 p-1"><span className="mt-1 text-secondary-orange lg:text-[10px] text-[5px]">{passwordValidation}</span></div>
               </div>
               <div className="flex flex-col">
                 <div className="relative">
