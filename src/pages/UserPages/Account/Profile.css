@@ -61,12 +61,12 @@
     font-weight: 700;
 }
 
-#account .popupShare, #account .popupReport {
+#account .popupShare, #account .popupReport, #account .popupProfPic {
     visibility: hidden;
     display: none;
 }
 
-#account .popupShare.active, #account .popupReport.active {
+#account .popupShare.active, #account .popupReport.active, #account .popupProfPic.active {
     display: block;
     visibility: visible;
     position: fixed;
