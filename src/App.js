@@ -12,6 +12,8 @@ import Dashboard from "./pages/AdminPages/Pages/Dashboard/Dashboard";
 import KelolaThread from "./pages/AdminPages/Pages/Kelola Thread/KelolaThread";
 import KelolaUSer from "./pages/AdminPages/Pages/Kelola User/KelolaUser";
 import Setting from "./pages/AdminPages/Pages/Setting/Setting";
+import ProfileUserPage from "./pages/UserPages/Account/ProfileUserPage";
+import EditProfile from "./pages/UserPages/Account/EditProfile";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/user/account" element={<ProfileUserPage/>} />
+        <Route path="/user/account/edit" element={<EditProfile />} />
       </Route>
 
       <Route element={<AdminRoute />}>
