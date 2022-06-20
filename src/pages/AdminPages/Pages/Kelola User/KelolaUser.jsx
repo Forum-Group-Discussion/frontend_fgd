@@ -11,7 +11,7 @@ export default function KelolaUSer() {
   return (
     <>
       <div className="bg-primary-black h-content">
-        <div className="container mx-auto px-20">
+        <div className="container mx-auto  xl:px-20 lg:px-15">
           <Sidebar />
           <div>
             <div className="menu-content bg-primary-grey text-white p-6 h-content">

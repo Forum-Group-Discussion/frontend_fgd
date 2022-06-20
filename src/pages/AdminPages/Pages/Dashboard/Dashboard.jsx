@@ -10,37 +10,37 @@ import Sidebar from "../../Components/Sidebar";
 
 export default function Dashboard() {
   return (
-    <div className="bg-primary-black h-content">
-      <div className="container mx-auto px-20">
+    <div className="bg-primary-black h-content w-screen">
+      <div className="container mx-auto xl:px-20 lg:px-15">
         <Sidebar />
         <div>
           <div className="menu-content bg-primary-grey text-white p-7 h-content">
-            <div className="grid grid-cols-3 gap-4">
-              <div className="mb-4">
+            <div className="grid grid-cols-3 gap-3">
+              <div className="mb-3">
                 <TotalUser />
               </div>
-              <div className="mb-4">
+              <div className="mb-3">
                 <OnlineUser />
               </div>
-              <div className="mb-4">
+              <div className="mb-3">
                 <OnlineDiscusion />
               </div>
             </div>
             <div className="flex flex-row">
-              <div className="flex flex-col w-3/4">
-                <div className="w-full mb-4">
+              <div className="flex flex-col w-2/3">
+                <div className="w-full mb-3 ">
                   <ThreadStatistic />
                 </div>
-                <div className="w-full flex flex-row ">
-                  <div>
+                <div className="flex flex-row  justify-between">
+                  <div className="w-full">
                     <TodayTrending />
                   </div>
-                  <div className="ml-3">
+                  <div className="w-full ml-3">
                     <TotalReport />
                   </div>
                 </div>
               </div>
-              <div>
+              <div className="flex justify-end w-1/3 ml-3">
                 <NoticeBoard />
               </div>
             </div>
