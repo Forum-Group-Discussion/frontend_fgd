@@ -7,7 +7,7 @@ import "./RegisterPage.css";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { axiosInstance } from "../../networks/api";
+import  axiosInstance  from "../../networks/api";
 import Swal from "sweetalert2";
 
 function RegisterPage() {
