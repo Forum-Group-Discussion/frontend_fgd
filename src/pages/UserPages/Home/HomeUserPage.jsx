@@ -62,13 +62,12 @@ export default function HomeUserPage() {
       // .get("https://6298cbc5f2decf5bb74c0022.mockapi.io/fgd/thread")
       .get("/thread")
       .then((response) => {
-        console.log(response);
-        dispatch(DATA_THREAD(response.data));
+        dispatch(DATA_THREAD(response.data.data));
       })
       .catch((error) => {
         console.log(error.response);
       });
-  }, []);
+  }, [dispatch]);
 
   console.log(threads);
 
@@ -96,7 +95,7 @@ export default function HomeUserPage() {
               <TrendingSlider />
             </div>
             {threads?.map((item) => (
-              <div id="thread" key={item.id}>
+              <div id="thread">
                 <div id="thread-box" className="flex">
                   <div id="thread-header" className="flex">
                     <div className="mr-2">
@@ -104,7 +103,7 @@ export default function HomeUserPage() {
                     </div>
                     <div className="flex items-center">
                       <div className="flex-col text-white">
-                        <h5 className="font-semibold tracking-[2px]">{item.user}</h5>
+                        <h5 className="font-semibold tracking-[2px]">{item.users.name}</h5>
                         <h6 className="font-medium mt-1 opacity-30">2 days ago</h6>
                       </div>
                     </div>
