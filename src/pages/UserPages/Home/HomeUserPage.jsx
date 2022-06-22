@@ -12,11 +12,10 @@ import Navbar from "../components/Navbar";
 import TrendingSlider from "./components/trendingSlider";
 import PopupShare from "./components/PopupShare";
 import PopupReport from "./components/PopupReport";
-import { axiosInstance } from "../../../networks/api";
+import axiosInstance from "../../../networks/api";
 import { useDispatch, useSelector } from "react-redux";
 import { DATA_THREAD } from "../../../redux/threadSlice";
 import { getToken } from "../../../utils/helpers";
-import axios from "axios";
 
 export default function HomeUserPage() {
   const dispatch = useDispatch();
@@ -60,7 +59,7 @@ export default function HomeUserPage() {
   useEffect(() => {
     axiosInstance
       // .get("https://6298cbc5f2decf5bb74c0022.mockapi.io/fgd/thread")
-      .get("/thread")
+      .get("v1/thread")
       .then((response) => {
         dispatch(DATA_THREAD(response.data.data));
       })
