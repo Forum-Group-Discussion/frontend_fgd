@@ -16,7 +16,7 @@ export default function EditProfile(){
     const [nameValidation, setNameValidation] = useState("");
     const [emailValidation, setEmailValidation] = useState("");
     const [passwordValidation, setPasswordValidation] = useState("");
-    const [popupProfPic, setPopupProfPic] = useState(true)
+    const [popupProfPic, setPopupProfPic] = useState(false)
     const navigate = useNavigate()
 
     const scrollToTop = () =>{
