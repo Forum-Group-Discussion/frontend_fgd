@@ -87,7 +87,6 @@ export default function ProfileUserPage(){
                 }
             }
         }
-        console.log(statconv.following," ", statconv.followers," ", statconv.threads)
     }, [stat])
     
     const handleAction = (e) => {
@@ -100,24 +99,19 @@ export default function ProfileUserPage(){
             <div className="max-w-[1240px] mx-auto">
                 <div id="acc-details" className="border-b-2 border-[#d9d9d91a] pb-[5%] text-white md:mx-[0] mx-auto">
                     <img src={Banner} alt="banner-pic"/>
-                    <div className="relative">
-                        <div className="absolute p-2 bg-white rounded-full w-15 right-3 bottom-3">
-                            <BsCameraFill size={30} className="fill-secondary-orange" />
+                    <div id="acc-details" className="grid gap-2 md:gap-y-5 mt-[-20%] sm:mt-[-7%] ml-[3%]">
+                        <div className="flex justify-between relative">
+                            <img id="profile-pic" src={Profile} alt="profile-pic" className="scale-50 ml-[-10%] sm:ml-0 sm:scale-100 aspect-square" />
+                            <Link to="/user/account/edit" className="bottom-0 md:-bottom-5 right-[3%] absolute text-md sm-text-xl md:text-2xl px-4 py-2 md:px-6 md:py-3 bg-secondary-orange rounded-xl sm:rounded-2xl text-white">Edit</Link>
+                        </div>
+                        <div id="username" className="mt-[-8%] sm:mt-[0%] text-xl sm:text-3xl md:text-4xl font-bold">Berry burrie</div>
+                        <div id="bio" className="text-md md:text-2xl">Hello Found</div>
+                        <div id="stat" className="mt-2 mb-3 sm:mt-0 text-sm md:text-lg inline-flex gap-3 sm:gap-10 text-gray-400">
+                            <div id="stat-following">{statconv.following} Following</div>
+                            <div id="stat-followers">{statconv.followers} Followers</div>
+                            <div id="stat-threads">{statconv.threads} Threads</div>
                         </div>
                     </div>
-                    <div id="acc-profile" className="flex justify-between">
-                        <div className="grid gap-y-5 mt-[-5%] ml-[3%]">
-                            <img id="profile-pic" src={Profile} alt="profile-pic" />
-                            <div id="username" className="text-3xl md:text-4xl font-bold">Berry burrie</div>
-                            <div id="bio" className="text-xl md:text-2xl">Hello Found</div>
-                            <div id="stat" className="inline-flex gap-10 text-gray-400">
-                                <div id="stat-following">{statconv.following} Following</div>
-                                <div id="stat-followers">{statconv.followers} Followers</div>
-                                <div id="stat-threads">{statconv.threads} Threads</div>
-                            </div>
-                        </div>
-                        <Link to="/user/account/edit" className="text-xl md:text-2xl m-[3%] text-secondary-orange">Edit</Link>
-                    </div> 
                 </div>
                 <div id="acc-button" className="my-[5%] mx-auto md:text-xl font-medium max-w-[500px]">
                     {choose === "thread"

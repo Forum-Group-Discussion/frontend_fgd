@@ -10,10 +10,10 @@ export default function ChangeProfilePic({closePopupProfPic}) {
             <div className="bg-white py-6 px-16 rounded-lg">
                 <img src={Profile} alt="ProfPic" className="mx-auto mx-auto my-3"/>
                 <div className="flex flex-col w-full">
-                    <h4 className="text-center my-3 font-bold">Synced Profile Photo</h4>
-                    <button className="my-3 text-primary-blue font-bold text-center border-b-1 border-black">Upload Photo</button>
-                    <button className="my-3 text-secondary-red font-bold">Remove Current Photo</button>
-                    <button onClick={closePopupProfPic} className="text-primary-black font-bold my-3">Cancel</button>
+                    <div className="text-sm sm:text:xl text-center my-3 font-bold">Synced Profile Photo</div>
+                    <button className="text-sm sm:text:xl my-3 text-primary-blue font-bold text-center border-b-1 border-black">Upload Photo</button>
+                    <button className="text-sm sm:text:xl my-3 text-secondary-red font-bold">Remove Current Photo</button>
+                    <button onClick={closePopupProfPic} className="text-sm sm:text:xl text-primary-black font-bold my-3">Cancel</button>
                 </div>
             </div>
         </div>

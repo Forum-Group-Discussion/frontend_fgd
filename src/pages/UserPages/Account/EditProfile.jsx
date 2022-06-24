@@ -88,31 +88,26 @@ export default function EditProfile(){
             <div className="max-w-[1240px] mx-auto">
                 <div id="acc-details" className="border-b-2 border-[#d9d9d91a] pb-[5%] text-white md:mx-[0] mx-auto">
                     <img src={Banner} alt="banner-pic"/>
-                    <div className="relative">
-                        <div className="absolute p-2 bg-white rounded-full w-15 right-3 bottom-3">
-                            <BsCameraFill size={30} className="fill-secondary-orange" />
-                        </div>
-                    </div>
                     <div id="acc-profile" className="flex justify-between">
-                        <div className="grid gap-y-5 mt-[-5%] ml-[3%]">
-                            <img id="profile-pic" src={Profile} alt="profile-pic" />
-                            <div onClick={showPopupProfPic} className="cursor-pointer">Change profil photo</div>
+                        <div className="grid gap-y-5 mt-[-20%] sm:mt-[-7%] ml-[3%]">
+                            <img id="profile-pic" src={Profile} alt="profile-pic" className="scale-50 ml-[-10%] sm:ml-0 sm:scale-100 aspect-square" />
+                            <div onClick={showPopupProfPic} className="mt-[-20%] sm:mt-[0%] text-sm sm:text-md cursor-pointer">Change profil photo</div>
                         </div>
                     </div> 
                 </div>
                 <div id="edit-profile">
                     <form onSubmit={handleSubmit} className="text-white relative">
-                        <div className="mb-[2%] mt-[3%]">
+                        <div className="mb-[6%] sm:mb-[2%] mt-[3%] text-sm sm:text-md">
                             <label htmlFor="username" className="block text-gray-300 mb-2">Username</label>
                             <input id="username" type="text" name="username" value={data.username} onChange={handleChange}
                             className="w-full py-3 px-8 bg-primary-grey rounded-lg text-white" />
                         </div>
-                        <div className="mb-[2%]">
+                        <div className="mb-[6%] sm:mb-[2%] text-sm sm:text-md">
                             <label htmlFor="username" className="block text-gray-300 mb-2">Email</label>
                             <input id="email" type="text" name="email" value={data.email} onChange={handleChange} 
                             className="w-full py-3 px-8 bg-primary-grey rounded-lg text-white" />
                         </div>
-                        <div className="mb-[2%]">
+                        <div className="mb-[6%] sm:mb-[2%] text-sm sm:text-md">
                             <label htmlFor="pass" className="block text-gray-300 mb-2">Password</label>
                             <div className="relative">
                                 <input id="pass" type={showPassword === false ? "password" : "text"} name="password" value={data.password} onChange={handleChange} 
@@ -120,23 +115,23 @@ export default function EditProfile(){
                                 <div className="text-2xl top-3 right-5 absolute ">{showPassword === false ? <AiOutlineEye onClick={toggleShowPassword} /> : <AiOutlineEyeInvisible onClick={toggleShowPassword} />}</div>
                             </div>
                         </div>
-                        <div className="mb-[2%]">
+                        <div className="mb-[6%] sm:mb-[2%] text-sm sm:text-md">
                             <label htmlFor="bio" className="block text-gray-300 mb-2">Bio</label>
                             <textarea id="bio" name="bio" value={data.bio} onChange={handleChange} 
                             rows="7" className="w-full bg-primary-grey rounded-lg text-white py-3 px-8"></textarea>
                         </div>
-                        <div className="mb-[2%]">
+                        <div className="mb-[6%] sm:mb-[2%] text-sm sm:text-md">
                             <label htmlFor="web" className="block text-gray-300 mb-2">Website</label>
                             <input id="web" type="text" name="website" value={data.website} onChange={handleChange} 
                             className="w-full py-3 px-8 bg-primary-grey rounded-lg text-white" />
                         </div>
-                        <div className="mb-[2%]">
+                        <div className="mb-[6%] sm:mb-[2%] text-sm sm:text-md">
                             <label htmlFor="loc" className="block text-gray-300 mb-2">Location</label>
                             <input id="loc" type="text" name="location" value={data.location} onChange={handleChange} 
                             className="w-full py-3 px-8 bg-primary-grey rounded-lg text-white" />
                         </div>
                             
-                        <input type="submit" value="Save" className="absolute top-[-30%] right-0 text-xl md:text-2xl m-[3%] text-secondary-orange cursor-pointer"/>
+                        <input type="submit" value="Save" className="absolute top-[-15%] md:top-[-25%] right-0 md:text-2xl m-[3%] text-md sm-text-xl md:text-2xl px-4 py-2 md:px-6 md:py-3 bg-secondary-orange rounded-xl sm:rounded-2xl text-white cursor-pointer"/>
                     </form>
                 </div>
                 <div id='close-popup' className={popupProfPic ? 'popupProfPic active' : 'popupProfPic'}>

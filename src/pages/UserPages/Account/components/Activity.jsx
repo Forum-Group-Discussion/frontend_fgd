@@ -53,7 +53,7 @@ export default function Activity(){
             <div id="thread" className="max-w-[1000px] mx-auto" data-aos="zoom-in">
                 <div id="user-action" className="inline-flex gap-5 mb-5">
                     <Icon icon={thumbsUp} size={20} style={{color:"white"}} />
-                    <div className="text-lg md:text-xl text-white">Berry {action} on This Thread</div>
+                    <div className="text-sm sm:text-lg md:text-xl text-white">Berry {action} on This Thread</div>
                 </div>
                 <div id="thread-box" className="flex border-t border-[#d9d9d91a]">
                     <div id="thread-header" className="flex">
@@ -68,11 +68,11 @@ export default function Activity(){
                         </div>
                     </div>
                     <div className="flex flex-1 justify-end items-center">
-                        <button id="thread-button">Follow</button>
+                        <button id="thread-button" className="text-sm sm:text-lg">Follow</button>
                     </div>
                 </div>
                 <div className="mt-4 mb-4">
-                    <h3 className="font-semibold text-white tracking-[1px]">Rekomendasi 5 Game Mobile yang Menarik di Minggu Keempat Bulan Mei 2022</h3>
+                    <h3 className="text-sm sm:text-lg md:font-semibold text-white tracking-[1px]">Rekomendasi 5 Game Mobile yang Menarik di Minggu Keempat Bulan Mei 2022</h3>
                 </div>
                 <div>
                     <img src={gambarThread} alt="gambar thread" />
@@ -80,15 +80,15 @@ export default function Activity(){
                 <div id="thread-icon" className="flex flex-1 justify-between mt-5">
                     <div>
                         <Icon icon={thumbsUp} />
-                        <span>100K</span>
+                        <span className="text-sm sm:text-lg text-white">100K</span>
                     </div>
                     <div>
                         <Icon icon={thumbsDown} />
-                        <span>100K</span>
+                        <span className="text-sm sm:text-lg text-white">100K</span>
                     </div>
                     <div>
                         <Icon icon={commentingO} />
-                        <span>100K</span>
+                        <span className="text-sm sm:text-lg text-white">100K</span>
                     </div>
                     <div>
                         <Icon icon={bookmark} />

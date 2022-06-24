@@ -25,10 +25,14 @@
     margin-right: 10px;
 }
 
-#account #thread #thread-icon span {
-    font-size: 18px;
-    color: white;
-    font-weight: 500;
+@media screen and (max-width: 480px) {
+    #account #thread #thread-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+    #account #thread #thread-button {
+        padding: 8px 15px;
+    }
 }
 
 #account #thread #thread-icon div:nth-child(5) {

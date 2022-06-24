@@ -1,5 +1,4 @@
-
-import gambarProfile from "../../../../assets/img/home/dashicons_games.png";
+import Profile from "../../../../assets/img/account/profile.png"
 import gambarThread from "../../../../assets/img/home/image7.png";
 import PopupShare from "./PopUpShare.jsx";
 import PopupReport from "./PopUpReport.jsx";
@@ -53,21 +52,18 @@ export default function Thread(){
                 <div id="thread-box" className="flex">
                     <div id="thread-header" className="flex">
                         <div className="mr-2">
-                            <img src={gambarProfile} alt="gambar profile" />
+                            <img src={Profile} alt="gambar profile" />
                         </div>
                         <div className="flex items-center">
                             <div className="flex-col text-white">
-                            <h5 className="font-semibold tracking-[2px]">amdar07</h5>
+                            <h5 className="font-semibold tracking-[2px]">Berry burrie</h5>
                             <h6 className="font-medium mt-1 opacity-30">2 days ago</h6>
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-1 justify-end items-center">
-                        <button id="thread-button">Follow</button>
-                    </div>
                 </div>
                 <div className="mt-4 mb-4">
-                    <h3 className="font-semibold text-white tracking-[1px]">Rekomendasi 5 Game Mobile yang Menarik di Minggu Keempat Bulan Mei 2022</h3>
+                    <h3 className="text-sm sm:text-lg md:font-semibold text-white tracking-[1px]">Rekomendasi 5 Game Mobile yang Menarik di Minggu Keempat Bulan Mei 2022</h3>
                 </div>
                 <div>
                     <img src={gambarThread} alt="gambar thread" />
@@ -75,15 +71,15 @@ export default function Thread(){
                 <div id="thread-icon" className="flex flex-1 justify-between mt-5">
                     <div>
                         <Icon icon={thumbsUp} />
-                        <span>100K</span>
+                        <span className="text-sm sm:text-lg text-white">100K</span>
                     </div>
                     <div>
                         <Icon icon={thumbsDown} />
-                        <span>100K</span>
+                        <span className="text-sm sm:text-lg text-white">100K</span>
                     </div>
                     <div>
                         <Icon icon={commentingO} />
-                        <span>100K</span>
+                        <span className="text-sm sm:text-lg text-white">100K</span>
                     </div>
                     <div>
                         <Icon icon={bookmark} />
