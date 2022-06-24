@@ -14,6 +14,7 @@ import KelolaUSer from "./pages/AdminPages/Pages/Kelola User/KelolaUser";
 import Setting from "./pages/AdminPages/Pages/Setting/Setting";
 import ProfileUserPage from "./pages/UserPages/Account/ProfileUserPage";
 import EditProfile from "./pages/UserPages/Account/EditProfile";
+import ProfileOtherUserPage from "./pages/UserPages/Account/ProfileOtherUserPage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/user/account" element={<ProfileUserPage/>} />
         <Route path="/user/account/edit" element={<EditProfile />} />
+        <Route path="/user/account/other" element={<ProfileOtherUserPage />} />
       </Route>
 
       <Route element={<AdminRoute />}>
