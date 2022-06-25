@@ -1,3 +1,30 @@
+input[type=radio] {
+    position: absolute;
+    visibility: hidden;
+    display: none;
+}
+input[type=radio]:nth-child(1):checked + label{
+    color: black;
+    background: #6C5DD4;
+}
+input[type=radio]:nth-child(3):checked + label{
+    color: black;
+    background: #5DD8D0;
+}
+input[type=radio]:nth-child(5):checked + label{
+    color: black;
+    background: #ECB0CD;
+}
+input[type=radio]:nth-child(7):checked + label{
+    color: black;
+    background: #BE70EE;
+}
+input[type=radio]:nth-child(9):checked + label{
+    color: black;
+    background: #FFA066;
+}
+
+/* text editor */
 .ql-snow.ql-toolbar {
     display: block;
     background: #eaecec;
