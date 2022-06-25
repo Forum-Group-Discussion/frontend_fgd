@@ -1,0 +1,24 @@
+.carousel {
+    width: 100%;
+    border: 1px solid #222834;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    overflow: hidden;
+    cursor: grab;
+}
+
+.inner-carousel {
+    display: inline-flex;
+}
+
+.inner-carousel .item {
+    width: 100px;
+}
+
+.inner-carousel .item img {
+    width: 100px;
+    pointer-events: none;
+    background-color: aliceblue;
+    border-radius: 50%;
+}
