@@ -83,38 +83,39 @@ export default function CreateThread(){
         }
     }
     return(
-        <div className='bg-primary-black min-h-[100vh]'>
+        <div className='bg-primary-black min-h-[100vh] overflow-hidden'>
             <Navbar />
             <div id='create-thread' className='max-w-[1240px] xl:mx-auto mx-10'>
                 <div className='h-14 sm:h-20'></div>
                 <form id='form' onSubmit={handleSubmit}>
                     <div id='title-box' className='mb-[6%] sm:mb-[2%] mt-[3%] text-sm sm:text-md'>
-                        <label htmlFor='title' className='text-gray-300 mb-2'>Add Title</label>
+                        <label htmlFor='title' className='block text-gray-300 mb-2'>Add Title</label>
                         <input id='title' type="text" onChange={handleTitle} value={value.title} placeholder='Title'className='w-full py-3 px-8 bg-primary-grey rounded-lg text-white'/>
                     </div>
                     <div id='title-err' className='text-secondary-orange'>{error.errTitle}</div>
                     <div id='img-box' className='mb-[6%] sm:mb-[2%] mt-[3%] text-sm sm:text-md'>
-                        <label htmlFor='img' className='text-gray-300 mb-2'>Add Image</label>
+                        <label htmlFor='img' className='block text-gray-300 mb-4'>Add Image</label>
+                        <label htmlFor='img' className='bg-secondary-blue px-6 py-2 text-white rounded-lg cursor-pointer text-center'>Choose Image</label>
                         <input id='img' type="file" ref={fotoThread} />
                     </div>
                     <div id='topic-box' className='mb-[6%] sm:mb-[2%] mt-[3%] text-sm sm:text-md'>
-                        <div className='text-gray-300 mb-2'>Choose topic</div>
-                        <div className='radio-group flex gap-6'>
+                        <div className='block text-gray-300 mb-2'>Choose topic</div>
+                        <div className='radio-group grid md:grid-cols-5 grid-cols-2 gap-6'>
                             <input id='topic-games' type='radio' name='topic' checked={value.topic==="Games"} value='Games' onChange={handleTopic}
-                            /><label htmlFor='topic-games' className='bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer'>Games</label>
+                            /><label htmlFor='topic-games' className='bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto'>Games</label>
                             <input id='topic-health' type='radio' name='topic' checked={value.topic==="Health"} value='Health' onChange={handleTopic} 
-                            /><label htmlFor='topic-health' className='bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer'>Health</label>
+                            /><label htmlFor='topic-health' className='bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto'>Health</label>
                             <input id='topic-foodtravel' type='radio' name='topic' checked={value.topic==="FoodTravel"} value='FoodTravel' onChange={handleTopic} 
-                            /><label htmlFor='topic-foodtravel' className='bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer'>Food & Travel</label>
+                            /><label htmlFor='topic-foodtravel' className='bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto'>Food & Travel</label>
                             <input id='topic-tech' type='radio' name='topic' checked={value.topic==="Tech"} value='Tech' onChange={handleTopic} 
-                            /><label htmlFor='topic-tech' className='bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer'>Technology</label>
+                            /><label htmlFor='topic-tech' className='bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto'>Tech - nology</label>
                             <input id='topic-edu' type='radio' name='topic' checked={value.topic==="Edu"} value='Edu' onChange={handleTopic} 
-                            /><label htmlFor='topic-edu' className='bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer'>Education</label>
+                            /><label htmlFor='topic-edu' className='bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto'>Edu - cation</label>
                         </div>
                     </div>
                     <div id='topic-err' className='text-secondary-orange'>{error.errTopic}</div>
                     <div id='content-box' className='mb-[6%] sm:mb-[2%] mt-[3%] text-sm sm:text-md'>
-                        <div className='text-gray-300 mb-2'>Thread Content</div>
+                        <div className='block text-gray-300 mb-2'>Thread Content</div>
                         <div id='text-editor' className='editor'>
                             <ReactQuill modules={modules} 
                                     theme="snow" 

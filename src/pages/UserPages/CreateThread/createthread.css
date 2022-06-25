@@ -24,6 +24,14 @@ input[type=radio]:nth-child(9):checked + label{
     background: #FFA066;
 }
 
+input[type="file"] {
+    display: none;
+}
+.file-preview {
+    margin: 0 10px;
+    color: white;
+}
+
 /* text editor */
 .ql-snow.ql-toolbar {
     display: block;
