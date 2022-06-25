@@ -2,3 +2,13 @@
   border-radius: 10px;
   margin-left: 280px;
 }
+.inputfile {
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+  cursor: pointer;
+}

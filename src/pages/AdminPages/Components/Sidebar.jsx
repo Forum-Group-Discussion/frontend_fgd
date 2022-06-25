@@ -2,13 +2,15 @@ import { Link } from "react-router-dom";
 import Logo from "../../../assets/img/logo.png";
 import { RiDashboard3Line, RiUser3Line, RiSettings3Line, RiListSettingsLine } from "react-icons/ri";
 import HomeAdminPage from "./NavbarAdmin";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useRo } from "react-router-dom";
 import Logout from "../../../assets/img/Admin/Logout.png"
 import { removeUserSession } from "../../../utils/helpers";
 import Swal from "sweetalert2";
 import "./style.css";
 
 export default function Sidebar(){
+
+  
   const navigate = useNavigate();
 
   // handle click event of logout button
@@ -43,7 +45,7 @@ export default function Sidebar(){
           </div>
           <div className="flex flex-col ">
             <ul className="min-w-full mt-20 text-white ">
-              <li className="p-3">
+              <li className="p-3 hover:bg-secondary-orange">
                 <Link to="/admin/home ">
                   <div className="side-menu flex flex-row items-center">
                     <RiDashboard3Line size={20} className="mr-4" />
@@ -77,10 +79,10 @@ export default function Sidebar(){
                 </Link>
               </li>
 
-              <li className="p-3 mt-[170px] flex justify-center ">
+              <li className="p-3 mt-[170px] flex justify-center logout ">
                 <div className="flex flex-row items-center">
                 <img src={Logout} className="mr-4 w-[20px]" alt="Icon_logout"/>
-                  <input type="submit" onClick={handleLogout} value="Logout" />
+                  <input type="submit" onClick={handleLogout} value="Logout" className="logout"/>
                 </div>
               </li>
             </ul>

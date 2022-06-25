@@ -12,8 +12,7 @@ export default function Dashboard() {
   return (
     <div className="bg-primary-black h-content w-screen">
       <div className="container mx-auto xl:px-20 lg:px-15">
-        <Sidebar />
-        <div>
+        <Sidebar/>
           <div className="menu-content bg-primary-grey text-white p-7 h-content">
             <div className="grid grid-cols-3 gap-3">
               <div className="mb-3">
@@ -32,10 +31,10 @@ export default function Dashboard() {
                   <ThreadStatistic />
                 </div>
                 <div className="flex flex-row  justify-between">
-                  <div className="w-full">
+                  <div className="w-full mr-3">
                     <TodayTrending />
                   </div>
-                  <div className="w-full ml-3">
+                  <div className="w-full">
                     <TotalReport />
                   </div>
                 </div>
@@ -45,7 +44,6 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-        </div>
       </div>
     </div>
   );

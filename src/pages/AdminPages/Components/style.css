@@ -1,7 +1,7 @@
 /*Css Sidebar*/
-li:hover {
+/* li:hover {
   background-color: #ff3d00;
-}
+} */
 
 .side-menu {
   margin-left: 30px;
@@ -9,22 +9,11 @@ li:hover {
 /*end Css Sidebar*/
 
 /*Css Navbar Admin*/
-.Search input {
-  background: none;
-  border: solid 1px;
-  border-radius: 20px;
-  padding: 7px;
-  width: 400px;
-}
-
-@media screen {
-  
-}
 
 .Navbar-admin {
   margin-left: 280px;
 }
 
-.Navbar-admin {
-  margin-left: 280px;
+.logout{
+  cursor: pointer;
 }
