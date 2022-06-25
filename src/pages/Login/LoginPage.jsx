@@ -8,7 +8,7 @@ import "aos/dist/aos.css";
 import Swal from "sweetalert2";
 import { getIsAdmin, setUserSession } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
-import { axiosInstance } from "../../networks/api";
+import  axiosInstance  from "../../networks/api";
 import { useDispatch } from "react-redux";
 import { USER_NAME } from "../../redux/userSlice";
 
@@ -39,7 +39,7 @@ function LoginPage() {
   const handleLogin = (e) => {
     e.preventDefault();
     axiosInstance
-      .post("/auth/login", { email: users.email, password: users.password })
+      .post("/v1/auth/login", { email: users.email, password: users.password })
       .then((response) => {
         Swal.fire({
           position: "top-end",

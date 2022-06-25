@@ -6,8 +6,6 @@ import Jokowi from "../../../assets/img/Admin/JOK.png"
 function HomeAdminPage() {
   const user = useSelector((state) => state.user.name);
 
-  console.log(user);
-
   return (
     <div>
       <div className="Navbar-admin text-white pt-7 pb-7 ">
