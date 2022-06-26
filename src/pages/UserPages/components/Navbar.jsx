@@ -4,6 +4,7 @@ import Logo from "../../../assets/img/logo.png";
 import { Icon } from "react-icons-kit";
 import { pencil } from "react-icons-kit/oct/pencil";
 import "./Navbar.css";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
@@ -34,12 +35,14 @@ const Navbar = () => {
             Account
           </a>
         </ul>
-        <div className="flex border-b">
-          <div className="mr-2">
-            <Icon icon={pencil} />
+        <Link to="/user/create">
+          <div className="flex border-b">
+            <div className="mr-2">
+              <Icon icon={pencil} />
+            </div>
+            <span>Create Thread</span>
           </div>
-          <span>Create Thread</span>
-        </div>
+        </Link>
       </div>
       <ul id="nav-side" className={nav ? "bg-primary-black fixed left-0 w-[60%] h-full border-r border-r-primary-grey ease-in-out duration-500 top-14 sm:hidden" : "ease-in-out duration-500 fixed left-[-100%]"}>
         <a href="#about">
