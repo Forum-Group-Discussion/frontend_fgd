@@ -12,9 +12,13 @@ import Dashboard from "./pages/AdminPages/Pages/Dashboard/Dashboard";
 import KelolaThread from "./pages/AdminPages/Pages/Kelola Thread/KelolaThread";
 import KelolaUSer from "./pages/AdminPages/Pages/Kelola User/KelolaUser";
 import Setting from "./pages/AdminPages/Pages/Setting/Setting";
+<<<<<<< HEAD
 import ProfileUserPage from "./pages/UserPages/Account/ProfileUserPage";
 import EditProfile from "./pages/UserPages/Account/EditProfile";
 import ProfileOtherUserPage from "./pages/UserPages/Account/ProfileOtherUserPage";
+=======
+import CreateThread from "./pages/UserPages/CreateThread/CreateThread";
+>>>>>>> 6be00f9c20ca84cf685973626812fd79bacc462d
 
 function App() {
   return (
@@ -23,9 +27,13 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+<<<<<<< HEAD
         <Route path="/user/account" element={<ProfileUserPage/>} />
         <Route path="/user/account/edit" element={<EditProfile />} />
         <Route path="/user/account/other" element={<ProfileOtherUserPage />} />
+=======
+        <Route path="/user/create" element={<CreateThread />} />
+>>>>>>> 6be00f9c20ca84cf685973626812fd79bacc462d
       </Route>
 
       <Route element={<AdminRoute />}>
