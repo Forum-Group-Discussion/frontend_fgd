@@ -45,7 +45,7 @@ export default function ThreadStatistic() {
 
   return (
     <div className="rounded-md border-gray-500/10 border-2 p-3">
-      <p className="text-xl font-bold">Thread Statistic</p>
+      <p className="font-bold xl:text-base lg:text-sm">Thread Statistic</p>
       <Line options={options} data={data} />
     </div>
   );
