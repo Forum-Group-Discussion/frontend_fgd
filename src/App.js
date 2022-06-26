@@ -23,11 +23,16 @@ function App() {
       </Route>
 
       <Route element={<AdminRoute />}>
-        <Route path="/admin/home" element={<Dashboard />} />
+        {/* <Route path="/admin/home" element={<Dashboard />} />
+        <Route path="KelolaThread" element={<KelolaThread />} />
+        <Route path="KelolaUser" element={<KelolaUSer />} />
+        <Route path="Setting" element={<Setting />} /> */}
+      </Route>
+
+      <Route path="/admin/home" element={<Dashboard />} />
         <Route path="KelolaThread" element={<KelolaThread />} />
         <Route path="KelolaUser" element={<KelolaUSer />} />
         <Route path="Setting" element={<Setting />} />
-      </Route>
 
       <Route element={<UserRoute />}>
         <Route path="/user/home" element={<HomeUserPage />} />
