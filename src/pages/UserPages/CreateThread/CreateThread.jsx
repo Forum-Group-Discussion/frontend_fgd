@@ -7,17 +7,18 @@ import { useEffect } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import axiosInstance from "../../../networks/api";
+import storage from "../../../firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 export default function CreateThread() {
   const [value, setValue] = useState({ title: "", topic: "" });
+  const [image, setImage] = useState(null);
   const [content, setContent] = useState("");
-  const fotoThread = useRef(null);
+  const fotoThread = useRef();
   const [error, setError] = useState({ errTitle: "Please add a title", errTopic: "Please add a topic" });
   const navigate = useNavigate();
 
-  console.log(value);
-  console.log(content);
-  console.log(fotoThread);
+  console.log(image);
 
   // useEffect(()=>{
   //     console.log(value, content)
@@ -34,12 +35,24 @@ export default function CreateThread() {
     else setError({ ...error, errTopic: "" });
   };
   const modules = {
-    toolbar: [["bold", "underline", "italic", "strike"], ["code-block", "blockquote"], [{ header: [1, 2, 3, 4, 5] }], [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }], "link"],
+    toolbar: [["bold", "underline", "italic", "strike"], ["code-block", "blockquote"], [{ header: [1, 2, 3, 4, 5] }], [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }], ["link", "image"]],
   };
   const handleSubmit = async () => {
     if (error.errTitle === "" && error.errTopic === "" && content !== "") {
-      // await pindah ke database
-      axiosInstance.post("/v1/thread", { topic: { id: parseInt(value.topic) }, title: value.title, content: content, image: "https://image" });
+      const imageName = ref(storage, `threads/${image.name}`);
+      const uploadTask = uploadBytes(imageName, image);
+
+      uploadTask.then((snapshot) => {
+        getDownloadURL(snapshot.ref).then(async (downloadURL) => {
+          await axiosInstance.post("/v1/thread", {
+            topic: { id: parseInt(value.topic) },
+            title: value.title,
+            content: content,
+            image: "test image",
+          });
+        });
+      });
+
       navigate("/user/account");
       Swal.fire({
         toast: true,
@@ -102,7 +115,15 @@ export default function CreateThread() {
             <label htmlFor="img" className="bg-secondary-blue px-6 py-2 text-white rounded-lg cursor-pointer text-center">
               Choose Image
             </label>
-            <input id="img" type="file" ref={fotoThread} />
+            <input
+              id="img"
+              type="file"
+              ref={fotoThread}
+              onChange={(e) => {
+                setImage(e.target.files[0]);
+              }}
+              name="image"
+            />
           </div>
           <div id="topic-box" className="mb-[6%] sm:mb-[2%] mt-[3%] text-sm sm:text-md">
             <div className="block text-gray-300 mb-2">Choose topic</div>

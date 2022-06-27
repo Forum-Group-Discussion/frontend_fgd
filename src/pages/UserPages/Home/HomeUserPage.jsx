@@ -15,18 +15,20 @@ import PopupReport from "./components/PopupReport";
 import axiosInstance from "../../../networks/api";
 import { useDispatch, useSelector } from "react-redux";
 import { DATA_THREAD } from "../../../redux/threadSlice";
-import { getToken } from "../../../utils/helpers";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function HomeUserPage() {
   const dispatch = useDispatch();
   const threads = useSelector((state) => state.thread.thread);
   const [more, setMore] = useState({
-    "index": '',
-    "value": false
+    index: "",
+    value: false,
   });
   const [popupShare, setPopupShare] = useState(false);
   const [popupReport, setPopupReport] = useState(false);
-  const [threadIndex, setThreadIdex] = useState('')
+  const [threadIndex, setThreadIdex] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const showPopupShare = () => {
     if (popupShare === false) {
@@ -53,9 +55,8 @@ export default function HomeUserPage() {
   };
 
   const showMoreMenu = (index) => {
-    setMore(!more)
-    setThreadIdex(index)
-
+    setMore(!more);
+    setThreadIdex(index);
   };
 
   useEffect(() => {
@@ -64,14 +65,13 @@ export default function HomeUserPage() {
       .get("v1/thread")
       .then((response) => {
         dispatch(DATA_THREAD(response.data.data));
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error.response);
         window.location.reload();
       });
   }, [dispatch]);
-
-  console.log(threads);
 
   return (
     <>
@@ -96,75 +96,106 @@ export default function HomeUserPage() {
             <div className="trending-slider">
               <TrendingSlider />
             </div>
-            {threads?.map((item, index) => (
-              <div id="thread" key={index}>
+            {loading ? (
+              <div id="thread">
                 <div id="thread-box" className="flex">
                   <div id="thread-header" className="flex">
                     <div className="mr-2">
-                      <img src={gambarProfile} alt="gambar profile" />
+                      <Skeleton height={30} baseColor="#202020" highlightColor="#444" />
                     </div>
                     <div className="flex items-center">
                       <div className="flex-col text-white">
-                        <h5 className="font-semibold tracking-[2px]">{item.users.name}</h5>
-                        <h6 className="font-medium mt-1 opacity-30">2 days ago</h6>
+                        <Skeleton height={30} baseColor="#202020" highlightColor="#444" />
+                        <Skeleton height={30} baseColor="#202020" highlightColor="#444" />
                       </div>
                     </div>
                   </div>
                   <div className="flex flex-1 justify-end items-center">
-                    <button id="thread-button">Follow</button>
+                    <Skeleton height={30} baseColor="#202020" highlightColor="#444" />
                   </div>
                 </div>
                 <div className="mt-4 mb-4">
-                  <h3 className="font-semibold text-white tracking-[1px]">{item.title}</h3>
+                  <Skeleton height={30} baseColor="#202020" highlightColor="#444" />
                 </div>
                 <div>
-                  <img src={gambarThread} alt="gambar thread" />
+                  <Skeleton height={30} baseColor="#202020" highlightColor="#444" />
                 </div>
                 <div id="thread-icon" className="flex flex-1 justify-between mt-5">
-                  <div>
-                    <Icon icon={thumbsUp} />
-                    <span>100K</span>
-                  </div>
-                  <div>
-                    <Icon icon={thumbsDown} />
-                    <span>100K</span>
-                  </div>
-                  <div>
-                    <Icon icon={commentingO} />
-                    <span>100K</span>
-                  </div>
-                  <div>
-                    <Icon icon={bookmark} />
-                  </div>
-                  <div onClick={() => showMoreMenu(index)}>
-                    <Icon icon={moreVertical} />
-                    <div className={more && index === threadIndex ? 'more active' : 'more'}>
-                      <span className="cursor-pointer" onClick={showPopupShare}>Share</span>
-                      <span className="cursor-pointer" onClick={showPopupReport}>Report</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div id='close-popup' className={popupShare ? 'popupShare active' : 'popupShare'}>
-                  <div>
-                    <div className="flex absolute inset-0 m-auto justify-center p-4">
-                      <PopupShare closePopupShare={closePopupShare} />
-                    </div>
-                  </div>
-                </div>
-
-                <div id='close-popup' className={popupReport ? 'popupReport active' : 'popupReport'}>
-                  <div>
-                    <div className="flex absolute inset-0 m-auto justify-center p-4">
-                      <PopupReport closePopupReport={closePopupReport} />
-                    </div>
-                  </div>
+                  <Skeleton height={30} baseColor="#202020" highlightColor="#444" />
                 </div>
               </div>
-            ))}
-            <div>
+            ) : (
+              threads?.map((item, index) => (
+                <div id="thread" key={index}>
+                  <div id="thread-box" className="flex">
+                    <div id="thread-header" className="flex">
+                      <div className="mr-2">
+                        <img src={gambarProfile} alt="gambar profile" />
+                      </div>
+                      <div className="flex items-center">
+                        <div className="flex-col text-white">
+                          <h5 className="font-semibold tracking-[2px]">{item.users.name}</h5>
+                          <h6 className="font-medium mt-1 opacity-30">2 days ago</h6>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-1 justify-end items-center">
+                      <button id="thread-button">Follow</button>
+                    </div>
+                  </div>
+                  <div className="mt-4 mb-4">
+                    <h3 className="font-semibold text-white tracking-[1px]">{item.title}</h3>
+                  </div>
+                  <div>
+                    <img src={gambarThread} alt="gambar thread" />
+                  </div>
+                  <div id="thread-icon" className="flex flex-1 justify-between mt-5">
+                    <div>
+                      <Icon icon={thumbsUp} />
+                      <span>100K</span>
+                    </div>
+                    <div>
+                      <Icon icon={thumbsDown} />
+                      <span>100K</span>
+                    </div>
+                    <div>
+                      <Icon icon={commentingO} />
+                      <span>100K</span>
+                    </div>
+                    <div>
+                      <Icon icon={bookmark} />
+                    </div>
+                    <div onClick={() => showMoreMenu(index)}>
+                      <Icon icon={moreVertical} />
+                      <div className={more && index === threadIndex ? "more active" : "more"}>
+                        <span className="cursor-pointer" onClick={showPopupShare}>
+                          Share
+                        </span>
+                        <span className="cursor-pointer" onClick={showPopupReport}>
+                          Report
+                        </span>
+                      </div>
+                    </div>
+                  </div>
 
-            </div>
+                  <div id="close-popup" className={popupShare ? "popupShare active" : "popupShare"}>
+                    <div>
+                      <div className="flex absolute inset-0 m-auto justify-center p-4">
+                        <PopupShare closePopupShare={closePopupShare} />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div id="close-popup" className={popupReport ? "popupReport active" : "popupReport"}>
+                    <div>
+                      <div className="flex absolute inset-0 m-auto justify-center p-4">
+                        <PopupReport closePopupReport={closePopupReport} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
