@@ -20,9 +20,13 @@ import { getToken } from "../../../utils/helpers";
 export default function HomeUserPage() {
   const dispatch = useDispatch();
   const threads = useSelector((state) => state.thread.thread);
-  const [more, setMore] = useState(false);
+  const [more, setMore] = useState({
+    "index": '',
+    "value": false
+  });
   const [popupShare, setPopupShare] = useState(false);
   const [popupReport, setPopupReport] = useState(false);
+  const [threadIndex, setThreadIdex] = useState('')
 
   const showPopupShare = () => {
     if (popupShare === false) {
@@ -48,12 +52,10 @@ export default function HomeUserPage() {
     }
   };
 
-  const showMoreMenu = () => {
-    if (more === false) {
-      setMore(true);
-    } else {
-      setMore(false);
-    }
+  const showMoreMenu = (index) => {
+    setMore(!more)
+    setThreadIdex(index)
+
   };
 
   useEffect(() => {
@@ -65,6 +67,7 @@ export default function HomeUserPage() {
       })
       .catch((error) => {
         console.log(error.response);
+        window.location.reload();
       });
   }, [dispatch]);
 
@@ -93,8 +96,8 @@ export default function HomeUserPage() {
             <div className="trending-slider">
               <TrendingSlider />
             </div>
-            {threads?.map((item) => (
-              <div id="thread">
+            {threads?.map((item, index) => (
+              <div id="thread" key={index}>
                 <div id="thread-box" className="flex">
                   <div id="thread-header" className="flex">
                     <div className="mr-2">
@@ -133,12 +136,35 @@ export default function HomeUserPage() {
                   <div>
                     <Icon icon={bookmark} />
                   </div>
-                  <div>
+                  <div onClick={() => showMoreMenu(index)}>
                     <Icon icon={moreVertical} />
+                    <div className={more && index === threadIndex ? 'more active' : 'more'}>
+                      <span className="cursor-pointer" onClick={showPopupShare}>Share</span>
+                      <span className="cursor-pointer" onClick={showPopupReport}>Report</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div id='close-popup' className={popupShare ? 'popupShare active' : 'popupShare'}>
+                  <div>
+                    <div className="flex absolute inset-0 m-auto justify-center p-4">
+                      <PopupShare closePopupShare={closePopupShare} />
+                    </div>
+                  </div>
+                </div>
+
+                <div id='close-popup' className={popupReport ? 'popupReport active' : 'popupReport'}>
+                  <div>
+                    <div className="flex absolute inset-0 m-auto justify-center p-4">
+                      <PopupReport closePopupReport={closePopupReport} />
+                    </div>
                   </div>
                 </div>
               </div>
             ))}
+            <div>
+
+            </div>
           </div>
         </div>
       </div>
