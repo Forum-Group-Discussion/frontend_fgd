@@ -1,7 +1,6 @@
 import Profile from "../../../../assets/img/account/profile.png"
 import gambarThread from "../../../../assets/img/home/image7.png";
 import PopupShare from "./PopUpShare.jsx";
-import PopupReport from "./PopUpReport.jsx";
 import { Icon } from "react-icons-kit";
 import { thumbsUp } from "react-icons-kit/feather/thumbsUp";
 import { thumbsDown } from "react-icons-kit/feather/thumbsDown";
