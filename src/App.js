@@ -16,6 +16,7 @@ import ProfileUserPage from "./pages/UserPages/Account/ProfileUserPage";
 import EditProfile from "./pages/UserPages/Account/EditProfile";
 import ProfileOtherUserPage from "./pages/UserPages/Account/ProfileOtherUserPage";
 import CreateThread from "./pages/UserPages/CreateThread/CreateThread";
+import EditThread from "./pages/UserPages/CreateThread/EditThread";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path="/user/account/edit" element={<EditProfile />} />
         <Route path="/user/account/other" element={<ProfileOtherUserPage />} />
         <Route path="/user/create" element={<CreateThread />} />
+        <Route path="/user/edit" element={<EditThread />} />
       </Route>
 
       <Route path="*" element={<ErrorPage code="404" title="Ooopss Page Not Found" />} />

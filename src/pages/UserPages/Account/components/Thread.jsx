@@ -1,7 +1,6 @@
 import Profile from "../../../../assets/img/account/profile.png"
 import gambarThread from "../../../../assets/img/home/image7.png";
 import PopupShare from "./PopUpShare.jsx";
-import PopupReport from "./PopUpReport.jsx";
 import { Icon } from "react-icons-kit";
 import { thumbsUp } from "react-icons-kit/feather/thumbsUp";
 import { thumbsDown } from "react-icons-kit/feather/thumbsDown";
@@ -9,11 +8,13 @@ import { bookmark } from 'react-icons-kit/feather/bookmark'
 import { commentingO } from "react-icons-kit/fa/commentingO";
 import { moreVertical } from 'react-icons-kit/feather/moreVertical'
 import { useState } from "react";
+import Swal from "sweetalert2";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Thread(){
     const [more, setMore] = useState(false)
     const [popupShare, setPopupShare] = useState(false)
-    const [popupReport, setPopupReport] = useState(false)
+    const navigate = useNavigate()
 
     const showPopupShare = () => {
         if (popupShare === false) {
@@ -27,16 +28,40 @@ export default function Thread(){
         }
     }
 
-    const showPopupReport = () => {
-        if (popupReport === false) {
-            setPopupReport(true)
-        }
-    }
-
-    const closePopupReport = () => {
-        if(popupReport === true) {
-            setPopupReport(false)
-        }
+    const showPopupDelete = () => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            iconColor: "#FDBB2E",
+            backdrop: "#ffffff4d",
+            background: "#222834",
+            color: "#FDBB2E",
+            showCancelButton: true,
+            confirmButtonColor: '#18B015',
+            cancelButtonColor: '#DE1508',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                navigate("/user/account");
+                Swal.fire({
+                    toast: true,
+                    icon: "success",
+                    title: "Thread successfully deleted",
+                    animation: false,
+                    background: "#222834",
+                    color: "#18B015",
+                    position: "bottom-end",
+                    showConfirmButton: false,
+                    timer: 4000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                    toast.addEventListener("mouseenter", Swal.stopTimer);
+                    toast.addEventListener("mouseleave", Swal.resumeTimer);
+                    },
+                });
+            }
+        })
     }
     
     const showMoreMenu = () => {
@@ -87,8 +112,9 @@ export default function Thread(){
                     <div onClick={showMoreMenu}>
                         <Icon icon={moreVertical} />
                         <div className={more ? 'more active' : 'more'}>
+                            <Link to="/user/edit"><span className="cursor-pointer">Edit</span></Link>
                             <span className="cursor-pointer" onClick={showPopupShare}>Share</span>
-                            <span className="cursor-pointer" onClick={showPopupReport}>Report</span>
+                            <span className="cursor-pointer" onClick={showPopupDelete}>Delete</span>
                         </div>
                     </div>
                 </div>
@@ -97,14 +123,6 @@ export default function Thread(){
                 <div>
                     <div className="flex absolute inset-0 m-auto justify-center p-4">
                         <PopupShare closePopupShare={closePopupShare} />
-                    </div>
-                </div>
-            </div>
-
-            <div id='close-popup' className={popupReport ? 'popupReport active' : 'popupReport'}>
-                <div>
-                    <div className="flex absolute inset-0 m-auto justify-center p-4">
-                        <PopupReport closePopupReport={closePopupReport}/>
                     </div>
                 </div>
             </div>
