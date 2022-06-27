@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineMenu, AiFillPlusCircle } from "react-icons/ai";
 import Logo from "../../../assets/img/logo.png";
 import { Icon } from "react-icons-kit";
 import { pencil } from "react-icons-kit/oct/pencil";
@@ -19,8 +19,8 @@ const Navbar = () => {
         <div id="nav-toggler" onClick={handleNav} className="sm:hidden flex flex-col justify-center">
           {nav ? <AiOutlineClose size={25} /> : <AiOutlineMenu size={25} />}
         </div>
-        <a href="/#">
-          <div id="nav-logo" className="flex flex-col justify-center col-span-2">
+        <a href="/#" className="flex flex-col justify-center col-span-2">
+          <div id="nav-logo">
             <img src={Logo} className="sm:h-[60px] sm:max-h-[none] max-h-[40px] mx-auto sm:mx-[0]" alt="logo found" />
           </div>
         </a>
@@ -35,12 +35,17 @@ const Navbar = () => {
             Account
           </a>
         </ul>
-        <Link to="/user/create">
+        <Link to="/user/create" className="hidden sm:block">
           <div className="flex border-b">
             <div className="mr-2">
               <Icon icon={pencil} />
             </div>
             <span>Create Thread</span>
+          </div>
+        </Link>
+        <Link to="/user/create" className="sm:hidden grid m-auto mr-0">
+          <div className="">
+            <AiFillPlusCircle size={35}></AiFillPlusCircle>
           </div>
         </Link>
       </div>
