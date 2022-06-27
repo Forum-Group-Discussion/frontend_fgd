@@ -7,7 +7,7 @@ import "./RegisterPage.css";
 import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import  axiosInstance  from "../../networks/api";
+import axiosInstance from "../../networks/api";
 import Swal from "sweetalert2";
 
 function RegisterPage() {
@@ -74,7 +74,7 @@ function RegisterPage() {
       alert("Data does not match");
     } else {
       axiosInstance
-        .post("/auth/register", { name: users.name, email: users.email, password: users.password })
+        .post("v1/auth/register", { name: users.name, email: users.email, password: users.password })
         .then(() => {
           Swal.fire({
             position: "top-end",

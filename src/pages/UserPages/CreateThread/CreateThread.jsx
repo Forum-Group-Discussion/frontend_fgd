@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
+import axiosInstance from "../../../networks/api";
 
 export default function CreateThread() {
   const [value, setValue] = useState({ title: "", topic: "" });
@@ -13,6 +14,10 @@ export default function CreateThread() {
   const fotoThread = useRef(null);
   const [error, setError] = useState({ errTitle: "Please add a title", errTopic: "Please add a topic" });
   const navigate = useNavigate();
+
+  console.log(value);
+  console.log(content);
+  console.log(fotoThread);
 
   // useEffect(()=>{
   //     console.log(value, content)
@@ -34,6 +39,7 @@ export default function CreateThread() {
   const handleSubmit = async () => {
     if (error.errTitle === "" && error.errTopic === "" && content !== "") {
       // await pindah ke database
+      axiosInstance.post("/v1/thread", { topic: { id: parseInt(value.topic) }, title: value.title, content: content, image: "https://image" });
       navigate("/user/account");
       Swal.fire({
         toast: true,
@@ -101,23 +107,23 @@ export default function CreateThread() {
           <div id="topic-box" className="mb-[6%] sm:mb-[2%] mt-[3%] text-sm sm:text-md">
             <div className="block text-gray-300 mb-2">Choose topic</div>
             <div className="radio-group grid md:grid-cols-5 grid-cols-2 gap-6">
-              <input id="topic-games" type="radio" name="topic" checked={value.topic === "Games"} value="Games" onChange={handleTopic} />
+              <input id="topic-games" type="radio" name="topic" checked={value.topic === "1"} value="1" onChange={handleTopic} />
               <label htmlFor="topic-games" className="bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto">
                 Games
               </label>
-              <input id="topic-health" type="radio" name="topic" checked={value.topic === "Health"} value="Health" onChange={handleTopic} />
+              <input id="topic-health" type="radio" name="topic" checked={value.topic === "2"} value="2" onChange={handleTopic} />
               <label htmlFor="topic-health" className="bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto">
                 Health
               </label>
-              <input id="topic-foodtravel" type="radio" name="topic" checked={value.topic === "FoodTravel"} value="FoodTravel" onChange={handleTopic} />
+              <input id="topic-foodtravel" type="radio" name="topic" checked={value.topic === "3"} value="3" onChange={handleTopic} />
               <label htmlFor="topic-foodtravel" className="bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto">
                 Food & Travel
               </label>
-              <input id="topic-tech" type="radio" name="topic" checked={value.topic === "Tech"} value="Tech" onChange={handleTopic} />
+              <input id="topic-tech" type="radio" name="topic" checked={value.topic === "4"} value="4" onChange={handleTopic} />
               <label htmlFor="topic-tech" className="bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto">
                 Tech - nology
               </label>
-              <input id="topic-edu" type="radio" name="topic" checked={value.topic === "Edu"} value="Edu" onChange={handleTopic} />
+              <input id="topic-edu" type="radio" name="topic" checked={value.topic === "5"} value="5" onChange={handleTopic} />
               <label htmlFor="topic-edu" className="bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto">
                 Edu - cation
               </label>
