@@ -15,8 +15,8 @@ const Navbar = () => {
         <div id="nav-toggler" onClick={handleNav} className="sm:hidden flex flex-col justify-center">
           {nav ? <AiOutlineClose size={25} /> : <AiOutlineMenu size={25} />}
         </div>
-        <a href="/#">
-          <div id="nav-logo" className="flex flex-col justify-center col-span-2">
+        <a href="/#" className="flex flex-col justify-center col-span-2">
+          <div id="nav-logo">
             <img src={Logo} className="sm:h-[60px] sm:max-h-[none] max-h-[40px] mx-auto sm:mx-[0]" alt="logo found" />
           </div>
         </a>

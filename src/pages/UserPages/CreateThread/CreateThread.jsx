@@ -34,7 +34,7 @@ export default function CreateThread() {
     else setError({ ...error, errTopic: "" });
   };
   const modules = {
-    toolbar: [["bold", "underline", "italic", "strike"], ["code-block", "blockquote"], [{ header: [1, 2, 3, 4, 5] }], [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }], ["link", "image"]],
+    toolbar: [["bold", "underline", "italic", "strike"], ["code-block", "blockquote"], [{ header: [1, 2, 3, 4, 5] }], [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }], "link"],
   };
   const handleSubmit = async () => {
     if (error.errTitle === "" && error.errTopic === "" && content !== "") {
