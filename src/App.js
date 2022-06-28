@@ -17,6 +17,7 @@ import EditProfile from "./pages/UserPages/Account/EditProfile";
 import ProfileOtherUserPage from "./pages/UserPages/Account/ProfileOtherUserPage";
 import CreateThread from "./pages/UserPages/CreateThread/CreateThread";
 import EditThread from "./pages/UserPages/CreateThread/EditThread";
+import TopicPage from "./pages/UserPages/Topic/TopicPage";
 
 function App() {
   return (
@@ -25,6 +26,8 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/user/topic" element={<TopicPage />} />
+        <Route path="/user/home" element={<HomeUserPage />} />
       </Route>
 
       <Route element={<AdminRoute />}>
@@ -35,7 +38,6 @@ function App() {
       </Route>
 
       <Route element={<UserRoute />}>
-        <Route path="/user/home" element={<HomeUserPage />} />
         <Route path="/user/account" element={<ProfileUserPage />} />
         <Route path="/user/account/edit" element={<EditProfile />} />
         <Route path="/user/account/other" element={<ProfileOtherUserPage />} />
