@@ -9,6 +9,7 @@ import { useEffect } from "react"
 export default function TopicPage(){
     const [ keyword, setKeyword ] = useState("")
     const [ topic, setTopic ] = useState(new Array(5).fill(false))
+    // Keterangan index = 0: Education, 1: Food&Travel, 2: Games, 3: Health, 4: Technology
     const [ trend, setTrend ] = useState("")
     const [ isFiltering, setFiltering ] = useState(false)
     const [ isAnyResult, setRes ] = useState(true)
