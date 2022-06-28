@@ -11,25 +11,36 @@ export default function TopicPage(){
     const [ topic, setTopic ] = useState(new Array(5).fill(false))
     // Keterangan index = 0: Education, 1: Food&Travel, 2: Games, 3: Health, 4: Technology
     const [ trend, setTrend ] = useState("")
-    const [ isFiltering, setFiltering ] = useState(false)
+    const [ isFiltering, setFiltering ] = useState("no")
     const [ isAnyResult, setRes ] = useState(true)
     const [ isOpen, setOpen ] = useState(false)
 
     useEffect(()=>{
-        console.log(trend)
-        topic.map((item,index) =>
-            console.log(index, item)
-        )
+        // console.log(trend)
+        // topic.map((item,index) =>
+        // console.log(index, item)
+        // )
+        // console.log(isFiltering)
+        if(topic[0]===false && topic[1]===false && topic[2]===false && topic[3]===false && topic[4]===false && trend==="" && keyword===""){
+            setFiltering("no")
+        }
+        if(keyword!=="" && isFiltering!=="yes"){
+            setFiltering("process")
+        }
     })
     const handleChange = e => {
+        setFiltering("process")
         const name = e.target.name
         const value = e.target.value
         if(name==="search"){
             setKeyword(value)
+            setTopic(topic.fill(false))
+            setTrend("")
         }
         if(name==="trend"){
             setTrend(value)
             setTopic(topic.fill(false))
+            setKeyword("")
         }
         if(name==="topic"){
             const updatedTopic = topic.map((item, index) =>
@@ -37,20 +48,61 @@ export default function TopicPage(){
             )
             setTopic(updatedTopic)
             setTrend("")
+            setKeyword("")
         }
     }
 
     const handleReset = e => {
-        setTopic({edu:false, foodtravel:false, games:false, health:false, tech:false})
-        setTrend({acc:false, thread:false})
-        setFiltering(false)
+        setTopic(topic.fill(false))
+        setTrend("")
+        setKeyword("")
+        setFiltering("no")
     }
 
     const handleSubmit = e => {
-        setFiltering(true)
-
+        e.preventDefault()
+        setFiltering("yes")
+        console.log(keyword)
         // Kalo gada hasilnya
         // setRes(false)
+    }
+
+    // passing datanya di sini yak
+    const res = () => {
+        if(isFiltering==="yes"){
+            if(isAnyResult){
+                if(trend==="acc"){ // buat filter trending acc
+                    return(
+                        <TrendAccount />
+                    )
+                }
+                else if(trend==="thread"){ // buat filter trending thread
+                    return(
+                        <Thread />
+                    )
+                }
+                else if(keyword!==""){ // buat hasil search
+                    return(
+                        <Thread />
+                    )
+                }
+                else{ // buat filter topic
+                    return(
+                        <Thread />
+                    )
+                }
+            }
+            else{ // kalo hasilnya filter/search gaada
+                return(
+                    <div className="text-md xl:text-lg text-secondary-red">No results found</div>
+                )
+            }
+        }
+        else if(isFiltering==="no"){
+            return(
+                <Thread />
+            )
+        }
     }
 
     return(
@@ -114,16 +166,17 @@ export default function TopicPage(){
                     <div className="flex justify-between lg:block w-full">
                         <BiFilter size={40} className="fill-white lg:hidden my-auto"></BiFilter>
                         <div id="search-box" className="w-full ml-2">
-                            <form action="submit">
+                            <form onSubmit={handleSubmit}>
                                 <input type="text" name="search" onChange={handleChange} value={keyword} placeholder="Search here" className="w-full py-3 px-8 bg-[#D9D9D9] rounded-lg"/>
                             </form>
                         </div>
                     </div>
                     <div className="bg-primary-grey rounded-xl w-full mt-8 p-8">
-                        <div className="text-white text-md xl:text-lg font-semibold mb-8">{isFiltering ? "Result" : "Trending Today"}</div>
-                        {isAnyResult && trend==="acc" && <TrendAccount />}
-                        {isAnyResult && trend!=="acc" && <Thread /> }
-                        {!isAnyResult && <div className="text-md xl:text-lg text-secondary-red">No results found</div>}
+                        <div className="text-white text-md xl:text-lg font-semibold mb-8">
+                        {isFiltering==="yes" && "Result"}
+                        {isFiltering==="no" && "Trending Today"}
+                        {isFiltering==="process" && "Apply your filter or search"}</div>
+                        {res()}
                     </div>
                 </div>
             </div>
