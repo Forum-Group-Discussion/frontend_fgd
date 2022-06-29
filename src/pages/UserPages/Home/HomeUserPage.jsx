@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import "./Home.css";
 import gambarProfile from "../../../assets/img/home/dashicons_games.png";
 import gambarThread from "../../../assets/img/home/image7.png";
@@ -29,6 +30,7 @@ export default function HomeUserPage() {
   const [popupReport, setPopupReport] = useState(false);
   const [threadIndex, setThreadIdex] = useState("");
   const [loading, setLoading] = useState(true);
+  let { category } = useParams()
 
   const showPopupShare = () => {
     if (popupShare === false) {
@@ -59,8 +61,8 @@ export default function HomeUserPage() {
     setThreadIdex(index);
   };
 
-  useEffect(() => {
-    axiosInstance
+  useEffect(async () => {
+    const fetchData = await axiosInstance
       // .get("https://6298cbc5f2decf5bb74c0022.mockapi.io/fgd/thread")
       .get("v1/thread")
       .then((response) => {
@@ -69,8 +71,8 @@ export default function HomeUserPage() {
       })
       .catch((error) => {
         console.log(error.response);
-        window.location.reload();
       });
+      fetchData()
   }, [dispatch]);
 
   return (
@@ -82,12 +84,24 @@ export default function HomeUserPage() {
             <div className="fixed w-1/5">
               <div id="kategori-list" className="flex absolute">
                 <ul id="kategori" className="text-center">
-                  <li>Trending Topic</li>
-                  <li>Games</li>
-                  <li>Health</li>
-                  <li>Food & Travel</li>
-                  <li>Technology</li>
-                  <li>Education</li>
+                  <Link to='/user/home/Trending'>
+                    <li>Trending Topic</li>
+                  </Link>
+                  <Link to='/user/home/Games'>
+                    <li>Games</li>
+                  </Link>
+                  <Link to='/user/home/Health'>
+                    <li>Health</li>
+                  </Link>
+                  <Link to='/user/home/Food-Travel'>
+                    <li>Food & Travel</li>
+                  </Link>
+                  <Link to='/user/home/Technology'>
+                    <li>Technology</li>
+                  </Link>
+                  <Link to='/user/home/Education'>
+                    <li>Education</li>
+                  </Link>
                 </ul>
               </div>
             </div>
@@ -145,6 +159,7 @@ export default function HomeUserPage() {
                   </div>
                   <div className="mt-4 mb-4">
                     <h3 className="font-semibold text-white tracking-[1px]">{item.title}</h3>
+                    <h3 className="text-white">{item.topic.topicName}</h3>
                   </div>
                   <div>
                     <img src={gambarThread} alt="gambar thread" />
