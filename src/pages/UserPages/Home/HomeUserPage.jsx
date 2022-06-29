@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./Home.css";
 import gambarProfile from "../../../assets/img/home/dashicons_games.png";
@@ -61,9 +61,8 @@ export default function HomeUserPage() {
     setThreadIdex(index);
   };
 
-  useEffect(async () => {
-    const fetchData = await axiosInstance
-      // .get("https://6298cbc5f2decf5bb74c0022.mockapi.io/fgd/thread")
+  const fetchData = useCallback(() => {
+    const response = axiosInstance
       .get("v1/thread")
       .then((response) => {
         dispatch(DATA_THREAD(response.data.data));
@@ -72,8 +71,12 @@ export default function HomeUserPage() {
       .catch((error) => {
         console.log(error.response);
       });
-      fetchData()
-  }, [dispatch]);
+    return response;
+  }, [dispatch])
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   return (
     <>
@@ -159,7 +162,6 @@ export default function HomeUserPage() {
                   </div>
                   <div className="mt-4 mb-4">
                     <h3 className="font-semibold text-white tracking-[1px]">{item.title}</h3>
-                    <h3 className="text-white">{item.topic.topicName}</h3>
                   </div>
                   <div>
                     <img src={gambarThread} alt="gambar thread" />
