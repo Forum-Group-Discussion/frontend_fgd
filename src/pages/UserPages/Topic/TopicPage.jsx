@@ -9,7 +9,7 @@ import { useEffect } from "react"
 export default function TopicPage(){
     const [ keyword, setKeyword ] = useState("")
     const [ topic, setTopic ] = useState(new Array(5).fill(false))
-    // Keterangan index = 0: Education, 1: Food&Travel, 2: Games, 3: Health, 4: Technology
+    // Keterangan index = 0: Games, 1: Health, 2: Food&Travel, 3: Technology, 4: Education
     const [ trend, setTrend ] = useState("")
     const [ isFiltering, setFiltering ] = useState("no")
     const [ isAnyResult, setRes ] = useState(true)
@@ -122,24 +122,24 @@ export default function TopicPage(){
                                 <div className="mb-4 text-md xl:text-lg font-semibold">Topic Theme</div>
                                 <div className="flex flex-col gap-3 text-sm xl:text-md">
                                     <div className="flex items-center">
-                                        <input type="checkbox" id="edu" name="topic" value="0" checked={topic[0]===true} onChange={handleChange} className="accent-secondary-orange mr-2 w-4 h-4 rounded cursor-pointer"/>
-                                        <label htmlFor="edu"> Education</label>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <input type="checkbox" id="foodtravel" name="topic" value="1" checked={topic[1]===true} onChange={handleChange} className="accent-secondary-orange mr-2 w-4 h-4 rounded cursor-pointer"/>
-                                        <label htmlFor="foodtravel"> Food & Travel</label>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <input type="checkbox" id="games" name="topic" value="2" checked={topic[2]===true} onChange={handleChange} className="accent-secondary-orange mr-2 w-4 h-4 rounded cursor-pointer"/>
+                                        <input type="checkbox" id="games" name="topic" value="2" checked={topic[1]===true} onChange={handleChange} className="accent-secondary-orange mr-2 w-4 h-4 rounded cursor-pointer"/>
                                         <label htmlFor="games"> Games</label>
                                     </div>
                                     <div className="flex items-center">
-                                        <input type="checkbox" id="health" name="topic" value="3" checked={topic[3]===true} onChange={handleChange} className="accent-secondary-orange mr-2 w-4 h-4 rounded cursor-pointer"/>
+                                        <input type="checkbox" id="health" name="topic" value="3" checked={topic[2]===true} onChange={handleChange} className="accent-secondary-orange mr-2 w-4 h-4 rounded cursor-pointer"/>
                                         <label htmlFor="health"> Health</label>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <input type="checkbox" id="foodtravel" name="topic" value="1" checked={topic[3]===true} onChange={handleChange} className="accent-secondary-orange mr-2 w-4 h-4 rounded cursor-pointer"/>
+                                        <label htmlFor="foodtravel"> Food & Travel</label>
                                     </div>
                                     <div className="flex items-center">
                                         <input type="checkbox" id="tech" name="topic" value="4" checked={topic[4]===true} onChange={handleChange} className="accent-secondary-orange mr-2 w-4 h-4 rounded cursor-pointer"/>
                                         <label htmlFor="tech"> Technology</label>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <input type="checkbox" id="edu" name="topic" value="0" checked={topic[5]===true} onChange={handleChange} className="accent-secondary-orange mr-2 w-4 h-4 rounded cursor-pointer"/>
+                                        <label htmlFor="edu"> Education</label>
                                     </div>
                                 </div>
                             </div>
