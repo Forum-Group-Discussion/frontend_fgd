@@ -36,6 +36,7 @@ function App() {
 
       <Route element={<UserRoute />}>
         <Route path="/user/home" element={<HomeUserPage />} />
+        {/* <Route path="/user/home/:category" element={<HomeUserPage />} /> */}
         <Route path="/user/account" element={<ProfileUserPage />} />
         <Route path="/user/account/edit" element={<EditProfile />} />
         <Route path="/user/account/other" element={<ProfileOtherUserPage />} />
