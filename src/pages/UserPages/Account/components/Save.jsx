@@ -1,4 +1,3 @@
-
 import gambarProfile from "../../../../assets/img/home/dashicons_games.png";
 import gambarThread from "../../../../assets/img/home/image7.png";
 import PopupShare from "../../Home/components/PopupShare.jsx";
@@ -9,13 +8,69 @@ import { thumbsDown } from "react-icons-kit/feather/thumbsDown";
 import { bookmark } from 'react-icons-kit/feather/bookmark'
 import { commentingO } from "react-icons-kit/fa/commentingO";
 import { moreVertical } from 'react-icons-kit/feather/moreVertical'
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
-export default function Activity(){
+export default function Save(){
     const [more, setMore] = useState(false)
     const [popupShare, setPopupShare] = useState(false)
     const [popupReport, setPopupReport] = useState(false)
-    const [action, setAction] = useState("Liked")
+    const [stat, setStat] = useState({like:105500, dislike:99900, comment:100})
+    const [statconv, setStatconv] = useState({like:"", dislike:"", comment:""})
+
+    useEffect(()=>{
+        let lk = stat.like
+        let dis = stat.dislike
+        let cmt = stat.comment
+        if(stat.like>=1000){
+            lk = lk/1000
+            lk = lk.toFixed(1)
+        }
+        if(stat.dislike>=1000){
+            dis = dis/1000
+            dis = dis.toFixed(1)
+        }
+        if(stat.comment>=1000){
+            cmt = cmt/1000
+            cmt = cmt.toFixed(1)
+        }
+
+        if(stat.like>=1000){
+            if(stat.dislike>=1000){
+                if(stat.comment>=1000){
+                    setStatconv({like:lk+"k", dislike:dis+"k",comment:cmt+"k"})
+                }
+                else{
+                    setStatconv({like:lk+"k", dislike:dis+"k",comment:cmt})
+                }
+            }
+            else{
+                if(stat.comment>=1000){
+                    setStatconv({like:lk+"k", dislike:dis,comment:cmt+"k"})
+                }
+                else{
+                    setStatconv({like:lk+"k", dislike:dis,comment:cmt})
+                }
+            }
+        }
+        else{
+            if(stat.dislike>=1000){
+                if(stat.comment>=1000){
+                    setStatconv({like:lk, dislike:dis+"k",comment:cmt+"k"})
+                }
+                else{
+                    setStatconv({like:lk, dislike:dis+"k",comment:cmt})
+                }
+            }
+            else{
+                if(stat.comment>=1000){
+                    setStatconv({like:lk, dislike:dis,comment:cmt+"k"})
+                }
+                else{
+                    setStatconv({like:lk, dislike:dis,comment:cmt})
+                }
+            }
+        }
+    }, [stat])
 
     const showPopupShare = () => {
         if (popupShare === false) {
@@ -51,11 +106,7 @@ export default function Activity(){
     return(
         <>
             <div id="thread" className="max-w-[1000px] mx-auto" data-aos="zoom-in">
-                <div id="user-action" className="inline-flex gap-5 mb-5">
-                    <Icon icon={thumbsUp} size={20} style={{color:"white"}} />
-                    <div className="text-sm sm:text-lg md:text-xl text-white">Berry {action} on This Thread</div>
-                </div>
-                <div id="thread-box" className="flex border-t border-[#d9d9d91a]">
+                <div id="thread-box" className="flex border-[#d9d9d91a]">
                     <div id="thread-header" className="flex">
                         <div className="mr-2">
                             <img src={gambarProfile} alt="gambar profile" />
@@ -80,15 +131,15 @@ export default function Activity(){
                 <div id="thread-icon" className="flex flex-1 justify-between mt-5">
                     <div>
                         <Icon icon={thumbsUp} />
-                        <span className="text-sm sm:text-lg text-white">100K</span>
+                        <span className="text-sm sm:text-lg text-white">{statconv.like}</span>
                     </div>
                     <div>
                         <Icon icon={thumbsDown} />
-                        <span className="text-sm sm:text-lg text-white">100K</span>
+                        <span className="text-sm sm:text-lg text-white">{statconv.dislike}</span>
                     </div>
                     <div>
                         <Icon icon={commentingO} />
-                        <span className="text-sm sm:text-lg text-white">100K</span>
+                        <span className="text-sm sm:text-lg text-white">{statconv.comment}</span>
                     </div>
                     <div>
                         <Icon icon={bookmark} />

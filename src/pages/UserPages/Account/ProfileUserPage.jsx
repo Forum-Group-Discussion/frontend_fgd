@@ -1,5 +1,6 @@
 import Navbar from "../components/Navbar";
 import Thread from "./components/Thread";
+import Save from "./components/Save";
 import Activity from "./components/Activity";
 import "./Profile.css"
 import { BsCameraFill } from "react-icons/bs"
@@ -114,23 +115,31 @@ export default function ProfileUserPage(){
                     </div>
                 </div>
                 <div id="acc-button" className="my-[5%] mx-auto md:text-xl font-medium max-w-[500px]">
-                    {choose === "thread"
-                    ? 
+                    { choose === "thread" &&
                         <div className="flex justify-around">
                             <button onClick={handleAction} value="thread" className="text-white">Thread</button>
                             <button onClick={handleAction} value="activity" className="text-gray-400">Activity</button>
+                            <button onClick={handleAction} value="saved" className="text-gray-400">Saved</button>
                         </div>
-                    :
+                    }
+                    { choose === "activity" &&
                         <div className="flex justify-around">
                             <button onClick={handleAction} value="thread" className="text-gray-400">Thread</button>
                             <button onClick={handleAction} value="activity" className="text-white">Activity</button>
+                            <button onClick={handleAction} value="saved" className="text-gray-400">Saved</button>
+                        </div>
+                    }
+                    { choose === "saved" &&
+                        <div className="flex justify-around">
+                            <button onClick={handleAction} value="thread" className="text-gray-400">Thread</button>
+                            <button onClick={handleAction} value="activity" className="text-gray-400">Activity</button>
+                            <button onClick={handleAction} value="saved" className="text-white">Saved</button>
                         </div>
                     }
                 </div>
-                {choose === "thread" 
-                ? <Thread />
-                : <Activity />
-                }
+                { choose === "thread" && <Thread /> }
+                { choose === "activity" && <Activity /> }
+                { choose === "saved" && <Save /> }
             </div>
         </section>
         </>
