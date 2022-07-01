@@ -1,6 +1,6 @@
 import Profile from "../../../../assets/img/account/profile.png"
 import gambarThread from "../../../../assets/img/home/image7.png";
-import PopupShare from "./PopUpShare.jsx";
+import PopupShare from "../../Home/components/PopupShare.jsx";
 import { Icon } from "react-icons-kit";
 import { thumbsUp } from "react-icons-kit/feather/thumbsUp";
 import { thumbsDown } from "react-icons-kit/feather/thumbsDown";
@@ -112,7 +112,7 @@ export default function Thread(){
                     <div onClick={showMoreMenu}>
                         <Icon icon={moreVertical} />
                         <div className={more ? 'more active' : 'more'}>
-                            <Link to="/user/edit"><span className="cursor-pointer">Edit</span></Link>
+                            <Link to="/user/edit"><div className="cursor-pointer">Edit</div></Link>
                             <span className="cursor-pointer" onClick={showPopupShare}>Share</span>
                             <span className="cursor-pointer" onClick={showPopupDelete}>Delete</span>
                         </div>

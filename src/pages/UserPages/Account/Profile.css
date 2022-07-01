@@ -58,7 +58,7 @@
     border-radius: 6px;
 }
 
-#account #thread-icon .more.active span {
+#account #thread-icon .more.active span, #account #thread-icon .more.active a {
     letter-spacing: 1px;
     padding: 20px 80px;
     text-align: center;
