@@ -17,9 +17,9 @@ function TrendingSlider() {
     <div className="sliderTrending">
       <motion.div className="carousel" ref={carousel}>
         <motion.div drag="x" dragConstraints={{ right: 0, left: -width }} className="inner-carousel">
-          {trendingPicture.map((data) => {
+          {trendingPicture.map((data, index) => {
             return (
-              <motion.div className="item mr-4">
+              <motion.div key={index} className="item mr-4">
                 <img src={data} alt="gambar" />
                 <h5 className="text-center text-white mt-1">Johny</h5>
               </motion.div>

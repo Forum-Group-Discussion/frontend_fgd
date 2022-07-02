@@ -1,6 +1,7 @@
 import axios from "axios";
 import CONST from "../utils/constants";
 import { getToken } from "../utils/helpers";
+import { errorHandler, requestHandler, succesHandler } from "./interceptors";
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -22,7 +23,11 @@ const isLocalDev = (isDev) => {
 
 const axiosInstance = isLocalDev(isDev);
 
+axiosInstance.interceptors.request.use((request) => requestHandler(request));
+
+axiosInstance.interceptors.response.use(
+  (response) => succesHandler(response),
+  (error) => errorHandler(error)
+)
+
 export default axiosInstance
-
-
-// export const axiosInstance = axios.create(config);

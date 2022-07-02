@@ -7,7 +7,7 @@ import "./Profile.css"
 import { BsCameraFill } from "react-icons/bs"
 import Banner from "../../../assets/img/account/banner.png"
 import Profile from "../../../assets/img/account/profile.png"
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom"
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -19,88 +19,76 @@ export default function ProfileUserPage(){
     const [res, setRes] = useState(true)
     const [showDetail, setShowDetail] = useState(false)
 
-    useEffect(() => {
-        AOS.init();
-        AOS.refresh();
-    }, []);
+  useEffect(() => {
+    AOS.init();
+    AOS.refresh();
+  }, []);
 
-    useEffect(()=>{
-        let ing = stat.following
-        let ers = stat.followers
-        let thr = stat.threads
-        if(stat.following>=1000){
-            ing = ing/1000
-            ing = ing.toFixed(1)
-            console.log(typeof ing, ing)
-            
-        }
-        else{
-            setStatconv({following:stat.following})
-        }
-        if(stat.followers>=1000){
-            ers = ers/1000
-            ers = ers.toFixed(1)
-            setStatconv({followers:toString(ers)+"k"})
-        }
-        else{
-            setStatconv({followers:stat.followers})
-        }
-        if(stat.threads>=1000){
-            thr = thr/1000
-            thr = thr.toFixed(1)
-            setStatconv({threads:thr+"k"})
-        }
-        else{
-            setStatconv({threads:stat.threads})
-        }
+  useEffect(() => {
+    let ing = stat.following;
+    let ers = stat.followers;
+    let thr = stat.threads;
+    if (stat.following >= 1000) {
+      ing = ing / 1000;
+      ing = ing.toFixed(1);
+    } else {
+      setStatconv({ following: stat.following });
+    }
+    if (stat.followers >= 1000) {
+      ers = ers / 1000;
+      ers = ers.toFixed(1);
+      setStatconv({ followers: toString(ers) + "k" });
+    } else {
+      setStatconv({ followers: stat.followers });
+    }
+    if (stat.threads >= 1000) {
+      thr = thr / 1000;
+      thr = thr.toFixed(1);
+      setStatconv({ threads: thr + "k" });
+    } else {
+      setStatconv({ threads: stat.threads });
+    }
 
-        if(stat.following>=1000){
-            if(stat.followers>=1000){
-                if(stat.threads>=1000){
-                    setStatconv({following:ing+"k", followers:ers+"k",threads:thr+"k"})
-                }
-                else{
-                    setStatconv({following:ing+"k", followers:ers+"k",threads:thr})
-                }
-            }
-            else{
-                if(stat.threads>=1000){
-                    setStatconv({following:ing+"k", followers:ers,threads:thr+"k"})
-                }
-                else{
-                    setStatconv({following:ing+"k", followers:ers,threads:thr})
-                }
-            }
+    if (stat.following >= 1000) {
+      if (stat.followers >= 1000) {
+        if (stat.threads >= 1000) {
+          setStatconv({ following: ing + "k", followers: ers + "k", threads: thr + "k" });
+        } else {
+          setStatconv({ following: ing + "k", followers: ers + "k", threads: thr });
         }
-        else{
-            if(stat.followers>=1000){
-                if(stat.threads>=1000){
-                    setStatconv({following:ing, followers:ers+"k",threads:thr+"k"})
-                }
-                else{
-                    setStatconv({following:ing, followers:ers+"k",threads:thr})
-                }
-            }
-            else{
-                if(stat.threads>=1000){
-                    setStatconv({following:ing, followers:ers,threads:thr+"k"})
-                }
-                else{
-                    setStatconv({following:ing, followers:ers,threads:thr})
-                }
-            }
+      } else {
+        if (stat.threads >= 1000) {
+          setStatconv({ following: ing + "k", followers: ers, threads: thr + "k" });
+        } else {
+          setStatconv({ following: ing + "k", followers: ers, threads: thr });
         }
-    }, [stat])
+      }
+    } else {
+      if (stat.followers >= 1000) {
+        if (stat.threads >= 1000) {
+          setStatconv({ following: ing, followers: ers + "k", threads: thr + "k" });
+        } else {
+          setStatconv({ following: ing, followers: ers + "k", threads: thr });
+        }
+      } else {
+        if (stat.threads >= 1000) {
+          setStatconv({ following: ing, followers: ers, threads: thr + "k" });
+        } else {
+          setStatconv({ following: ing, followers: ers, threads: thr });
+        }
+      }
+    }
+  }, [stat]);
+
+  const handleAction = (e) => {
+    setChoose(e.target.value);
+  };
     
     const handleShowDetail = () => {
         setShowDetail(!showDetail);
     }
     const handleCloseDetail = () => {
         setShowDetail(false);
-    }
-
-    const handleAction = (e) => {
-        setChoose(e.target.value)
     }
 
     const chooseFunction = () => {
@@ -211,8 +199,8 @@ export default function ProfileUserPage(){
                 </div>
                 { chooseFunction() }
                 {showDetail && <FollowStats onCancel={handleCloseDetail}/>}
-            </div>
+          </div>
         </section>
-        </>
-    )
+      </>
+   );
 }
