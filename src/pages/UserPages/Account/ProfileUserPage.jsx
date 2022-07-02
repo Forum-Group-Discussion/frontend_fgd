@@ -2,12 +2,12 @@ import Navbar from "../components/Navbar";
 import Thread from "./components/Thread";
 import Save from "./components/Save";
 import Activity from "./components/Activity";
+import FollowStats from "./components/FollowDetail";
 import "./Profile.css"
 import { BsCameraFill } from "react-icons/bs"
 import Banner from "../../../assets/img/account/banner.png"
 import Profile from "../../../assets/img/account/profile.png"
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom"
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -16,6 +16,8 @@ export default function ProfileUserPage(){
     const [stat, setStat] = useState({following:105500, followers:99900, threads:100})
     const [statconv, setStatconv] = useState({following:"", followers:"", threads:""})
     const [choose, setChoose] = useState("thread")
+    const [res, setRes] = useState(true)
+    const [showDetail, setShowDetail] = useState(false)
 
     useEffect(() => {
         AOS.init();
@@ -90,8 +92,78 @@ export default function ProfileUserPage(){
         }
     }, [stat])
     
+    const handleShowDetail = () => {
+        setShowDetail(!showDetail);
+    }
+    const handleCloseDetail = () => {
+        setShowDetail(false);
+    }
+
     const handleAction = (e) => {
         setChoose(e.target.value)
+    }
+
+    const chooseFunction = () => {
+        if(choose==="thread"){
+            // get threadnya
+            // kalo gada hasilnya uncomment ini yaa
+            // setRes(false)
+            if(res){
+                return(
+                    <Thread />
+                )
+            }
+            else{
+                return(
+                    <div className="border border-solid border-[#d9d9d91a] rounded-xl h-60 py-10">
+                        <div className="text-md xl:text-lg text-grey text-center mb-10">You don't have a thread yet</div>
+                        <div className="flex w-full justify-center">
+                            <Link to="/user/create" className="px-8 py-4 bg-secondary-orange rounded-xl text-white text-md xl:text-lg">Create Here</Link>
+                        </div>
+                    </div>
+                )
+            }
+        }
+        else if(choose==="activity"){
+            // get activity
+            // kalo gada hasilnya uncomment ini yaa
+            // setRes(false)
+            if(res){
+                return(
+                    <Activity />
+                )
+            }
+            else{
+                return(
+                    <div className="border border-solid border-[#d9d9d91a] rounded-xl h-60 py-10">
+                        <div className="text-md xl:text-lg text-grey text-center mb-10">You don't have any activity yet</div>
+                        <div className="flex w-full justify-center">
+                            <Link to="/user/home" className="px-8 py-4 bg-secondary-orange rounded-xl text-white text-md xl:text-lg">Go Home</Link>
+                        </div>
+                    </div>
+                )
+            }
+        }
+        else if(choose==="saved"){
+            // get thread yg disave
+            // kalo gada hasilnya uncomment ini yaa
+            // setRes(false)
+            if(res){
+                return(
+                    <Save />
+                )
+            }
+            else{
+                return(
+                    <div className="border border-solid border-[#d9d9d91a] rounded-xl h-60 py-10">
+                        <div className="text-md xl:text-lg text-grey text-center mb-10">You don't have a saved thread yet</div>
+                        <div className="flex w-full justify-center">
+                            <Link to="/user/home" className="px-8 py-4 bg-secondary-orange rounded-xl text-white text-md xl:text-lg">Go Home</Link>
+                        </div>
+                    </div>
+                )
+            }
+        }
     }
     return(
         <>
@@ -108,8 +180,8 @@ export default function ProfileUserPage(){
                         <div id="username" className="mt-[-8%] sm:mt-[0%] text-xl sm:text-3xl md:text-4xl font-bold">Berry burrie</div>
                         <div id="bio" className="text-md md:text-2xl">Hello Found</div>
                         <div id="stat" className="mt-2 mb-3 sm:mt-0 text-sm md:text-lg inline-flex gap-3 sm:gap-10 text-gray-400">
-                            <div id="stat-following">{statconv.following} Following</div>
-                            <div id="stat-followers">{statconv.followers} Followers</div>
+                            <button id="stat-following" onClick={handleShowDetail}>{statconv.following} Following</button>
+                            <button id="stat-followers" onClick={handleShowDetail}>{statconv.followers} Followers</button>
                             <div id="stat-threads">{statconv.threads} Threads</div>
                         </div>
                     </div>
@@ -137,9 +209,8 @@ export default function ProfileUserPage(){
                         </div>
                     }
                 </div>
-                { choose === "thread" && <Thread /> }
-                { choose === "activity" && <Activity /> }
-                { choose === "saved" && <Save /> }
+                { chooseFunction() }
+                {showDetail && <FollowStats onCancel={handleCloseDetail}/>}
             </div>
         </section>
         </>

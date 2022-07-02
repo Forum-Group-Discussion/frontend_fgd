@@ -57,11 +57,11 @@ const Navbar = () => {
             <button onClick={handleClick} className="p-4 text-lg">Account</button>
             <div id="dropdown" className={ open ? "absolute z-10 bg-primary-black divide-y divide-gray-100 rounded shadow w-44" : "absolute z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44"}>
               <ul className="py-1 text-sm text-white border-solid border-2 border-gray-500 rounded">
-                <li>
-                  <a href="/user/account" className="block px-4 py-2 hover:bg-secondary-orange hover:text-white">Profile</a>
+                <li className="hover:bg-secondary-orange">
+                  <a href="/user/account" className="block px-4 py-2">Profile</a>
                 </li>
-                <li>
-                  <button onClick={handleLogOut} className="block px-4 py-2 hover:bg-secondary-orange hover:text-white">Log Out</button>
+                <li className="hover:bg-secondary-orange">
+                  <button onClick={handleLogOut} className="block px-4 py-2 w-full text-left">Log Out</button>
                 </li>
               </ul>
             </div>
