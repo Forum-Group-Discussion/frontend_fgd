@@ -176,8 +176,8 @@ export default function ProfileOtherUserPage(){
                         <div id="username" className="mt-[-8%] sm:mt-[0%] text-xl sm:text-3xl md:text-4xl font-bold">Berry burrie</div>
                         <div id="bio" className="text-md md:text-2xl">Hello Found</div>
                         <div id="stat" className="mt-2 mb-3 sm:mt-0 text-sm md:text-lg inline-flex gap-3 sm:gap-10 text-gray-400">
-                            <button id="stat-following" onClick={handleShowFollowing}>{statconv.following} Following</button>
-                            <button id="stat-followers" onClick={handleShowFollowers}>{statconv.followers} Followers</button>
+                            <button id="stat-following" onClick={handleShowFollowing} className="text-left">{statconv.following} Following</button>
+                            <button id="stat-followers" onClick={handleShowFollowers} className="text-left">{statconv.followers} Followers</button>
                             <div id="stat-threads">{statconv.threads} Threads</div>
                         </div>
                     </div>
