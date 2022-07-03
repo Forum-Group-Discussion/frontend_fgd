@@ -48,21 +48,72 @@
     display: none;
 }
 
-#account #thread-icon .more.active {
+#account #thread-icon .more-4.active {
     display: flex;
     flex-direction: column;
     color: white;
     position: absolute;
+    top: -350%;
     right: 0;
     background-color: #222834;
     border-radius: 6px;
 }
 
-#account #thread-icon .more.active span, #account #thread-icon .more.active a {
+#account #thread-icon .more-4.active span, #account #thread-icon .more-4.active a {
     letter-spacing: 1px;
-    padding: 20px 80px;
+    padding: 10px 40px;
     text-align: center;
+    font-size: 12px;
     font-weight: 700;
+}
+
+@media screen and (min-width: 400px) {
+    #account #thread #thread-icon .more-4.active {
+        top: -700%;
+    }
+}
+@media screen and (min-width: 481px) {
+    #account #thread #thread-icon .more-4.active {
+        top: -750%;
+    }
+    #account #thread-icon .more-4.active span, #account #thread-icon .more-4.active a {
+        padding: 15px 60px;
+        font-size: 16px;
+    }
+}
+
+#account #thread-icon .more-3.active {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    position: absolute;
+    top: -250%;
+    right: 0;
+    background-color: #222834;
+    border-radius: 6px;
+}
+
+#account #thread-icon .more-3.active span, #account #thread-icon .more-3.active a {
+    letter-spacing: 1px;
+    padding: 10px 40px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+@media screen and (min-width: 400px) {
+    #account #thread #thread-icon .more-3.active {
+        top: -550%;
+    }
+}
+@media screen and (min-width: 481px) {
+    #account #thread #thread-icon .more-3.active {
+        top: -600%;
+    }
+    #account #thread-icon .more-3.active span, #account #thread-icon .more-3.active a {
+        padding: 15px 60px;
+        font-size: 16px;
+    }
 }
 
 #account .popupShare, #account .popupReport, #account .popupProfPic {

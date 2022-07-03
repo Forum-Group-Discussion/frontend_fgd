@@ -3,30 +3,37 @@ import { IoIosClose } from "react-icons/io"
 
 const data = [
     {
+        id: 1,
         name: "Andrew Alfred",
         img: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=80"
     },
     {
+        id: 2,
         name: "Aisha Houston",
         img: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=80",
     },
     {
+        id: 3,
         name: "Anna White",
         img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=80",
     },
     {
+        id: 4,
         name: "Andy Flint",
         img: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=80",
     },
     {
+        id:5,
         name: "Bob Alfred",
         img: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=80",
     },
     {
+        id:6,
         name: "Bianca Houston",
         img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=80",
     },
     {
+        id:7,
         name: "Bert Flint",
         img: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=80"
     }
@@ -49,7 +56,7 @@ export default function Following({onCancel, page}){
                             </div>
                             <div id="list-account" className="">
                                 {data.map(item => (
-                                <div className="flex justify-between p-4">
+                                <div key={item.id} className="flex justify-between p-4">
                                     <button id="account" onClick={otherProfile} className="flex items-center gap-4">
                                         <img id="profile-pic" className="w-12 h-12 rounded-full" src={item.img} />
                                         <strong id="profile-username" className="text-sm font-medium text-slate-900">{item.name}</strong>
