@@ -2,7 +2,8 @@ import Navbar from "../components/Navbar";
 import Thread from "./components/Thread";
 import Save from "./components/Save";
 import Activity from "./components/Activity";
-import FollowStats from "./components/FollowDetail";
+import Followers from "./components/Followers";
+import Following from "./components/Following";
 import "./Profile.css"
 import { BsCameraFill } from "react-icons/bs"
 import Banner from "../../../assets/img/account/banner.png"
@@ -17,78 +18,96 @@ export default function ProfileUserPage(){
     const [statconv, setStatconv] = useState({following:"", followers:"", threads:""})
     const [choose, setChoose] = useState("thread")
     const [res, setRes] = useState(true)
-    const [showDetail, setShowDetail] = useState(false)
+    const [showFollowing, setShowFollowing] = useState(false)
+    const [showFollowers, setShowFollowers] = useState(false)
+    const page = "profile"
 
-  useEffect(() => {
-    AOS.init();
-    AOS.refresh();
-  }, []);
+    useEffect(() => {
+        AOS.init();
+        AOS.refresh();
+    }, []);
 
-  useEffect(() => {
-    let ing = stat.following;
-    let ers = stat.followers;
-    let thr = stat.threads;
-    if (stat.following >= 1000) {
-      ing = ing / 1000;
-      ing = ing.toFixed(1);
-    } else {
-      setStatconv({ following: stat.following });
-    }
-    if (stat.followers >= 1000) {
-      ers = ers / 1000;
-      ers = ers.toFixed(1);
-      setStatconv({ followers: toString(ers) + "k" });
-    } else {
-      setStatconv({ followers: stat.followers });
-    }
-    if (stat.threads >= 1000) {
-      thr = thr / 1000;
-      thr = thr.toFixed(1);
-      setStatconv({ threads: thr + "k" });
-    } else {
-      setStatconv({ threads: stat.threads });
-    }
+    useEffect(() => {
+        let ing = stat.following;
+        let ers = stat.followers;
+        let thr = stat.threads;
+        if (stat.following >= 1000) {
+            ing = ing / 1000;
+            ing = ing.toFixed(1);
+        } 
+        else {
+            setStatconv({ following: stat.following });
+        }
+        if (stat.followers >= 1000) {
+            ers = ers / 1000;
+            ers = ers.toFixed(1);
+            setStatconv({ followers: toString(ers) + "k" });
+        } 
+        else {
+            setStatconv({ followers: stat.followers });
+        }
+        if (stat.threads >= 1000) {
+            thr = thr / 1000;
+            thr = thr.toFixed(1);
+            setStatconv({ threads: thr + "k" });
+        } 
+        else {
+            setStatconv({ threads: stat.threads });
+        }
 
-    if (stat.following >= 1000) {
-      if (stat.followers >= 1000) {
-        if (stat.threads >= 1000) {
-          setStatconv({ following: ing + "k", followers: ers + "k", threads: thr + "k" });
-        } else {
-          setStatconv({ following: ing + "k", followers: ers + "k", threads: thr });
+        if (stat.following >= 1000) {
+            if (stat.followers >= 1000) {
+                if (stat.threads >= 1000) {
+                    setStatconv({ following: ing + "k", followers: ers + "k", threads: thr + "k" });
+                } 
+                else {
+                    setStatconv({ following: ing + "k", followers: ers + "k", threads: thr });
+                }
+            } 
+            else {
+                if (stat.threads >= 1000) {
+                    setStatconv({ following: ing + "k", followers: ers, threads: thr + "k" });
+                } 
+                else {
+                    setStatconv({ following: ing + "k", followers: ers, threads: thr });
+                }
+            }
+        } 
+        else {
+            if (stat.followers >= 1000) {
+                if (stat.threads >= 1000) {
+                    setStatconv({ following: ing, followers: ers + "k", threads: thr + "k" });
+                } 
+                else {
+                    setStatconv({ following: ing, followers: ers + "k", threads: thr });
+                }
+            } 
+            else {
+                if (stat.threads >= 1000) {
+                    setStatconv({ following: ing, followers: ers, threads: thr + "k" });
+                } 
+                else {
+                    setStatconv({ following: ing, followers: ers, threads: thr });
+                }
+            }
         }
-      } else {
-        if (stat.threads >= 1000) {
-          setStatconv({ following: ing + "k", followers: ers, threads: thr + "k" });
-        } else {
-          setStatconv({ following: ing + "k", followers: ers, threads: thr });
-        }
-      }
-    } else {
-      if (stat.followers >= 1000) {
-        if (stat.threads >= 1000) {
-          setStatconv({ following: ing, followers: ers + "k", threads: thr + "k" });
-        } else {
-          setStatconv({ following: ing, followers: ers + "k", threads: thr });
-        }
-      } else {
-        if (stat.threads >= 1000) {
-          setStatconv({ following: ing, followers: ers, threads: thr + "k" });
-        } else {
-          setStatconv({ following: ing, followers: ers, threads: thr });
-        }
-      }
-    }
-  }, [stat]);
+    }, [stat]);
 
-  const handleAction = (e) => {
-    setChoose(e.target.value);
-  };
+    const handleAction = (e) => {
+        setChoose(e.target.value);
+    };
     
-    const handleShowDetail = () => {
-        setShowDetail(!showDetail);
+    const handleShowFollowing = () => {
+        setShowFollowing(!showFollowing);
     }
-    const handleCloseDetail = () => {
-        setShowDetail(false);
+    const handleCloseFollowing = () => {
+        setShowFollowing(false);
+    }
+    const handleShowFollowers = () => {
+        setShowFollowers(!showFollowers);
+    }
+    const handleCloseFollowers = () => {
+        setShowFollowers(false);
     }
 
     const chooseFunction = () => {
@@ -168,8 +187,8 @@ export default function ProfileUserPage(){
                         <div id="username" className="mt-[-8%] sm:mt-[0%] text-xl sm:text-3xl md:text-4xl font-bold">Berry burrie</div>
                         <div id="bio" className="text-md md:text-2xl">Hello Found</div>
                         <div id="stat" className="mt-2 mb-3 sm:mt-0 text-sm md:text-lg inline-flex gap-3 sm:gap-10 text-gray-400">
-                            <button id="stat-following" onClick={handleShowDetail}>{statconv.following} Following</button>
-                            <button id="stat-followers" onClick={handleShowDetail}>{statconv.followers} Followers</button>
+                            <button id="stat-following" onClick={handleShowFollowing}>{statconv.following} Following</button>
+                            <button id="stat-followers" onClick={handleShowFollowers}>{statconv.followers} Followers</button>
                             <div id="stat-threads">{statconv.threads} Threads</div>
                         </div>
                     </div>
@@ -198,7 +217,8 @@ export default function ProfileUserPage(){
                     }
                 </div>
                 { chooseFunction() }
-                {showDetail && <FollowStats onCancel={handleCloseDetail}/>}
+                {showFollowers && <Followers onCancel={handleCloseFollowers} page={page}/>}
+                {showFollowing && <Following onCancel={handleCloseFollowing} page={page}/>}
           </div>
         </section>
       </>

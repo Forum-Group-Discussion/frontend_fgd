@@ -1,7 +1,8 @@
 import Navbar from "../components/Navbar";
 import Thread from "./components/Thread";
 import Activity from "./components/Activity";
-import FollowStats from "./components/FollowDetail";
+import Followers from "./components/Followers";
+import Following from "./components/Following";
 import "./Profile.css"
 import Banner from "../../../assets/img/account/banner.png"
 import Profile from "../../../assets/img/account/profile.png"
@@ -16,7 +17,9 @@ export default function ProfileOtherUserPage(){
     const [choose, setChoose] = useState("thread")
     const [follow, setFollow] = useState(true)
     const [res, setRes] = useState(true)
-    const [showDetail, setShowDetail] = useState(false)
+    const [showFollowing, setShowFollowing] = useState(false)
+    const [showFollowers, setShowFollowers] = useState(false)
+    const page = "other"
 
     useEffect(() => {
         AOS.init();
@@ -91,11 +94,17 @@ export default function ProfileOtherUserPage(){
         }
     }, [stat])
     
-    const handleShowDetail = () => {
-        setShowDetail(!showDetail);
+    const handleShowFollowing = () => {
+        setShowFollowing(!showFollowing);
     }
-    const handleCloseDetail = () => {
-        setShowDetail(false);
+    const handleCloseFollowing = () => {
+        setShowFollowing(false);
+    }
+    const handleShowFollowers = () => {
+        setShowFollowers(!showFollowers);
+    }
+    const handleCloseFollowers = () => {
+        setShowFollowers(false);
     }
 
     const handleAction = e => {
@@ -167,8 +176,8 @@ export default function ProfileOtherUserPage(){
                         <div id="username" className="mt-[-8%] sm:mt-[0%] text-xl sm:text-3xl md:text-4xl font-bold">Berry burrie</div>
                         <div id="bio" className="text-md md:text-2xl">Hello Found</div>
                         <div id="stat" className="mt-2 mb-3 sm:mt-0 text-sm md:text-lg inline-flex gap-3 sm:gap-10 text-gray-400">
-                            <button id="stat-following" onClick={handleShowDetail}>{statconv.following} Following</button>
-                            <button id="stat-followers" onClick={handleShowDetail}>{statconv.followers} Followers</button>
+                            <button id="stat-following" onClick={handleShowFollowing}>{statconv.following} Following</button>
+                            <button id="stat-followers" onClick={handleShowFollowers}>{statconv.followers} Followers</button>
                             <div id="stat-threads">{statconv.threads} Threads</div>
                         </div>
                     </div>
@@ -188,7 +197,8 @@ export default function ProfileOtherUserPage(){
                     }
                 </div>
                 { chooseFunction() }
-                {showDetail && <FollowStats onCancel={handleCloseDetail}/>}
+                {showFollowers && <Followers onCancel={handleCloseFollowers} page={page}/>}
+                {showFollowing && <Following onCancel={handleCloseFollowing} page={page}/>}
             </div>
         </section>
         </>
