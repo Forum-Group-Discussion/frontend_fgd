@@ -26,8 +26,6 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/user/account" element={<ProfileUserPage />} />
-        <Route path="/user/topic" element={<TopicPage />} />
       </Route>
 
       <Route element={<AdminRoute />}>
@@ -40,10 +38,12 @@ function App() {
       <Route element={<UserRoute />}>
         <Route path="/user/home" element={<HomeUserPage />} />
         {/* <Route path="/user/home/:category" element={<HomeUserPage />} /> */}
+        <Route path="/user/account" element={<ProfileUserPage />} />
         <Route path="/user/account/edit" element={<EditProfile />} />
         <Route path="/user/account/other" element={<ProfileOtherUserPage />} />
         <Route path="/user/create" element={<CreateThread />} />
         <Route path="/user/edit" element={<EditThread />} />
+        <Route path="/user/topic" element={<TopicPage />} />
       </Route>
 
       <Route path="*" element={<ErrorPage code="404" title="Ooopss Page Not Found" />} />
