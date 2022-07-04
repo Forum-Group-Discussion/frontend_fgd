@@ -131,7 +131,7 @@ export default function EditProfile(){
                             className="w-full py-3 px-8 bg-primary-grey rounded-lg text-white" />
                         </div>
                             
-                        <input type="submit" value="Save" className="absolute top-[-15%] md:top-[-25%] right-0 md:text-2xl m-[3%] text-md sm-text-xl md:text-2xl px-4 py-2 md:px-6 md:py-3 bg-secondary-orange rounded-xl sm:rounded-2xl text-white cursor-pointer"/>
+                        <input type="submit" value="Save" className="absolute top-[-15%] md:top-[-25%] right-0 m-[3%] text-md sm-text-xl md:text-2xl px-4 py-2 md:px-6 md:py-3 bg-secondary-orange rounded-xl sm:rounded-2xl text-white cursor-pointer"/>
                     </form>
                 </div>
                 <div id='close-popup' className={popupProfPic ? 'popupProfPic active' : 'popupProfPic'}>

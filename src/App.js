@@ -18,6 +18,9 @@ import ProfileOtherUserPage from "./pages/UserPages/Account/ProfileOtherUserPage
 import CreateThread from "./pages/UserPages/CreateThread/CreateThread";
 import EditThread from "./pages/UserPages/CreateThread/EditThread";
 import TopicPage from "./pages/UserPages/Topic/TopicPage";
+import Category from "./pages/AdminPages/Pages/Kelola User/Category/Category";
+import CategoryUser from "./pages/AdminPages/Pages/Kelola User/Category/CategryUser/CategoryUser";
+import CategoryThread from "./pages/AdminPages/Pages/Kelola Thread/Pages/CategoryThread";
 
 function App() {
   return (
@@ -30,21 +33,31 @@ function App() {
       </Route>
 
       <Route element={<AdminRoute />}>
-        <Route path="/admin/home" element={<Dashboard />} />
+        {/* <Route path="/admin/home" element={<Dashboard />} />
         <Route path="KelolaThread" element={<KelolaThread />} />
         <Route path="KelolaUser" element={<KelolaUSer />} />
-        <Route path="Setting" element={<Setting />} />
+        <Route path="Setting" element={<Setting />} /> */}
       </Route>
 
+      <Route path="/admin/home" element={<Dashboard />} />
+        <Route path="/KelolaThread" element={<KelolaThread />} />
+        <Route path="/KelolaThread/category/thread" element={<CategoryThread/>} />
+        <Route path="/KelolaUser" element={<KelolaUSer />} />
+        <Route path="/KelolaUser/category" element={<Category/>} />
+        <Route path="/KelolaUser/category/user" element={<CategoryUser/>} />
+        <Route path="/Setting" element={<Setting />} />
+
       <Route element={<UserRoute />}>
-        <Route path="/user/home" element={<HomeUserPage />} />
+        {/* <Route path="/user/home" element={<HomeUserPage />} /> */}
         {/* <Route path="/user/home/:category" element={<HomeUserPage />} /> */}
-        <Route path="/user/account/edit" element={<EditProfile />} />
+        
+      </Route>
+      <Route path="/user/account/edit" element={<EditProfile />} />
+      <Route path="/user/home" element={<HomeUserPage />} />
         <Route path="/user/account/other" element={<ProfileOtherUserPage />} />
         <Route path="/user/create" element={<CreateThread />} />
         <Route path="/user/edit" element={<EditThread />} />
         <Route path="/user/topic" element={<TopicPage />} />
-      </Route>
 
       <Route path="*" element={<ErrorPage code="404" title="Ooopss Page Not Found" />} />
     </Routes>

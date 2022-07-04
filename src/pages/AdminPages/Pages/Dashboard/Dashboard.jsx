@@ -10,7 +10,7 @@ import Sidebar from "../../Components/Sidebar";
 
 export default function Dashboard() {
   return (
-    <div className="bg-primary-black h-content w-screen">
+    <div className="bg-primary-black h-fit w-screen">
       <div className="container mx-auto xl:px-20 lg:px-15">
         <Sidebar/>
           <div className="menu-content bg-primary-grey text-white p-7 h-content">
