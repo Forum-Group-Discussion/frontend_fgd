@@ -8,7 +8,7 @@ import "aos/dist/aos.css";
 import Swal from "sweetalert2";
 import { getIsAdmin, setUserSession } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
-import  axiosInstance  from "../../networks/api";
+import axiosInstance from "../../networks/api";
 import { useDispatch } from "react-redux";
 import { USER_NAME } from "../../redux/userSlice";
 

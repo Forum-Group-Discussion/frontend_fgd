@@ -9,6 +9,8 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import axiosInstance from "../../networks/api";
 import Swal from "sweetalert2";
+import { Icon } from "react-icons-kit";
+import { image } from 'react-icons-kit/feather/image'
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -29,9 +31,11 @@ function RegisterPage() {
     email: "",
     password: "",
     confirmpassword: "",
+    image: "",
   };
 
   const [users, setUsers] = useState(DEFAULT_USER);
+  const [imageProfile, setImageProfile] = useState('');
 
   const handleOnChange = (e) => {
     const values = e.target.value;
@@ -64,11 +68,18 @@ function RegisterPage() {
       } else {
         setConfirmPasswordValidation("Confirm password does not match with password");
       }
+    } else if (NAME === "image") {
+      setUsers({ ...users, image: e.target.files[0] })
     }
   };
 
+  console.log(users.image)
+
   const [error, setError] = useState("");
   const handleSubmit = (e) => {
+    const data = new FormData()
+    data.append('file', users.image)
+
     e.preventDefault();
     if (users.name.length < 5 || emailValidation !== "" || passwordValidation !== "" || users.confirmpassword !== users.password) {
       alert("Data does not match");
@@ -122,6 +133,16 @@ function RegisterPage() {
                 <div className="h-1 p-1">
                   <span className="mt-1 text-secondary-orange lg:text-xs text-[10px]">{emailValidation}</span>
                 </div>
+              </div>
+              <div className="flex flex-col justify-center items-center bg-white rounded-xl">
+                <label for="inputTag" className="flex items-center justify-center text-black bg-white-600 w-4/5 p-2">
+                  Choose Image <br />
+                  <div className="flex justify-center ml-2 ">
+                    <Icon icon={image} />
+                  </div>
+                  <input name="image" id="inputTag" type="file" className="hidden" onChange={handleOnChange} />
+                  <br />
+                </label>
               </div>
               <div className="flex flex-col">
                 <div className="relative">
