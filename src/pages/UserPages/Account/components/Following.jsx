@@ -51,7 +51,7 @@ export default function Following({onCancel, page}){
                     <div id="box" className="no-scrollbar rounded-xl mt-[85%] md:mt-[45%] lg:mt-[35%] xl:mt-[25%] -translate-y-[50%] relative max-w-md mx-auto bg-white shadow-lg h-[70vh] overflow-auto ring-1 ring-slate-900/5 -my-px">
                         <div className="relative">
                             <div id="header" className="sticky top-0 px-4 py-3 font-semibold text-sm text-slate-900 bg-slate-50/90 backdrop-blur-sm ring-1 ring-slate-900/10">
-                                <div id="title" className="text-center">Followers</div>
+                                <div id="title" className="text-center">Following</div>
                                 <IoIosClose id="close-button" onClick={onCancel} size={40} className="absolute right-1 top-1 cursor-pointer" />
                             </div>
                             <div id="list-account" className="">
@@ -61,7 +61,7 @@ export default function Following({onCancel, page}){
                                         <img id="profile-pic" className="w-12 h-12 rounded-full" src={item.img} />
                                         <strong id="profile-username" className="text-sm font-medium text-slate-900">{item.name}</strong>
                                     </button>
-                                    {page==="profile" && <button id="delete-button" className="my-3 border border-secondary-orange text-secondary-orange rounded-full px-6 -py-4 text-sm hover:bg-secondary-orange hover:text-slate-100">Unfollow</button>}
+                                    {page==="profile" && <button id="delete-button" className="my-3 border border-secondary-orange text-secondary-orange rounded-full px-6 -py-4 text-sm hover:bg-secondary-orange hover:text-slate-100">Hapus</button>}
                                 </div>))
                                 }
                             </div>

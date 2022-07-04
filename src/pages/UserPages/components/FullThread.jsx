@@ -278,13 +278,13 @@ export default function FullThread({onCancel}){
                                     <hr />
                                     <div id="action-button" className="flex justify-between my-2 lg:my-3 px-4 text-xs md:text-sm xl:text-base">
                                         <div className="flex gap-3">
-                                            <AiOutlineLike className="fill-grey w-4 h-4 md:w-6 md:h-6 xl:w-8 xl:h-8"/>
-                                            <AiOutlineDislike className="fill-grey w-4 h-4 md:w-6 md:h-6 xl:w-8 xl:h-8"/>
-                                            <AiOutlineShareAlt onClick={showPopupShare} className="fill-grey w-4 h-4 md:w-6 md:h-6 xl:w-8 xl:h-8"/>
+                                            <AiOutlineLike className="fill-grey w-4 h-4 md:w-6 md:h-6 xl:w-8 xl:h-8 cursor-pointer"/>
+                                            <AiOutlineDislike className="fill-grey w-4 h-4 md:w-6 md:h-6 xl:w-8 xl:h-8 cursor-pointer"/>
+                                            <AiOutlineShareAlt onClick={showPopupShare} className="fill-grey w-4 h-4 md:w-6 md:h-6 xl:w-8 xl:h-8 cursor-pointer"/>
                                         </div>
                                         <div className="flex gap-3">
-                                            <MdOutlineReport onClick={showPopupReport} className="fill-grey w-4 h-4 md:w-6 md:h-6 xl:w-8 xl:h-8"/>
-                                            <BsBookmark onClick={handleSave} className="fill-grey w-4 h-4 md:w-6 md:h-6 xl:w-8 xl:h-8"/>
+                                            <MdOutlineReport onClick={showPopupReport} className="fill-grey w-4 h-4 md:w-6 md:h-6 xl:w-8 xl:h-8 cursor-pointer"/>
+                                            <BsBookmark onClick={handleSave} className="fill-grey w-4 h-4 md:w-6 md:h-6 xl:w-8 xl:h-8 cursor-pointer"/>
                                         </div>
                                     </div>
                                     <hr />
