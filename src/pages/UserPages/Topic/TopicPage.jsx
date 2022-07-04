@@ -109,7 +109,7 @@ export default function TopicPage(){
         <div id="topic" className="bg-black" style={{backgroundColor: "black"}}>
             <Navbar />
             <div className="h-28"></div>
-            <div id="container" className="flex w-4/5 mx-auto">
+            <div id="container" className="lg:flex w-11/12 md:w-4/5 mx-auto">
                 {/* <div className="bg-transparent sticky h-screen top-0 bottom-4"> */}
                 <div id="filter-box" className="w-1/4 mr-8 mx-auto bg-primary-grey rounded-xl hidden lg:block">
                     <div id="filter" className="p-8">
