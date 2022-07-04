@@ -5,9 +5,17 @@ import Sidebar from '../../../Components/Sidebar'
 import Btnsuspen from '../../../Components/BtnSuspen'
 import Report from  '../../../Components/Report'
 import Thread from '../../../../UserPages/Account/components/Thread'
+import { useEffect } from 'react'
+import AOS from "aos";
+
 
 export default function CategoryUser() {
     const [choose, setChoose] = useState("thread")
+
+    useEffect(() => {
+    AOS.init();
+    AOS.refresh();
+}, []);
 
   
 
