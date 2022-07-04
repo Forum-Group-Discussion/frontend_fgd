@@ -1,7 +1,7 @@
-import Profile from "../../../../assets/img/account/profile.png"
-import gambarThread from "../../../../assets/img/home/image7.png";
-import PopupShare from "../../components/PopupShare.jsx";
-import FullThread from "../../components/FullThread";
+import Profile from "../../../assets/img/account/profile.png"
+import gambarThread from "../../../assets/img/home/image7.png";
+import PopupShare from "../../UserPages/components/PopupShare"
+import FullThread from "../../UserPages/components/FullThread";
 import { Icon } from "react-icons-kit";
 import { thumbsUp } from "react-icons-kit/feather/thumbsUp";
 import { thumbsDown } from "react-icons-kit/feather/thumbsDown";
@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import { useNavigate, Link } from "react-router-dom";
 
-export default function Thread(){
+export default function DeleteThread(){
     const [more, setMore] = useState(false)
     const [popupShare, setPopupShare] = useState(false)
     const [showFull, setFull] = useState(false)

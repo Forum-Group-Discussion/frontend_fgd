@@ -1,19 +1,21 @@
 import React from 'react'
 import { useState } from 'react'
-import Joko from "../../../../../../assets/img/Admin/JOK.png"
-import Sidebar from '../../../../Components/Sidebar'
-import Btnsuspen from '../../../components/BtnSuspen'
-import Report from '../../../components/Report'
-import Thread from '../../../../../UserPages/Account/components/Thread'
+import Joko from "../../../../../assets/img/Admin/JOK.png"
+import Sidebar from '../../../Components/Sidebar'
+import Btnsuspen from '../../../Components/BtnSuspen'
+import Report from  '../../../Components/Report'
+import Thread from '../../../../UserPages/Account/components/Thread'
 
 export default function CategoryUser() {
     const [choose, setChoose] = useState("thread")
+
+  
 
     const handleAction = e => {
         setChoose(e.target.value)
     }
   return (
-    <div className="bg-primary-black h-screen w-screen">
+    <div className="bg-primary-black h-content w-screen">
         <div className="container mx-auto xl:px-20 lg:px-15">
           <Sidebar />
           <div>
@@ -25,7 +27,7 @@ export default function CategoryUser() {
                       <img src={Joko} alt="Icon-game" className="rounded-full 2xl:w-[100px] xl:w-[70px] lg:w-[80%] md:w-[70%]"/>
                     </div>
                     <div className="xl:ml-8 md:ml-5 ">
-                      <div className="font-bold text-xl mb-2">Jokowi</div>
+                      <div className="font-bold text-xl mb-2">Berry burrie</div>
                       <div className="text-white/50">
                         2000 Following <span className='text-white'>|</span> 100k Followers
                       </div>

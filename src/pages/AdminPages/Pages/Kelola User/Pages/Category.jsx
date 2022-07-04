@@ -19,7 +19,7 @@ export default function Category() {
                     <div className="flex place-items-center">
                         <img src={Joko} alt="Icon-game" className="rounded-full xl:w-[70px] lg:w-[80%] md:w-[70%]"/>
                       <div className="xl:ml-8 md:ml-5">
-                        <div className="font-bold text-base mb-2">Jokowi</div>
+                        <div className="font-bold text-base mb-2">Berry burrie</div>
                         <div >
                           <span className="text-secondary-orange text-xl font-semibold">776</span> report
                         </div>

@@ -42,11 +42,20 @@ function LoginPage() {
       .post("/v1/auth/login", { email: users.email, password: users.password })
       .then((response) => {
         Swal.fire({
-          position: "top-end",
+          toast: true,
           icon: "success",
-          title: "Login is successful",
+          title: "Successfully login",
+          animation: false,
+          background: "#222834",
+          color: "#18B015",
+          position: "bottom-end",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 4000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
         });
         setUserSession(response.data.data.token, response.data.data.name, response.data.data.isAdmin);
         console.log(response.data.data.name);
@@ -59,20 +68,38 @@ function LoginPage() {
       })
       .catch((error) => {
         if (error.response.responseCode === 401) {
-          Swal.fire({
-            position: "center",
-            icon: "error",
-            title: error,
-            showConfirmButton: false,
-            timer: 1500,
-          });
+            Swal.fire({
+              toast: true,
+              icon: "error",
+              title: "Something went wrong, please try again later",
+              animation: false,
+              background: "#222834",
+              color: "#DE1508",
+              position: "bottom-end",
+              showConfirmButton: false,
+              timer: 4000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
         } else {
           Swal.fire({
-            position: "center",
+            toast: true,
             icon: "error",
-            title: "Username or Password is Wrong",
+            title: "Check your username and password",
+            animation: false,
+            background: "#222834",
+            color: "#DE1508",
+            position: "bottom-end",
             showConfirmButton: false,
-            timer: 1500,
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
           });
         }
       });

@@ -1,5 +1,5 @@
 import React from 'react'
-import Joko from "../../../../assets/img/Admin/JOK.png"
+import Joko from "../../../assets/img/Admin/JOK.png"
 
 export default function Report() {
   return (
@@ -10,7 +10,7 @@ export default function Report() {
           <img src={Joko} alt="Icon-game" className="rounded-full xl:w-[70px] lg:w-[80%] md:w-[70%]"/>
         </div>
         <div className="xl:ml-8 md:ml-5">
-          <div className="text-base mb-2">Ultramen</div>
+          <div className="text-base mb-2">Berry burrie</div>
         </div>
       </div>
       <div>
@@ -18,7 +18,7 @@ export default function Report() {
       </div>
     </div>
     <div className='px-5'>
-    <div className='border-t border-white/20 py-5'>AFK</div>
+    <div className='border-t border-white/20 py-5'>Thread Mengandung unsur pornografi tidak pantas !</div>
     </div>
   </div>
   )
