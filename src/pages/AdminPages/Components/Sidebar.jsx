@@ -3,14 +3,12 @@ import Logo from "../../../assets/img/logo.png";
 import { RiDashboard3Line, RiUser3Line, RiSettings3Line, RiListSettingsLine } from "react-icons/ri";
 import HomeAdminPage from "./NavbarAdmin";
 import { useNavigate, useRo } from "react-router-dom";
-import Logout from "../../../assets/img/Admin/Logout.png"
+import Logout from "../../../assets/img/Admin/Logout.png";
 import { removeUserSession } from "../../../utils/helpers";
 import Swal from "sweetalert2";
 import "./style.css";
 
-export default function Sidebar(){
-
-  
+export default function Sidebar() {
   const navigate = useNavigate();
 
   // handle click event of logout button
@@ -29,9 +27,23 @@ export default function Sidebar(){
       focusCancel: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        removeUserSession();
-        navigate("/");
-        window.location.reload();
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          title: "Log Out Successfully",
+          animation: false,
+          background: "#222834",
+          color: "#18B015",
+          position: "bottom-end",
+          showConfirmButton: false,
+          timer: 4000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+            removeUserSession(navigate);
+          },
+        });
       }
     });
   };
@@ -81,8 +93,8 @@ export default function Sidebar(){
 
               <li className="p-3 mt-[170px] flex justify-center logout ">
                 <div className="flex flex-row items-center">
-                <img src={Logout} className="mr-4 w-[20px]" alt="Icon_logout"/>
-                  <input type="submit" onClick={handleLogout} value="Logout" className="logout"/>
+                  <img src={Logout} className="mr-4 w-[20px]" alt="Icon_logout" />
+                  <input type="submit" onClick={handleLogout} value="Logout" className="logout" />
                 </div>
               </li>
             </ul>

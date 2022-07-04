@@ -10,10 +10,11 @@ export const getToken = () => {
   return localStorage.getItem("token") || null;
 };
 
-export const removeUserSession = () => {
+export const removeUserSession = (navigate) => {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
   localStorage.removeItem("isAdmin");
+  navigate("/");
 };
 
 export const setUserSession = (token, user, isAdmin) => {

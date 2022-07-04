@@ -28,12 +28,12 @@ export default function HomeUserPage() {
     index: "",
     value: false,
   });
-  const [showFull, setFull] = useState(false)
+  const [showFull, setFull] = useState(false);
   const [popupShare, setPopupShare] = useState(false);
   const [popupReport, setPopupReport] = useState(false);
   const [threadIndex, setThreadIdex] = useState("");
   const [loading, setLoading] = useState(true);
-  let { category } = useParams()
+  let { category } = useParams();
 
   const showPopupShare = () => {
     if (popupShare === false) {
@@ -75,38 +75,37 @@ export default function HomeUserPage() {
         console.log(error.response);
       });
     return response;
-  }, [dispatch])
+  }, [dispatch]);
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
-  
   const handleShowFull = () => {
     setFull(!showFull);
-  }
+  };
   const handleCloseFull = () => {
-      setFull(false);
-  }
+    setFull(false);
+  };
 
   const handleSave = () => {
     Swal.fire({
-        toast: true,
-        icon: "success",
-        title: "Thread successfully saved",
-        animation: false,
-        background: "#222834",
-        color: "#18B015",
-        position: "bottom-end",
-        showConfirmButton: false,
-        timer: 4000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
+      toast: true,
+      icon: "success",
+      title: "Thread successfully saved",
+      animation: false,
+      background: "#222834",
+      color: "#18B015",
+      position: "bottom-end",
+      showConfirmButton: false,
+      timer: 4000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
         toast.addEventListener("mouseenter", Swal.stopTimer);
         toast.addEventListener("mouseleave", Swal.resumeTimer);
-        },
+      },
     });
-}
+  };
 
   return (
     <>
@@ -117,22 +116,22 @@ export default function HomeUserPage() {
             <div className="fixed w-1/5">
               <div id="kategori-list" className="flex absolute">
                 <ul id="kategori" className="text-center">
-                  <Link to='/user/home/Trending'>
+                  <Link to="/user/home/Trending">
                     <li>Trending Topic</li>
                   </Link>
-                  <Link to='/user/home/Games'>
+                  <Link to="/user/home/Games">
                     <li>Games</li>
                   </Link>
-                  <Link to='/user/home/Health'>
+                  <Link to="/user/home/Health">
                     <li>Health</li>
                   </Link>
-                  <Link to='/user/home/Food-Travel'>
+                  <Link to="/user/home/Food-Travel">
                     <li>Food & Travel</li>
                   </Link>
-                  <Link to='/user/home/Technology'>
+                  <Link to="/user/home/Technology">
                     <li>Technology</li>
                   </Link>
-                  <Link to='/user/home/Education'>
+                  <Link to="/user/home/Education">
                     <li>Education</li>
                   </Link>
                 </ul>
@@ -215,9 +214,15 @@ export default function HomeUserPage() {
                     <div onClick={() => showMoreMenu(index)}>
                       <Icon icon={moreVertical} />
                       <div className={more && index === threadIndex ? "more-3 active" : "more"}>
-                        <span className="cursor-pointer" onClick={handleShowFull}>Open</span>
-                        <span className="cursor-pointer" onClick={showPopupShare}>Share</span>
-                        <span className="cursor-pointer" onClick={showPopupReport}>Report</span>
+                        <span className="cursor-pointer" onClick={handleShowFull}>
+                          Open
+                        </span>
+                        <span className="cursor-pointer" onClick={showPopupShare}>
+                          Share
+                        </span>
+                        <span className="cursor-pointer" onClick={showPopupReport}>
+                          Report
+                        </span>
                       </div>
                     </div>
                   </div>

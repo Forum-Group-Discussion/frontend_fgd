@@ -77,20 +77,20 @@ function RegisterPage() {
         .post("v1/auth/register", { name: users.name, email: users.email, password: users.password })
         .then(() => {
           Swal.fire({
-              toast: true,
-              icon: "success",
-              title: "Successfully registered",
-              animation: false,
-              background: "#222834",
-              color: "#18B015",
-              position: "bottom-end",
-              showConfirmButton: false,
-              timer: 4000,
-              timerProgressBar: true,
-              didOpen: (toast) => {
+            toast: true,
+            icon: "success",
+            title: "Successfully registered",
+            animation: false,
+            background: "#222834",
+            color: "#18B015",
+            position: "bottom-end",
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
               toast.addEventListener("mouseenter", Swal.stopTimer);
               toast.addEventListener("mouseleave", Swal.resumeTimer);
-              },
+            },
           });
           setUsers(DEFAULT_USER);
           navigate("/login");
@@ -110,8 +110,8 @@ function RegisterPage() {
               timer: 4000,
               timerProgressBar: true,
               didOpen: (toast) => {
-              toast.addEventListener("mouseenter", Swal.stopTimer);
-              toast.addEventListener("mouseleave", Swal.resumeTimer);
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
               },
             });
           }
