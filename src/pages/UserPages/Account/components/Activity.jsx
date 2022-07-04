@@ -1,8 +1,9 @@
 
 import gambarProfile from "../../../../assets/img/home/dashicons_games.png";
 import gambarThread from "../../../../assets/img/home/image7.png";
-import PopupShare from "../../Home/components/PopupShare.jsx";
-import PopupReport from "../../Home/components/PopupReport.jsx";
+import PopupShare from "../../components/PopupShare.jsx";
+import PopupReport from "../../components/PopupReport.jsx";
+import FullThread from "../../components/FullThread";
 import { Icon } from "react-icons-kit";
 import { thumbsUp } from "react-icons-kit/feather/thumbsUp";
 import { thumbsDown } from "react-icons-kit/feather/thumbsDown";
@@ -10,11 +11,13 @@ import { bookmark } from 'react-icons-kit/feather/bookmark'
 import { commentingO } from "react-icons-kit/fa/commentingO";
 import { moreVertical } from 'react-icons-kit/feather/moreVertical'
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 export default function Activity(){
     const [more, setMore] = useState(false)
     const [popupShare, setPopupShare] = useState(false)
     const [popupReport, setPopupReport] = useState(false)
+    const [showFull, setFull] = useState(false)
     const [action, setAction] = useState("Liked")
 
     const showPopupShare = () => {
@@ -48,6 +51,33 @@ export default function Activity(){
             setMore(false)
         }
     }
+
+    const handleShowFull = () => {
+        setFull(!showFull);
+    }
+    const handleCloseFull = () => {
+        setFull(false);
+    }
+
+    const handleSave = () => {
+        Swal.fire({
+            toast: true,
+            icon: "success",
+            title: "Thread successfully saved",
+            animation: false,
+            background: "#222834",
+            color: "#18B015",
+            position: "bottom-end",
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+        });
+    }
+
     return(
         <>
             <div id="thread" className="max-w-[1000px] mx-auto" data-aos="zoom-in">
@@ -78,24 +108,25 @@ export default function Activity(){
                     <img src={gambarThread} alt="gambar thread" />
                 </div>
                 <div id="thread-icon" className="flex flex-1 justify-between mt-5">
-                    <div>
+                    <div className="cursor-pointer">
                         <Icon icon={thumbsUp} />
                         <span className="text-sm sm:text-lg text-white">100K</span>
                     </div>
-                    <div>
+                    <div className="cursor-pointer">
                         <Icon icon={thumbsDown} />
                         <span className="text-sm sm:text-lg text-white">100K</span>
                     </div>
-                    <div>
-                        <Icon icon={commentingO} />
+                    <div className="cursor-pointer">
+                        <Icon onClick={handleShowFull} icon={commentingO} />
                         <span className="text-sm sm:text-lg text-white">100K</span>
                     </div>
-                    <div>
+                    <div onClick={handleSave} className="cursor-pointer">
                         <Icon icon={bookmark} />
                     </div>
                     <div onClick={showMoreMenu}>
                         <Icon icon={moreVertical} />
-                        <div className={more ? 'more active' : 'more'}>
+                        <div className={more ? 'more-3 active' : 'more'}>
+                            <span className="cursor-pointer" onClick={handleShowFull}>Open</span>
                             <span className="cursor-pointer" onClick={showPopupShare}>Share</span>
                             <span className="cursor-pointer" onClick={showPopupReport}>Report</span>
                         </div>
@@ -117,6 +148,7 @@ export default function Activity(){
                     </div>
                 </div>
             </div>
+            {showFull && <FullThread onCancel={handleCloseFull} />}
         </>
     )
 }

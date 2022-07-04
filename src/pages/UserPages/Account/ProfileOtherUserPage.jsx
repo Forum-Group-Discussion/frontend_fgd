@@ -1,11 +1,13 @@
 import Navbar from "../components/Navbar";
 import Thread from "./components/Thread";
 import Activity from "./components/Activity";
+import Followers from "./components/Followers";
+import Following from "./components/Following";
 import "./Profile.css"
 import Banner from "../../../assets/img/account/banner.png"
 import Profile from "../../../assets/img/account/profile.png"
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -14,6 +16,10 @@ export default function ProfileOtherUserPage(){
     const [statconv, setStatconv] = useState({following:"", followers:"", threads:""})
     const [choose, setChoose] = useState("thread")
     const [follow, setFollow] = useState(true)
+    const [res, setRes] = useState(true)
+    const [showFollowing, setShowFollowing] = useState(false)
+    const [showFollowers, setShowFollowers] = useState(false)
+    const page = "other"
 
     useEffect(() => {
         AOS.init();
@@ -88,12 +94,69 @@ export default function ProfileOtherUserPage(){
         }
     }, [stat])
     
+    const handleShowFollowing = () => {
+        setShowFollowing(!showFollowing);
+    }
+    const handleCloseFollowing = () => {
+        setShowFollowing(false);
+    }
+    const handleShowFollowers = () => {
+        setShowFollowers(!showFollowers);
+    }
+    const handleCloseFollowers = () => {
+        setShowFollowers(false);
+    }
+
     const handleAction = e => {
         setChoose(e.target.value)
     }
+
     const handleFollow = e => {
         if(follow) setFollow(false)
         else setFollow(true)
+    }
+
+    const chooseFunction = () => {
+        if(choose==="thread"){
+            // get threadnya
+            // kalo gada hasilnya uncomment ini yaa
+            // setRes(false)
+            if(res){
+                return(
+                    <Thread />
+                )
+            }
+            else{
+                return(
+                    <div className="border border-solid border-[#d9d9d91a] rounded-xl h-60 py-10">
+                        <div className="text-md xl:text-lg text-grey text-center mb-10">This account doesn't have a thread yet</div>
+                        <div className="flex w-full justify-center">
+                            <Link to="/user/create" className="px-8 py-4 bg-secondary-orange rounded-xl text-white text-md xl:text-lg">Create Here</Link>
+                        </div>
+                    </div>
+                )
+            }
+        }
+        else if(choose==="activity"){
+            // get activity
+            // kalo gada hasilnya uncomment ini yaa
+            // setRes(false)
+            if(res){
+                return(
+                    <Activity />
+                )
+            }
+            else{
+                return(
+                    <div className="border border-solid border-[#d9d9d91a] rounded-xl h-60 py-10">
+                        <div className="text-md xl:text-lg text-grey text-center mb-10">This account has no activity yet</div>
+                        <div className="flex w-full justify-center">
+                            <Link to="/user/home" className="px-8 py-4 bg-secondary-orange rounded-xl text-white text-md xl:text-lg">Go Home</Link>
+                        </div>
+                    </div>
+                )
+            }
+        }
     }
     return(
         <>
@@ -113,8 +176,8 @@ export default function ProfileOtherUserPage(){
                         <div id="username" className="mt-[-8%] sm:mt-[0%] text-xl sm:text-3xl md:text-4xl font-bold">Berry burrie</div>
                         <div id="bio" className="text-md md:text-2xl">Hello Found</div>
                         <div id="stat" className="mt-2 mb-3 sm:mt-0 text-sm md:text-lg inline-flex gap-3 sm:gap-10 text-gray-400">
-                            <div id="stat-following">{statconv.following} Following</div>
-                            <div id="stat-followers">{statconv.followers} Followers</div>
+                            <button id="stat-following" onClick={handleShowFollowing} className="text-left">{statconv.following} Following</button>
+                            <button id="stat-followers" onClick={handleShowFollowers} className="text-left">{statconv.followers} Followers</button>
                             <div id="stat-threads">{statconv.threads} Threads</div>
                         </div>
                     </div>
@@ -133,10 +196,9 @@ export default function ProfileOtherUserPage(){
                         </div>
                     }
                 </div>
-                {choose === "thread" 
-                ? <Thread />
-                : <Activity />
-                }
+                { chooseFunction() }
+                {showFollowers && <Followers onCancel={handleCloseFollowers} page={page}/>}
+                {showFollowing && <Following onCancel={handleCloseFollowing} page={page}/>}
             </div>
         </section>
         </>

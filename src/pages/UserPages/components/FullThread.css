@@ -1,0 +1,24 @@
+.scrollbar::-webkit-scrollbar {
+    display: none;
+    transition: all 0.5s 0.3s ease-in-out;
+}
+
+#content-box:hover > .scrollbar::-webkit-scrollbar{
+    display: contents;
+    width: 5px;
+    height: 15px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: whitesmoke
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background: #A7A9AE;
+    border-radius: 100vh;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #8c8d8e;
+}
