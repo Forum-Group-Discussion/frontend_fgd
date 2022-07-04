@@ -1,12 +1,14 @@
 import { useNavigate } from "react-router-dom"
 import { IoIosClose } from "react-icons/io"
-import { AiOutlineLike, AiOutlineDislike, AiOutlineShareAlt } from "react-icons/ai"
+import { AiOutlineLike, AiOutlineDislike, AiOutlineShareAlt, AiFillLike } from "react-icons/ai"
+import { FcLikePlaceholder, FcLike } from "react-icons/fc"
 import { BsBookmark } from "react-icons/bs"
 import { MdOutlineReport } from "react-icons/md"
 import { useState } from "react"
 import Swal from "sweetalert2"
 import PopupShare from "./PopupShare"
 import PopupReport from "./PopupReport"
+import "./FullThread.css"
 
 const data =
     {
@@ -98,6 +100,11 @@ export default function FullThread({onCancel}){
     const [comment, setComment] = useState("")
     const [popupShare, setPopupShare] = useState(false)
     const [popupReport, setPopupReport] = useState(false)
+    const [like, setLike] = useState(false)
+
+    const handleLike = e => {
+        setLike(!like)
+    }
 
     const otherProfile = () => {
         navigate("/user/account/other")
@@ -192,57 +199,77 @@ export default function FullThread({onCancel}){
                             <div className="">
                                 <div id="header" className="lg:absolute top-0 right-0 left-[50%] px-4 py-3 font-semibold text-xs md:text-sm text-slate-900 bg-slate-50/90 ring-1 ring-slate-900/10">
                                     <div id="identity" className="flex gap-4">
-                                        <img id="profpic-header" src={data.profpic} className="w-6 h-6 rounded-full" />
-                                        <div id="name-follow" className="my-auto">{data.name} <span className={data.followed ? "ml-2" : "ml-2 text-secondary-orange opacity-80"}>{data.followed ? "Following" : "Follow"}</span> </div>
+                                        <img id="profpic-header" onClick={otherProfile} src={data.profpic} className="w-6 h-6 rounded-full cursor-pointer" />
+                                        <div id="name-follow" onClick={otherProfile} className="my-auto cursor-pointer">{data.name} 
+                                            <span className={data.followed ? "ml-2" : "ml-2 text-secondary-orange opacity-80"}> 
+                                                <button className="font-bold">{data.followed ? "Following" : "Follow"}</button> 
+                                            </span> 
+                                        </div>
                                     </div>
                                     <IoIosClose id="close-button" onClick={onCancel} size={40} className="absolute right-1 top-1 cursor-pointer" />
                                 </div>
-                                <div className="lg:mt-12 lg:mb-32">
-                                    <div id="content" className="text-xs md:text-sm p-4 overflow-auto h-[57vh] md:h-[50vh] lg:h-[50vh] xl:h-[70vh]">
-                                        <div id="identity" className="flex gap-4 mb-2">
+                                <div id="content-box" className="lg:mt-12 lg:mb-32">
+                                    <div id="content" className="scrollbar text-xs md:text-sm p-4 overflow-auto h-[57vh] md:h-[50vh] lg:h-[50vh] xl:h-[55vh] 2xl:h-[60vh]">
+                                        <div id="identity" onClick={otherProfile} className="flex gap-4 mb-2 cursor-pointer">
                                             <img id="profpic" src={data.profpic} className="w-6 h-6 rounded-full" />
                                             <div id="name" className="my-auto font-semibold">{data.name}</div>
                                         </div>
                                         <div className="mb-2 ml-10">{data.caption}</div>
                                         <div className="mb-6 ml-10 text-grey">{data.time}</div>
                                         {data.replies?.map(item => (
-                                            <div id="post-comment" key={item.id}>
-                                                <div id="post-comment-identity" className="flex gap-4 mb-2">
-                                                    <img id="post-comment-profpic" src={item.profpic} className="w-6 h-6 rounded-full" />
-                                                    <div id="post-comment-name" className="my-auto font-semibold">{item.name}</div>
-                                                </div>
-                                                <div id="post-comment-content" className="mb-2 ml-10">{item.comment}</div>
-                                                <div className="flex gap-4 mb-4 ml-10">
-                                                    <div id="post-comment-time" className="text-grey">{item.time}</div>
-                                                    {item.likes>1 && <div id="post-comment-sum-likes" className="text-grey">{(item.likes).toLocaleString()} Likes</div>}
-                                                    {item.likes>0 && item.likes<2 && <div id="post-comment-one-like" className="text-grey">{item.likes} Like</div>}
-                                                    <button id="post-comment-reply-button" onClick={handleReply} value={item.name} className="text-grey cursor-pointer">Reply</button>
-                                                </div>
-                                                {item.replies.length>1 && !showReplies[item.id-1] && 
-                                                    <button id="show-replies-button" onClick={handleShowReplies} value={item.id} className="ml-10 mb-4 text-grey cursor-pointer">
-                                                        ---- Show Replies ({item.replies.length})
-                                                    </button>
-                                                }
-                                                {item.replies.length>1 && showReplies[item.id-1] && 
-                                                    <button id="hide-replies-button" onClick={handleShowReplies} value={item.id} className="ml-10 mb-4 text-grey cursor-pointer">
-                                                        ---- Hide Replies
-                                                    </button>
-                                                }
-                                                {showReplies[item.id-1] && item.replies?.map(item => (
-                                                    <div id="comment-comment" key={item.id} className="ml-10">
-                                                        <div id="comment-comment-identity" className="flex gap-4 mb-2">
-                                                            <img id="comment-comment-profpic" src={item.profpic} className="w-6 h-6 rounded-full" />
-                                                            <div id="comment-comment-name" className="my-auto font-semibold">{item.name}</div>
-                                                        </div>
-                                                        <div id="comment-comment-content" className="mb-2 ml-10">{item.comment}</div>
-                                                        <div className="flex gap-4 mb-4 ml-10">
-                                                            <div id="comment-comment-time" className="text-grey">{item.time}</div>
-                                                            {item.likes>1 && <div id="comment-comment-sum-likes" className="text-grey">{(item.likes).toLocaleString()} Likes</div>}
-                                                            {item.likes>0 && item.likes<2 && <div id="comment-comment-one-like" className="text-grey">{item.likes} Like</div>}
-                                                            <button id="comment-comment-reply-button" onClick={handleReply} value={item.name} className="text-grey cursor-pointer">Reply</button>
-                                                        </div>
+                                            <div id="post-comment" key={item.id} className="relative">
+                                                <div>
+                                                    <div id="post-comment-identity" onClick={otherProfile} className="flex gap-4 mb-2 cursor-pointer max-w-[85%]">
+                                                        <img id="post-comment-profpic" src={item.profpic} className="w-6 h-6 rounded-full" />
+                                                        <div id="post-comment-name" className="my-auto font-semibold">{item.name}</div>
                                                     </div>
-                                                ))}
+                                                    <div id="post-comment-content" className="mb-2 ml-10 max-w-[85%]">{item.comment}</div>
+                                                    <div className="flex gap-4 mb-4 ml-10">
+                                                        <div id="post-comment-time" className="text-grey">{item.time}</div>
+                                                        {item.likes>1 && <div id="post-comment-sum-likes" className="text-grey">{(item.likes).toLocaleString()} Likes</div>}
+                                                        {item.likes>0 && item.likes<2 && <div id="post-comment-one-like" className="text-grey">{item.likes} Like</div>}
+                                                        <button id="post-comment-reply-button" onClick={handleReply} value={item.name} className="text-grey cursor-pointer">Reply</button>
+                                                    </div>
+                                                    {item.replies.length>1 && !showReplies[item.id-1] && 
+                                                        <button id="show-replies-button" onClick={handleShowReplies} value={item.id} className="ml-10 mb-4 text-grey cursor-pointer">
+                                                            ---- Show Replies ({item.replies.length})
+                                                        </button>
+                                                    }
+                                                    {item.replies.length>1 && showReplies[item.id-1] && 
+                                                        <button id="hide-replies-button" onClick={handleShowReplies} value={item.id} className="ml-10 mb-4 text-grey cursor-pointer">
+                                                            ---- Hide Replies
+                                                        </button>
+                                                    }
+                                                    {showReplies[item.id-1] && item.replies?.map(item1 => (
+                                                        <div id="comment-comment" key={item1.id} className="ml-10 relative">
+                                                            <div>
+                                                                <div id="comment-comment-identity" onClick={otherProfile} className="flex gap-4 mb-2 cursor-pointer max-w-[85%]">
+                                                                    <img id="comment-comment-profpic" src={item1.profpic} className="w-6 h-6 rounded-full" />
+                                                                    <div id="comment-comment-name" className="my-auto font-semibold">{item1.name}</div>
+                                                                </div>
+                                                                <div id="comment-comment-content" className="mb-2 ml-10 max-w-[85%]">{item1.comment}</div>
+                                                                <div className="flex gap-4 mb-4 ml-10">
+                                                                    <div id="comment-comment-time" className="text-grey">{item1.time}</div>
+                                                                    {item1.likes>1 && <div id="comment-comment-sum-likes" className="text-grey">{(item1.likes).toLocaleString()} Likes</div>}
+                                                                    {item1.likes>0 && item1.likes<2 && <div id="comment-comment-one-like" className="text-grey">{item1.likes} Like</div>}
+                                                                    <button id="comment-comment-reply-button" onClick={handleReply} value={item1.name} className="text-grey cursor-pointer">Reply</button>
+                                                                </div>
+                                                            </div>
+                                                            <div id="like-comment-comment-button" onClick={handleLike} className="absolute right-0 top-0 cursor-pointer">
+                                                                { like 
+                                                                ? <FcLike className="fill-secondary-red w-4 h-4 md:w-6 md:h-6"/>
+                                                                : <FcLikePlaceholder className="fill-grey w-4 h-4 md:w-6 md:h-6" />
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                                <div id="like-post-comment-button" onClick={handleLike} className="absolute right-0 top-0 cursor-pointer">
+                                                    { like 
+                                                    ? <FcLike className="fill-secondary-red w-4 h-4 md:w-6 md:h-6"/>
+                                                    : <FcLikePlaceholder className="fill-grey w-4 h-4 md:w-6 md:h-6" />
+                                                    }
+                                                </div>
                                             </div>
                                         ))}
                                     </div>
@@ -268,7 +295,7 @@ export default function FullThread({onCancel}){
                                     </div>
                                     <hr />
                                     <form id="comment-reply-box" onSubmit={handleSubmit} className="py-2 px-4 md:p-4 flex justify-between text-xs md:text-base">
-                                        <input type="text" className="h-6 md:h-8 w-full focus:outline-none text-xs md:text-sm xl:text-base" onChange={handleChange} value={comment} placeholder="Add a comment..."/>
+                                        <textarea className="h-6 md:h-8 w-full focus:outline-none text-xs md:text-sm xl:text-base" onChange={handleChange} value={comment} placeholder="Add a comment..."/>
                                         <button type="Submit" className="border-none bg-none md:px-4 text-secondary-orange text-xs md:text-sm xl:text-base">Send</button>
                                     </form>
                                 </div>
