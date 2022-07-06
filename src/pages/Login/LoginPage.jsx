@@ -41,30 +41,49 @@ function LoginPage() {
     axiosInstance
       .post("/v1/auth/login", { email: users.email, password: users.password })
       .then((response) => {
-        Swal.fire({
-          toast: true,
-          icon: "success",
-          title: "Successfully login",
-          animation: false,
-          background: "#222834",
-          color: "#18B015",
-          position: "bottom-end",
-          showConfirmButton: false,
-          timer: 4000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-          },
-        });
-        setUserSession(response.data.data.token, response.data.data.name, response.data.data.isAdmin);
-        console.log(response.data.data.name);
-        dispatch(USER_NAME(response.data.data.name));
-        dispatch(USER_ID(response.data.data.id));
-        if (getIsAdmin() === "true") {
-          navigate("/admin/home");
+        if (response.data.data.isSupended === false) {
+          Swal.fire({
+            toast: true,
+            icon: "success",
+            title: "Successfully login",
+            animation: false,
+            background: "#222834",
+            color: "#18B015",
+            position: "bottom-end",
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+          setUserSession(response.data.data.token, response.data.data.name, response.data.data.isAdmin);
+          console.log(response.data.data.name);
+          dispatch(USER_NAME(response.data.data.name));
+          dispatch(USER_ID(response.data.data.id));
+          if (getIsAdmin() === "true") {
+            navigate("/admin/home");
+          } else {
+            navigate("/user/home");
+          }
         } else {
-          navigate("/user/home");
+          Swal.fire({
+            toast: true,
+            icon: "error",
+            title: "your account has been suspended",
+            animation: false,
+            background: "#222834",
+            color: "#DE1508",
+            position: "bottom-end",
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
         }
       })
       .catch((error) => {
