@@ -8,7 +8,7 @@ export default function Setting() {
       <div className="container mx-auto xl:px-20 lg:px-15">
         <Sidebar/>
         <div>
-          <div className="menu-content bg-primary-grey text-white p-7 h-content">
+          <div className="menu-content bg-primary-grey text-white p-7 h-content pb-[10%]">
             <div className="flex justify-between">
               <div>Account</div>
               <div>Edit</div>
@@ -22,20 +22,20 @@ export default function Setting() {
                 <div className="place-self-center">
                   <form className="">
                     <div className="py-3">
-                      <div className="text-xs pb-2">Full name</div>
-                      <input type="input" className="bg-primary-black rounded-md xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
+                      <div className="text-xs pb-2 text-white/50">Full name</div>
+                      <input type="input" className="bg-primary-black rounded-md 2xl:w-[750px] xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
                     </div>
                     <div className="py-3">
-                      <div className="text-xs pb-2">user name</div>
-                      <input type="input" className="bg-primary-black rounded-md xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
+                      <div className="text-xs pb-2 text-white/50">user name</div>
+                      <input type="input" className="bg-primary-black rounded-md 2xl:w-[750px] xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
                     </div>
                     <div className="py-3">
-                      <div className="text-xs pb-2">Email</div>
-                      <input type="email" className="bg-primary-black rounded-md xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
+                      <div className="text-xs pb-2 text-white/50">Email</div>
+                      <input type="email" className="bg-primary-black rounded-md 2xl:w-[750px] xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
                     </div>
                     <div className="py-3">
-                      <div className="text-xs pb-2">Password</div>
-                      <input type="password" className="bg-primary-black rounded-md xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
+                      <div className="text-xs pb-2 text-white/50">Password</div>
+                      <input type="password" className="bg-primary-black rounded-md 2xl:w-[750px] xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
                     </div>
                   </form>
                 </div>

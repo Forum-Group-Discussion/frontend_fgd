@@ -8,7 +8,7 @@ export default function ChangeProfilePic({closePopupProfPic}) {
     return (
         <div className="flex w-2/5 justify-center items-center">
             <div className="bg-white py-6 px-16 rounded-lg">
-                <img src={Profile} alt="ProfPic" className="mx-auto mx-auto my-3"/>
+                <img src={Profile} alt="ProfPic" className="mx-auto my-3"/>
                 <div className="flex flex-col w-full">
                     <div className="text-sm sm:text:xl text-center my-3 font-bold">Synced Profile Photo</div>
                     <button className="text-sm sm:text:xl my-3 text-primary-blue font-bold text-center border-b-1 border-black">Upload Photo</button>

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Logo from "../../../assets/img/logo.png";
 import { RiDashboard3Line, RiUser3Line, RiSettings3Line, RiListSettingsLine } from "react-icons/ri";
 import HomeAdminPage from "./NavbarAdmin";
@@ -8,8 +8,10 @@ import { removeUserSession } from "../../../utils/helpers";
 import Swal from "sweetalert2";
 import "./style.css";
 
-export default function Sidebar() {
+export default function Sidebar(){
+ 
   const navigate = useNavigate();
+
 
   // handle click event of logout button
   const handleLogout = () => {
@@ -49,6 +51,7 @@ export default function Sidebar() {
   };
   return (
     <div>
+      
       <HomeAdminPage />
       <div className="h-screen bg-primary-grey fixed top-0 flex-row w-[250px] ">
         <div className="flex-col ">
@@ -57,38 +60,38 @@ export default function Sidebar() {
           </div>
           <div className="flex flex-col ">
             <ul className="min-w-full mt-20 text-white ">
-              <li className="p-3 hover:bg-secondary-orange">
-                <Link to="/admin/home ">
+              <li className="p-3" >
+                <NavLink to="/admin/home" >
                   <div className="side-menu flex flex-row items-center">
                     <RiDashboard3Line size={20} className="mr-4" />
                     Dashboard
                   </div>
-                </Link>
+                </NavLink>
               </li>
               <li className="p-3">
-                <Link to="/KelolaUser">
+                <NavLink to="/KelolaUser">
                   <div className="side-menu flex flex-row items-center">
                     <RiUser3Line size={20} className="mr-4" />
                     Kelola User
                   </div>
-                </Link>
+                </NavLink>
               </li>
               <li className="p-3">
-                <Link to="/KelolaThread">
+                <NavLink to="/KelolaThread">
                   <div className="side-menu flex flex-row items-center">
                     <RiListSettingsLine size={20} className="mr-4" />
                     Kelola Thread
                   </div>
-                </Link>
+                </NavLink>
               </li>
 
               <li className="p-3">
-                <Link to="/Setting">
+                <NavLink to="/Setting">
                   <div className="side-menu flex flex-row items-center">
                     <RiSettings3Line size={20} className="mr-4" />
                     Setting
                   </div>
-                </Link>
+                </NavLink>
               </li>
 
               <li className="p-3 mt-[170px] flex justify-center logout ">
