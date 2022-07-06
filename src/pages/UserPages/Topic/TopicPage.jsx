@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import Thread from "./component/Thread.jsx";
 import TrendAccount from "./component/TrendAccount";
 import { BiFilterAlt, BiFilter } from "react-icons/bi";
+import { IoIosClose } from "react-icons/io";
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -28,6 +29,7 @@ export default function TopicPage() {
       setFiltering("process");
     }
   });
+
   const handleChange = (e) => {
     setFiltering("process");
     const name = e.target.name;
@@ -63,6 +65,7 @@ export default function TopicPage() {
     console.log(keyword);
     // Kalo gada hasilnya
     // setRes(false)
+    if(isOpen) setOpen(false)
   };
 
   // passing datanya di sini yak
@@ -87,16 +90,93 @@ export default function TopicPage() {
         return <div className="text-md xl:text-lg text-secondary-red">No results found</div>;
       }
     } else if (isFiltering === "no") {
-      return <Thread />;
+      return (
+        <>
+        <Thread />
+        <Thread />
+        <Thread />
+        </>
+      );
     }
   };
 
+const handleOpen = () => {
+    setOpen(!isOpen);
+}
+const handleClose = () => {
+    setOpen(false);
+}
+
+const openFilter = () => {
+  return(
+    <div id="filter-mobile-tablet">
+      <div className="fixed z-50 inset-0 m-auto">
+      <div onClick={handleClose} className="fixed inset-0 bg-[#ffffff4d]"></div>
+          <div className="px-3">
+            <div id="box" className="scrollbar-hp rounded-lg p-8 mt-[85%] -translate-y-[50%] relative max-w-md mx-auto bg-primary-black shadow-lg max-h-[80vh] overflow-auto ring-1 ring-slate-900/5 -my-px">
+              <div className="flex justify-between">
+                <div id="title" className="inline-flex gap-5">
+                  <BiFilterAlt size={40} className="fill-secondary-orange"></BiFilterAlt>
+                  <span className="m-auto text-lg sm:text-xl xl:text-2xl text-white font-bold">FILTER</span>
+                </div>
+                <IoIosClose id="close-button" onClick={handleClose} size={40} className="fill-white absolute right-1 top-1 cursor-pointer" />
+              </div>
+              <form onSubmit={handleSubmit} className="text-white">
+                <div id="topic" className="mt-4">
+                  <div className="mb-4 text-sm sm:text-md xl:text-lg font-semibold">Topic Theme</div>
+                  <div className="flex flex-col gap-3 text-xs sm:text-sm xl:text-md">
+                    <div className="flex items-center">
+                      <input type="checkbox" id="games" name="topic" value="0" checked={topic[0] === true} onChange={handleChange} className="accent-secondary-orange mr-2 w-4 h-4 rounded cursor-pointer" />
+                      <label htmlFor="games"> Games</label>
+                    </div>
+                    <div className="flex items-center">
+                      <input type="checkbox" id="health" name="topic" value="1" checked={topic[1] === true} onChange={handleChange} className="accent-secondary-orange mr-2 w-4 h-4 rounded cursor-pointer" />
+                      <label htmlFor="health"> Health</label>
+                    </div>
+                    <div className="flex items-center">
+                      <input type="checkbox" id="foodtravel" name="topic" value="2" checked={topic[2] === true} onChange={handleChange} className="accent-secondary-orange mr-2 w-4 h-4 rounded cursor-pointer" />
+                      <label htmlFor="foodtravel"> Food & Travel</label>
+                    </div>
+                    <div className="flex items-center">
+                      <input type="checkbox" id="tech" name="topic" value="3" checked={topic[3] === true} onChange={handleChange} className="accent-secondary-orange mr-2 w-4 h-4 rounded cursor-pointer" />
+                      <label htmlFor="tech"> Technology</label>
+                    </div>
+                    <div className="flex items-center">
+                      <input type="checkbox" id="edu" name="topic" value="4" checked={topic[4] === true} onChange={handleChange} className="accent-secondary-orange mr-2 w-4 h-4 rounded cursor-pointer" />
+                      <label htmlFor="edu"> Education</label>
+                    </div>
+                  </div>
+                </div>
+                <div id="trending" className="mt-4">
+                  <div className="mb-4 text-sm sm:text-md xl:text-lg font-semibold">Trending</div>
+                  <div className="flex flex-col gap-3 text-xs sm:text-sm xl:text-md">
+                    <div className="flex items-center">
+                      <input type="radio" id="trend-acc" name="trend" onChange={handleChange} checked={trend === "acc"} value="acc" className="accent-secondary-orange mr-2 w-4 h-4 rounded cursor-pointer" />
+                      <label htmlFor="trend-acc"> Trending Account</label>
+                    </div>
+                    <div className="flex items-center">
+                      <input type="radio" id="trend-thread" name="trend" onChange={handleChange} checked={trend === "thread"} value="thread" className="accent-secondary-orange mr-2 w-4 h-4 rounded cursor-pointer" />
+                      <label htmlFor="trend-thread"> Trending Thread</label>
+                    </div>
+                  </div>
+                </div>
+                <button onClick={handleReset} className="text-sm sm:text-md mt-12 sm:mt-16 w-full py-1 rounded-lg bg-gray-600 hover:bg-[#2A8DFE] text-center">
+                  Reset
+                </button>
+                <input type="submit" value="Apply" className="text-sm sm:text-md mt-4 w-full py-1 rounded-lg bg-secondary-orange hover:bg-[#18B015] cursor-pointer" />
+              </form>
+            </div>
+      </div>
+      </div>
+    </div>
+  )
+}
+
   return (
-    <div id="topic" className="bg-black" style={{ backgroundColor: "black" }}>
+    <div id="topic" className="bg-black max-h-[100vh] overflow-hidden" style={{ backgroundColor: "black" }}>
       <Navbar />
-      <div className="h-28"></div>
+      <div className="h-[100px] block"></div>
       <div id="container" className="lg:flex w-11/12 md:w-4/5 mx-auto">
-        {/* <div className="bg-transparent sticky h-screen top-0 bottom-4"> */}
         <div id="filter-box" className="w-1/4 relative mr-8 mx-auto hidden lg:block">
           <div className="fixed w-1/5">
             <div id="filter" className="p-8 bg-primary-grey rounded-xl">
@@ -151,23 +231,26 @@ export default function TopicPage() {
             </div>
           </div>
         </div>
-        {/* </div> */}
-        <div id="content-box" className="flex-1">
-          <div className="flex justify-between lg:block w-full">
-            <BiFilter size={40} className="fill-white lg:hidden my-auto"></BiFilter>
-            <div id="search-box" className="w-full ml-2">
-              <form onSubmit={handleSubmit}>
-                <input type="text" name="search" onChange={handleChange} value={keyword} placeholder="Search here" className="w-full py-3 px-8 bg-[#D9D9D9] rounded-lg" />
-              </form>
+        {isOpen && openFilter()}
+        <div id="content-box" className="flex-1 h-[95vh] overflow-hidden">
+          <div className="fixed top-[80px] md:top-[100px] left-[4.16%] md:left-[10%] lg:left-[calc(30%+2rem)] right-[4.16%] md:right-[10%]">
+            <div className="flex justify-between lg:block w-full">
+              <BiFilterAlt onClick={handleOpen} className="fill-white lg:hidden my-auto w-8 h-8 cursor-pointer"></BiFilterAlt>
+              <div id="search-box" className="w-full ml-3 lg:ml-0">
+                <form onSubmit={handleSubmit}>
+                  <input type="text" name="search" onChange={handleChange} value={keyword} placeholder="Search here" className="w-full text-xs md:text-base py-2 px-3 md:py-3 md:px-6 bg-[#D9D9D9] rounded-md md:rounded-lg" />
+                </form>
+              </div>
             </div>
           </div>
-          <div className="bg-primary-grey rounded-xl w-full mt-8 p-8">
+          <div className="scrollbar bg-primary-grey rounded-xl w-full p-8 mt-8 sm:mt-16 overflow-x-hidden overflow-y-auto h-[99%]">
             <div className="text-white text-md xl:text-lg font-semibold mb-8">
               {isFiltering === "yes" && "Result"}
               {isFiltering === "no" && "Trending Today"}
               {isFiltering === "process" && "Apply your filter or search"}
             </div>
             {res()}
+            <div className="h-14 sm:h-20 block"></div>
           </div>
         </div>
       </div>
