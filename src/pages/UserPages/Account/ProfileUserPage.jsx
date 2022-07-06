@@ -17,10 +17,10 @@ import { useDispatch } from "react-redux";
 import { DATA_PROFILE } from "../../../redux/profileSlice";
 import { useCallback } from "react";
 import axiosInstance from "../../../networks/api";
+import { getUserId } from "../../../utils/helpers";
 
 export default function ProfileUserPage() {
   const dispatch = useDispatch();
-  const idUser = useSelector((state) => state.user.id);
   const user = useSelector((state) => state.user.name);
   const [stat, setStat] = useState({ following: 105500, followers: 99900, threads: 100 });
   const [statconv, setStatconv] = useState({ following: "", followers: "", threads: "" });
@@ -166,12 +166,10 @@ export default function ProfileUserPage() {
     }
   };
 
-  console.log(idUser);
-
   const [loading, setLoading] = useState("");
   const fetchData = useCallback(() => {
     const response = axiosInstance
-      .get("v1/user/19")
+      .get("v1/user/" + getUserId())
       .then((response) => {
         dispatch(DATA_PROFILE(response.data.data));
         setLoading(false);
@@ -204,7 +202,7 @@ export default function ProfileUserPage() {
                 </Link>
               </div>
               <div id="username" className="mt-[-8%] sm:mt-[0%] text-xl sm:text-3xl md:text-4xl font-bold">
-                {user}
+                {profile.name}
               </div>
               <div id="bio" className="text-md md:text-2xl">
                 Hello Found
