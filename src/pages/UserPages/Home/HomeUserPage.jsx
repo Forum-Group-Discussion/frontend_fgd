@@ -28,12 +28,12 @@ export default function HomeUserPage() {
     index: "",
     value: false,
   });
-  const [showFull, setFull] = useState(false)
+  const [showFull, setFull] = useState(false);
   const [popupShare, setPopupShare] = useState(false);
   const [popupReport, setPopupReport] = useState(false);
   const [threadIndex, setThreadIdex] = useState("");
   const [loading, setLoading] = useState(true);
-  let { category } = useParams()
+  let { category } = useParams();
 
   const showPopupShare = () => {
     if (popupShare === false) {
@@ -75,38 +75,39 @@ export default function HomeUserPage() {
         console.log(error.response);
       });
     return response;
-  }, [dispatch])
+  }, [dispatch]);
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
-  
   const handleShowFull = () => {
     setFull(!showFull);
-  }
+  };
   const handleCloseFull = () => {
-      setFull(false);
-  }
+    setFull(false);
+  };
 
   const handleSave = () => {
     Swal.fire({
-        toast: true,
-        icon: "success",
-        title: "Thread successfully saved",
-        animation: false,
-        background: "#222834",
-        color: "#18B015",
-        position: "bottom-end",
-        showConfirmButton: false,
-        timer: 4000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
+      toast: true,
+      icon: "success",
+      title: "Thread successfully saved",
+      animation: false,
+      background: "#222834",
+      color: "#18B015",
+      position: "bottom-end",
+      showConfirmButton: false,
+      timer: 4000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
         toast.addEventListener("mouseenter", Swal.stopTimer);
         toast.addEventListener("mouseleave", Swal.resumeTimer);
-        },
+      },
     });
-}
+  };
+
+  const [filter, setFilter] = useState(null);
 
   return (
     <>
@@ -117,24 +118,24 @@ export default function HomeUserPage() {
             <div className="fixed w-1/5">
               <div id="kategori-list" className="flex absolute">
                 <ul id="kategori" className="text-center">
-                  <Link to='/user/home/Trending'>
-                    <li>Trending Topic</li>
-                  </Link>
-                  <Link to='/user/home/Games'>
-                    <li>Games</li>
-                  </Link>
-                  <Link to='/user/home/Health'>
-                    <li>Health</li>
-                  </Link>
-                  <Link to='/user/home/Food-Travel'>
-                    <li>Food & Travel</li>
-                  </Link>
-                  <Link to='/user/home/Technology'>
-                    <li>Technology</li>
-                  </Link>
-                  <Link to='/user/home/Education'>
-                    <li>Education</li>
-                  </Link>
+                  <li onClick={() => setFilter(null)} className="cursor-pointer">
+                    Trending Topic
+                  </li>
+                  <li onClick={() => setFilter(1)} className="cursor-pointer">
+                    Games
+                  </li>
+                  <li onClick={() => setFilter(2)} className="cursor-pointer">
+                    Health
+                  </li>
+                  <li onClick={() => setFilter(3)} className="cursor-pointer">
+                    Food & Travel
+                  </li>
+                  <li onClick={() => setFilter(4)} className="cursor-pointer">
+                    Technology
+                  </li>
+                  <li onClick={() => setFilter(5)} className="cursor-pointer">
+                    Education
+                  </li>
                 </ul>
               </div>
             </div>
@@ -171,8 +172,85 @@ export default function HomeUserPage() {
                   <Skeleton height={30} baseColor="#202020" highlightColor="#444" />
                 </div>
               </div>
+            ) : filter !== null ? (
+              threads
+                ?.filter((d) => d.topic.id === filter)
+                .map((item, index) => (
+                  <div id="thread" key={index}>
+                    <div id="thread-box" className="flex">
+                      <div id="thread-header" className="flex">
+                        <div className="mr-2">
+                          <img src={gambarProfile} alt="gambar profile" />
+                        </div>
+                        <div className="flex items-center">
+                          <div className="flex-col text-white">
+                            <h5 className="font-semibold tracking-[2px]">{item.users.name}</h5>
+                            <h6 className="font-medium mt-1 opacity-30">2 days ago</h6>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex flex-1 justify-end items-center">
+                        <button id="thread-button">Follow</button>
+                      </div>
+                    </div>
+                    <div className="mt-4 mb-4">
+                      <h3 className="font-semibold text-white tracking-[1px]">{item.title}</h3>
+                    </div>
+                    <div>
+                      <img src={gambarThread} alt="gambar thread" />
+                    </div>
+                    <div id="thread-icon" className="flex flex-1 justify-between mt-5">
+                      <div className="cursor-pointer">
+                        <Icon icon={thumbsUp} />
+                        <span>100K</span>
+                      </div>
+                      <div className="cursor-pointer">
+                        <Icon icon={thumbsDown} />
+                        <span>100K</span>
+                      </div>
+                      <div onClick={handleShowFull} className="cursor-pointer">
+                        <Icon icon={commentingO} />
+                        <span>100K</span>
+                      </div>
+                      <div onClick={handleSave} className="cursor-pointer">
+                        <Icon icon={bookmark} />
+                      </div>
+                      <div onClick={() => showMoreMenu(index)}>
+                        <Icon icon={moreVertical} />
+                        <div className={more && index === threadIndex ? "more-3 active" : "more"}>
+                          <span className="cursor-pointer" onClick={handleShowFull}>
+                            Open
+                          </span>
+                          <span className="cursor-pointer" onClick={showPopupShare}>
+                            Share
+                          </span>
+                          <span className="cursor-pointer" onClick={showPopupReport}>
+                            Report
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="close-popup" className={popupShare ? "popupShare active" : "popupShare"}>
+                      <div>
+                        <div className="flex absolute inset-0 m-auto justify-center p-4">
+                          <PopupShare closePopupShare={closePopupShare} />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="close-popup" className={popupReport ? "popupReport active" : "popupReport"}>
+                      <div>
+                        <div className="flex absolute inset-0 m-auto justify-center p-4">
+                          <PopupReport closePopupReport={closePopupReport} />
+                        </div>
+                      </div>
+                    </div>
+                    {showFull && <FullThread onCancel={handleCloseFull} />}
+                  </div>
+                ))
             ) : (
-              threads?.map((item, index) => (
+              threads.map((item, index) => (
                 <div id="thread" key={index}>
                   <div id="thread-box" className="flex">
                     <div id="thread-header" className="flex">
@@ -215,9 +293,15 @@ export default function HomeUserPage() {
                     <div onClick={() => showMoreMenu(index)}>
                       <Icon icon={moreVertical} />
                       <div className={more && index === threadIndex ? "more-3 active" : "more"}>
-                        <span className="cursor-pointer" onClick={handleShowFull}>Open</span>
-                        <span className="cursor-pointer" onClick={showPopupShare}>Share</span>
-                        <span className="cursor-pointer" onClick={showPopupReport}>Report</span>
+                        <span className="cursor-pointer" onClick={handleShowFull}>
+                          Open
+                        </span>
+                        <span className="cursor-pointer" onClick={showPopupShare}>
+                          Share
+                        </span>
+                        <span className="cursor-pointer" onClick={showPopupReport}>
+                          Report
+                        </span>
                       </div>
                     </div>
                   </div>
