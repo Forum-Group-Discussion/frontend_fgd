@@ -107,6 +107,10 @@ export default function HomeUserPage() {
     });
   };
 
+  const [filter, setFilter] = useState(null);
+
+  console.log(threads.filter((d) => d.topic.id === 1));
+
   return (
     <>
       <Navbar />
@@ -116,24 +120,24 @@ export default function HomeUserPage() {
             <div className="fixed w-1/5">
               <div id="kategori-list" className="flex absolute">
                 <ul id="kategori" className="text-center">
-                  <Link to="/user/home/Trending">
-                    <li>Trending Topic</li>
-                  </Link>
-                  <Link to="/user/home/Games">
-                    <li>Games</li>
-                  </Link>
-                  <Link to="/user/home/Health">
-                    <li>Health</li>
-                  </Link>
-                  <Link to="/user/home/Food-Travel">
-                    <li>Food & Travel</li>
-                  </Link>
-                  <Link to="/user/home/Technology">
-                    <li>Technology</li>
-                  </Link>
-                  <Link to="/user/home/Education">
-                    <li>Education</li>
-                  </Link>
+                  <li>
+                    <button onClick={() => setFilter(null)}>Trending Topic</button>
+                  </li>
+                  <li>
+                    <button onClick={() => setFilter(1)}>Games</button>
+                  </li>
+                  <li>
+                    <button onClick={() => setFilter(2)}>Health</button>
+                  </li>
+                  <li>
+                    <button onClick={() => setFilter(3)}>Food & Travel</button>
+                  </li>
+                  <li>
+                    <button onClick={() => setFilter(4)}>Technology</button>
+                  </li>
+                  <li>
+                    <button onClick={() => setFilter(5)}>Education</button>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -170,8 +174,85 @@ export default function HomeUserPage() {
                   <Skeleton height={30} baseColor="#202020" highlightColor="#444" />
                 </div>
               </div>
+            ) : filter !== null ? (
+              threads
+                ?.filter((d) => d.topic.id === filter)
+                .map((item, index) => (
+                  <div id="thread" key={index}>
+                    <div id="thread-box" className="flex">
+                      <div id="thread-header" className="flex">
+                        <div className="mr-2">
+                          <img src={gambarProfile} alt="gambar profile" />
+                        </div>
+                        <div className="flex items-center">
+                          <div className="flex-col text-white">
+                            <h5 className="font-semibold tracking-[2px]">{item.users.name}</h5>
+                            <h6 className="font-medium mt-1 opacity-30">2 days ago</h6>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex flex-1 justify-end items-center">
+                        <button id="thread-button">Follow</button>
+                      </div>
+                    </div>
+                    <div className="mt-4 mb-4">
+                      <h3 className="font-semibold text-white tracking-[1px]">{item.title}</h3>
+                    </div>
+                    <div>
+                      <img src={gambarThread} alt="gambar thread" />
+                    </div>
+                    <div id="thread-icon" className="flex flex-1 justify-between mt-5">
+                      <div className="cursor-pointer">
+                        <Icon icon={thumbsUp} />
+                        <span>100K</span>
+                      </div>
+                      <div className="cursor-pointer">
+                        <Icon icon={thumbsDown} />
+                        <span>100K</span>
+                      </div>
+                      <div onClick={handleShowFull} className="cursor-pointer">
+                        <Icon icon={commentingO} />
+                        <span>100K</span>
+                      </div>
+                      <div onClick={handleSave} className="cursor-pointer">
+                        <Icon icon={bookmark} />
+                      </div>
+                      <div onClick={() => showMoreMenu(index)}>
+                        <Icon icon={moreVertical} />
+                        <div className={more && index === threadIndex ? "more-3 active" : "more"}>
+                          <span className="cursor-pointer" onClick={handleShowFull}>
+                            Open
+                          </span>
+                          <span className="cursor-pointer" onClick={showPopupShare}>
+                            Share
+                          </span>
+                          <span className="cursor-pointer" onClick={showPopupReport}>
+                            Report
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="close-popup" className={popupShare ? "popupShare active" : "popupShare"}>
+                      <div>
+                        <div className="flex absolute inset-0 m-auto justify-center p-4">
+                          <PopupShare closePopupShare={closePopupShare} />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="close-popup" className={popupReport ? "popupReport active" : "popupReport"}>
+                      <div>
+                        <div className="flex absolute inset-0 m-auto justify-center p-4">
+                          <PopupReport closePopupReport={closePopupReport} />
+                        </div>
+                      </div>
+                    </div>
+                    {showFull && <FullThread onCancel={handleCloseFull} />}
+                  </div>
+                ))
             ) : (
-              threads?.map((item, index) => (
+              threads.map((item, index) => (
                 <div id="thread" key={index}>
                   <div id="thread-box" className="flex">
                     <div id="thread-header" className="flex">

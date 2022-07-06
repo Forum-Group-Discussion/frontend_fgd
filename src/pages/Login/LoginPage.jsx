@@ -8,7 +8,7 @@ import "aos/dist/aos.css";
 import Swal from "sweetalert2";
 import { getIsAdmin, setUserSession } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
-import  axiosInstance  from "../../networks/api";
+import axiosInstance from "../../networks/api";
 import { useDispatch } from "react-redux";
 import { USER_NAME } from "../../redux/userSlice";
 
@@ -53,8 +53,8 @@ function LoginPage() {
           timer: 4000,
           timerProgressBar: true,
           didOpen: (toast) => {
-          toast.addEventListener("mouseenter", Swal.stopTimer);
-          toast.addEventListener("mouseleave", Swal.resumeTimer);
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
           },
         });
         setUserSession(response.data.data.token, response.data.data.name, response.data.data.isAdmin);
@@ -68,22 +68,22 @@ function LoginPage() {
       })
       .catch((error) => {
         if (error.response.responseCode === 401) {
-            Swal.fire({
-              toast: true,
-              icon: "error",
-              title: "Something went wrong, please try again later",
-              animation: false,
-              background: "#222834",
-              color: "#DE1508",
-              position: "bottom-end",
-              showConfirmButton: false,
-              timer: 4000,
-              timerProgressBar: true,
-              didOpen: (toast) => {
+          Swal.fire({
+            toast: true,
+            icon: "error",
+            title: "Something went wrong, please try again later",
+            animation: false,
+            background: "#222834",
+            color: "#DE1508",
+            position: "bottom-end",
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
               toast.addEventListener("mouseenter", Swal.stopTimer);
               toast.addEventListener("mouseleave", Swal.resumeTimer);
-              },
-            });
+            },
+          });
         } else {
           Swal.fire({
             toast: true,
@@ -97,8 +97,8 @@ function LoginPage() {
             timer: 4000,
             timerProgressBar: true,
             didOpen: (toast) => {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
             },
           });
         }
