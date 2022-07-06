@@ -13,10 +13,14 @@ import { Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useSelector } from "react-redux";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { DATA_PROFILE } from "../../../redux/profileSlice";
+import { useCallback } from "react";
+import axiosInstance from "../../../networks/api";
 
 export default function ProfileUserPage() {
-  // const dipatch = useDispatch();
+  const dispatch = useDispatch();
+  const idUser = useSelector((state) => state.user.id);
   const user = useSelector((state) => state.user.name);
   const [stat, setStat] = useState({ following: 105500, followers: 99900, threads: 100 });
   const [statconv, setStatconv] = useState({ following: "", followers: "", threads: "" });
@@ -162,18 +166,28 @@ export default function ProfileUserPage() {
     }
   };
 
-  //   const fetchData = useCallback(() => {
-  //     const response = axiosInstance
-  //       .get("v1/thread")
-  //       .then((response) => {
-  //         dispatch(DATA_PROFILE(response.data.data));
-  //         setLoading(false);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error.response);
-  //       });
-  //     return response;
-  //   }, [dispatch]);
+  console.log(idUser);
+
+  const [loading, setLoading] = useState("");
+  const fetchData = useCallback(() => {
+    const response = axiosInstance
+      .get("v1/user/19")
+      .then((response) => {
+        dispatch(DATA_PROFILE(response.data.data));
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+    return response;
+  }, [dispatch]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const profile = useSelector((state) => state.profile.profile);
+  console.log(profile);
 
   return (
     <>

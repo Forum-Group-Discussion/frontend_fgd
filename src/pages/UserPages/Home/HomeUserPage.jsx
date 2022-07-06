@@ -109,8 +109,6 @@ export default function HomeUserPage() {
 
   const [filter, setFilter] = useState(null);
 
-  console.log(threads.filter((d) => d.topic.id === 1));
-
   return (
     <>
       <Navbar />
@@ -120,23 +118,23 @@ export default function HomeUserPage() {
             <div className="fixed w-1/5">
               <div id="kategori-list" className="flex absolute">
                 <ul id="kategori" className="text-center">
-                  <li>
-                    <button onClick={() => setFilter(null)}>Trending Topic</button>
+                  <li onClick={() => setFilter(null)} className="cursor-pointer">
+                    Trending Topic
                   </li>
-                  <li>
-                    <button onClick={() => setFilter(1)}>Games</button>
+                  <li onClick={() => setFilter(1)} className="cursor-pointer">
+                    Games
                   </li>
-                  <li>
-                    <button onClick={() => setFilter(2)}>Health</button>
+                  <li onClick={() => setFilter(2)} className="cursor-pointer">
+                    Health
                   </li>
-                  <li>
-                    <button onClick={() => setFilter(3)}>Food & Travel</button>
+                  <li onClick={() => setFilter(3)} className="cursor-pointer">
+                    Food & Travel
                   </li>
-                  <li>
-                    <button onClick={() => setFilter(4)}>Technology</button>
+                  <li onClick={() => setFilter(4)} className="cursor-pointer">
+                    Technology
                   </li>
-                  <li>
-                    <button onClick={() => setFilter(5)}>Education</button>
+                  <li onClick={() => setFilter(5)} className="cursor-pointer">
+                    Education
                   </li>
                 </ul>
               </div>

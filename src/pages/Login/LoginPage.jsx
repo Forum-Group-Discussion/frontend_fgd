@@ -10,7 +10,7 @@ import { getIsAdmin, setUserSession } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../networks/api";
 import { useDispatch } from "react-redux";
-import { USER_NAME } from "../../redux/userSlice";
+import { USER_ID, USER_NAME } from "../../redux/userSlice";
 
 function LoginPage() {
   const dispatch = useDispatch();
@@ -60,6 +60,7 @@ function LoginPage() {
         setUserSession(response.data.data.token, response.data.data.name, response.data.data.isAdmin);
         console.log(response.data.data.name);
         dispatch(USER_NAME(response.data.data.name));
+        dispatch(USER_ID(response.data.data.id));
         if (getIsAdmin() === "true") {
           navigate("/admin/home");
         } else {
