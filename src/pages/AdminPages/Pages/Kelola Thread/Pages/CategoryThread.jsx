@@ -21,7 +21,7 @@ export default function CategoryThread() {
           <div id='category-content'>
             <div className="menu-content bg-primary-grey text-white p-3 sm:p-7 max-h-[85vh] overflow-auto no-scrollbar w-[90%] lg:w-[70%] xl:w-[80%] mx-auto lg:mx-0 lg:ml-[280px]">
               <div className='p-5'>
-                <DeleteThread/>
+                <DeleteThread page="thread"/>
                 <Report/>
               </div>
             </div>

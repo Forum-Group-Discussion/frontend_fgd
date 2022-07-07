@@ -66,7 +66,7 @@ export default function Category() {
                 <div id="category" className="pb-3 sm:pb-6 ml-2 font-bold text-sm sm:text-base">Games</div>
                 <div className="max-h-[70vh] overflow-y-auto no-scrollbar">
                   {data?.map(item=>(
-                    <Link to="/KelolaUser/Category/User">
+                    <Link to="/KelolaUser/Category/User" key={item.id}>
                       <div className="rounded-md border-gray-500/10 border-2 mb-5">
                         <div className="xl:px-20 md:px-10 lg:px-15 md:py-8 py-4 px-2 flex justify-between">
                           <div id="category-details" className="flex place-items-center">

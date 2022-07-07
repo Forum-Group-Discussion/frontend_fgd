@@ -4,7 +4,7 @@ import Joko from "../../../../../assets/img/Admin/JOK.png"
 import Sidebar from '../../../Components/Sidebar'
 import Btnsuspen from '../../../Components/BtnSuspen'
 import Report from  '../../../Components/Report'
-import Thread from '../../../../UserPages/Account/components/Thread'
+import DeleteThread from "../../../Components/DeleteThread"
 import { useEffect } from 'react'
 import AOS from "aos";
 
@@ -97,7 +97,7 @@ export default function CategoryUser() {
                     }
                   </div>
                   {choose === "thread" 
-                    ? <Thread/>
+                    ? <DeleteThread page="user"/>
                     : <Report/>
                   }
                 </div>

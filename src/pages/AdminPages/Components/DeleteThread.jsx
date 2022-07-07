@@ -12,7 +12,7 @@ import { moreVertical } from 'react-icons-kit/feather/moreVertical'
 import { useState,useEffect } from "react";
 import Swal from "sweetalert2";
 
-export default function Save(){
+export default function DeleteThread({page}){
     const [more, setMore] = useState(false)
     const [popupShare, setPopupShare] = useState(false)
     const [popupReport, setPopupReport] = useState(false)
@@ -164,9 +164,11 @@ export default function Save(){
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-1 justify-end items-center">
-                        <button onClick={handleDelete} id="thread-button" className="text-sm sm:text-lg">Delete</button>
-                    </div>
+                    {page==="thread" &&
+                        <div className="flex flex-1 justify-end items-center">
+                            <button onClick={handleDelete} id="thread-button" className="text-sm sm:text-lg">Delete</button>
+                        </div>
+                    }
                 </div>
                 <div className="mt-4 mb-4">
                     <h3 className="text-sm sm:text-lg md:font-semibold text-white tracking-[1px]">Rekomendasi 5 Game Mobile yang Menarik di Minggu Keempat Bulan Mei 2022</h3>
