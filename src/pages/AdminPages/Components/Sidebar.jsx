@@ -65,7 +65,7 @@ export default function Sidebar(){
           <div id="nav-toggler" onClick={handleNav} className="lg:hidden flex flex-col justify-center">
               <AiOutlineMenu size={25} className="fill-white"/>
           </div>
-          <ul id="nav-item" className={nav ? "bg-primary-grey text-white fixed left-0 w-[60%] sm:w-[40%] h-full border-r border-r-primary-grey ease-in-out duration-500 top-0 lg:hidden" : "ease-in-out duration-500 fixed left-[-100%]"}>
+          <ul id="nav-item" className={nav ? "bg-primary-grey text-white fixed left-0 w-[60%] sm:w-[40%] h-full border-r border-r-primary-grey ease-in-out duration-500 top-0 lg:hidden z-50" : "ease-in-out duration-500 fixed left-[-100%] z-50"}>
             <AiOutlineClose size={25} onClick={handleNav} className="fill-white absolute top-6 right-6" />
             <li id="nav-home" className="p-3 mt-[30%]" >
               <NavLink to="/admin/home" >
