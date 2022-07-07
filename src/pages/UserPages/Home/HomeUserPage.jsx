@@ -124,23 +124,23 @@ export default function HomeUserPage() {
             <div className="fixed w-1/5">
               <div id="kategori-list" className="flex absolute">
                 <ul id="kategori" className="text-center">
-                  <li onClick={handleFilter} value={null} className="cursor-pointer flex gap-3 justify-center">
+                  <li onClick={handleFilter} value={null} className="flex gap-3 justify-center">
                     <AiFillFire className="fill-secondary-orange w-6 h-6"></AiFillFire>
                     <div className="text-secondary-orange">Trending Topic</div> 
                   </li>
-                  <li onClick={handleFilter} value={1} className="cursor-pointer">
+                  <li onClick={handleFilter} value={1} className={topic===1 ? "cursor-pointer bg-secondary-orange" : "cursor-pointer hover:bg-secondary-orange"}>
                     Games
                   </li>
-                  <li onClick={handleFilter} value={2} className="cursor-pointer">
+                  <li onClick={handleFilter} value={2} className={topic===2 ? "cursor-pointer bg-secondary-orange" : "cursor-pointer hover:bg-secondary-orange"}>
                     Health
                   </li>
-                  <li onClick={handleFilter} value={3} className="cursor-pointer">
+                  <li onClick={handleFilter} value={3} className={topic===3 ? "cursor-pointer bg-secondary-orange" : "cursor-pointer hover:bg-secondary-orange"}>
                     Food & Travel
                   </li>
-                  <li onClick={handleFilter} value={4} className="cursor-pointer">
+                  <li onClick={handleFilter} value={4} className={topic===4 ? "cursor-pointer bg-secondary-orange" : "cursor-pointer hover:bg-secondary-orange"}>
                     Technology
                   </li>
-                  <li onClick={handleFilter} value={5} className="cursor-pointer">
+                  <li onClick={handleFilter} value={5} className={topic===5 ? "cursor-pointer bg-secondary-orange" : "cursor-pointer hover:bg-secondary-orange"}>
                     Education
                   </li>
                 </ul>

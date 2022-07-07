@@ -113,15 +113,15 @@ const openFilter = () => {
       <div className="fixed z-50 inset-0 m-auto">
       <div onClick={handleClose} className="fixed inset-0 bg-[#ffffff4d]"></div>
           <div className="px-3">
-            <div id="box" className="scrollbar-hp rounded-lg p-8 mt-[85%] -translate-y-[50%] relative max-w-md mx-auto bg-primary-black shadow-lg max-h-[80vh] overflow-auto ring-1 ring-slate-900/5 -my-px">
+            <div id="box" className="scrollbar-hp rounded-lg p-8 mt-[85%] -translate-y-[50%] relative max-w-md mx-auto bg-white shadow-lg max-h-[80vh] overflow-auto ring-1 ring-slate-900/5 -my-px">
               <div className="flex justify-between">
                 <div id="title" className="inline-flex gap-5">
                   <BiFilterAlt size={40} className="fill-secondary-orange"></BiFilterAlt>
-                  <span className="m-auto text-lg sm:text-xl xl:text-2xl text-white font-bold">FILTER</span>
+                  <span className="m-auto text-lg sm:text-xl xl:text-2xl font-bold">FILTER</span>
                 </div>
-                <IoIosClose id="close-button" onClick={handleClose} size={40} className="fill-white absolute right-1 top-1 cursor-pointer" />
+                <IoIosClose id="close-button" onClick={handleClose} size={40} className="absolute right-1 top-1 cursor-pointer" />
               </div>
-              <form onSubmit={handleSubmit} className="text-white">
+              <form onSubmit={handleSubmit} className="">
                 <div id="topic" className="mt-4">
                   <div className="mb-4 text-sm sm:text-md xl:text-lg font-semibold">Topic Theme</div>
                   <div className="flex flex-col gap-3 text-xs sm:text-sm xl:text-md">
@@ -160,7 +160,7 @@ const openFilter = () => {
                     </div>
                   </div>
                 </div>
-                <button onClick={handleReset} className="text-sm sm:text-md mt-12 sm:mt-16 w-full py-1 rounded-lg bg-gray-600 hover:bg-[#2A8DFE] text-center">
+                <button onClick={handleReset} className="text-sm sm:text-md mt-12 sm:mt-16 w-full py-1 rounded-lg bg-gray-400 hover:bg-[#2A8DFE] text-center">
                   Reset
                 </button>
                 <input type="submit" value="Apply" className="text-sm sm:text-md mt-4 w-full py-1 rounded-lg bg-secondary-orange hover:bg-[#18B015] cursor-pointer" />

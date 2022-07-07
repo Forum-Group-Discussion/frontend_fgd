@@ -3,6 +3,7 @@ import "react-quill/dist/quill.snow.css";
 import { useState, useRef } from "react";
 import "./createthread.css";
 import Navbar from "../components/Navbar";
+import UploadPhoto from "../components/UploadPhoto";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
@@ -11,6 +12,7 @@ import storage from "../../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 export default function CreateThread() {
+  const [showUpload, setShowUpload] = useState(false);
   const [value, setValue] = useState({ title: "", topic: "" });
   const [image, setImage] = useState(null);
   const [content, setContent] = useState("");
@@ -23,6 +25,9 @@ export default function CreateThread() {
   // useEffect(()=>{
   //     console.log(value, content)
   // })
+const handleShowUpload = () => {
+    setShowUpload(!showUpload);
+}
 
   const handleTitle = (e) => {
     setValue({ ...value, title: e.target.value });
@@ -112,7 +117,7 @@ export default function CreateThread() {
             <label htmlFor="img" className="block text-gray-300 mb-4">
               Add Image
             </label>
-            <label htmlFor="img" className="bg-secondary-blue px-6 py-2 text-white rounded-lg cursor-pointer text-center">
+            {/* <label htmlFor="img" className="bg-secondary-blue px-6 py-2 text-white rounded-lg cursor-pointer text-center">
               Choose Image
             </label>
             <input
@@ -123,7 +128,8 @@ export default function CreateThread() {
                 setImage(e.target.files[0]);
               }}
               name="image"
-            />
+            /> */}
+            <div id="upload-button" onClick={handleShowUpload} className="bg-secondary-orange w-fit px-6 py-2 text-white rounded-lg cursor-pointer text-center">Choose Image</div>
           </div>
           <div id="topic-box" className="mb-[6%] sm:mb-[2%] mt-[3%] text-sm sm:text-md">
             <div className="block text-gray-300 mb-2">Choose topic</div>
@@ -162,6 +168,7 @@ export default function CreateThread() {
           <input id="submit-button" type="submit" value="Submit" className="mb-[12%] sm:mb-[4%] mt-[3%] w-full bg-primary-grey hover:bg-secondary-orange py-4 rounded-xl text-white text-lg md:text-xl font-bold"></input>
         </form>
       </div>
+      {showUpload && <UploadPhoto onCancel={handleShowUpload}/>}
     </div>
   );
 }

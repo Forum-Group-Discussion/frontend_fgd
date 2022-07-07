@@ -53,10 +53,6 @@
   border: none;
 }
 
-#home #container #kategori li:hover {
-  background-color: #ff3d00;
-}
-
 #home #box-2 #thread #thread-header div:nth-child(1) img {
   width: 80px;
 }
