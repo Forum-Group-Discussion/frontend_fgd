@@ -7,7 +7,7 @@ function PopupReport({closePopupReport}) {
     return (
         <div className="flex w-[80%] max-w-[500px] text-xs sm:text-sm md:text-base justify-center items-center">
             <div className="bg-[#222834] py-6 px-8 rounded-[8px] relative">
-                <div onClick={closePopupReport} className="absolute top-0 right-0 p-1 text-red-600">
+                <div id="close-button" onClick={closePopupReport} className="absolute top-0 right-0 p-1 text-red-600">
                     <Icon icon={x} />
                 </div>
                 <h4 className="text-center text-white mb-4 font-bold tracking-[1px]">Report</h4>

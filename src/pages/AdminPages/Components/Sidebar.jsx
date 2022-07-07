@@ -1,17 +1,26 @@
 import { NavLink } from "react-router-dom";
 import Logo from "../../../assets/img/logo.png";
 import { RiDashboard3Line, RiUser3Line, RiSettings3Line, RiListSettingsLine } from "react-icons/ri";
+import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import HomeAdminPage from "./NavbarAdmin";
-import { useNavigate, useRo } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Logout from "../../../assets/img/Admin/Logout.png";
 import { removeUserSession } from "../../../utils/helpers";
 import Swal from "sweetalert2";
 import "./style.css";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function Sidebar(){
- 
+  const [nav, setNav] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(()=>{
+    console.log(nav)
+  })
+  const handleNav = () => {
+    setNav(!nav);
+  };
 
   // handle click event of logout button
   const handleLogout = () => {
@@ -51,56 +60,108 @@ export default function Sidebar(){
   };
   return (
     <div>
-      
-      <HomeAdminPage />
-      <div className="h-screen bg-primary-grey fixed top-0 flex-row w-[250px] ">
-        <div className="flex-col ">
-          <div className="p-5">
-            <img src={Logo} className="sm:h-[50px] ml-5" alt="logo found" />
+      <div className="lg:hidden max-w-[1000px] w-[90%] mx-auto lg:max-w-0 lg:w-[100%]">
+        <div className="flex justify-center gap-6">
+          <div id="nav-toggler" onClick={handleNav} className="lg:hidden flex flex-col justify-center">
+              <AiOutlineMenu size={25} className="fill-white"/>
           </div>
-          <div className="flex flex-col ">
-            <ul className="min-w-full mt-20 text-white ">
-              <li className="p-3" >
-                <NavLink to="/admin/home" >
-                  <div className="side-menu flex flex-row items-center">
-                    <RiDashboard3Line size={20} className="mr-4" />
-                    Dashboard
-                  </div>
-                </NavLink>
-              </li>
-              <li className="p-3">
-                <NavLink to="/KelolaUser">
-                  <div className="side-menu flex flex-row items-center">
-                    <RiUser3Line size={20} className="mr-4" />
-                    Kelola User
-                  </div>
-                </NavLink>
-              </li>
-              <li className="p-3">
-                <NavLink to="/KelolaThread">
-                  <div className="side-menu flex flex-row items-center">
-                    <RiListSettingsLine size={20} className="mr-4" />
-                    Kelola Thread
-                  </div>
-                </NavLink>
-              </li>
-
-              <li className="p-3">
-                <NavLink to="/Setting">
-                  <div className="side-menu flex flex-row items-center">
-                    <RiSettings3Line size={20} className="mr-4" />
-                    Setting
-                  </div>
-                </NavLink>
-              </li>
-
-              <li className="p-3 mt-[170px] flex justify-center logout ">
-                <div className="flex flex-row items-center">
-                  <img src={Logout} className="mr-4 w-[20px]" alt="Icon_logout" />
-                  <input type="submit" onClick={handleLogout} value="Logout" className="logout" />
+          <ul id="nav-side" className={nav ? "bg-primary-grey text-white fixed left-0 w-[60%] sm:w-[40%] h-full border-r border-r-primary-grey ease-in-out duration-500 top-0 lg:hidden" : "ease-in-out duration-500 fixed left-[-100%]"}>
+            <AiOutlineClose size={25} onClick={handleNav} className="fill-white absolute top-6 right-6" />
+            <li className="p-3 mt-[30%]" >
+              <NavLink to="/admin/home" >
+                <div className="side-menu flex flex-row items-center">
+                  <RiDashboard3Line size={20} className="mr-4" />
+                  Dashboard
                 </div>
-              </li>
-            </ul>
+              </NavLink>
+            </li>
+            <li className="p-3">
+              <NavLink to="/KelolaUser">
+                <div className="side-menu flex flex-row items-center">
+                  <RiUser3Line size={20} className="mr-4" />
+                  Kelola User
+                </div>
+              </NavLink>
+            </li>
+            <li className="p-3">
+              <NavLink to="/KelolaThread">
+                <div className="side-menu flex flex-row items-center">
+                  <RiListSettingsLine size={20} className="mr-4" />
+                  Kelola Thread
+                </div>
+              </NavLink>
+            </li>
+
+            <li className="p-3">
+              <NavLink to="/Setting">
+                <div className="side-menu flex flex-row items-center">
+                  <RiSettings3Line size={20} className="mr-4" />
+                  Setting
+                </div>
+              </NavLink>
+            </li>
+
+            <li className="p-3 mt-[170px] flex justify-center logout ">
+              <div className="flex flex-row items-center">
+                <img src={Logout} className="mr-4 w-[20px]" alt="Icon_logout" />
+                <input type="submit" onClick={handleLogout} value="Logout" className="logout" />
+              </div>
+            </li>
+          </ul>
+          <HomeAdminPage />
+        </div>
+      </div>
+      <div className="hidden lg:contents">
+        <HomeAdminPage/>
+        <div className="flex h-screen bg-primary-grey fixed top-0 w-[250px]">
+          <div className="flex-col ">
+            <div className="p-5">
+              <img src={Logo} className="sm:h-[50px] ml-5" alt="logo found" />
+            </div>
+            <div className="flex flex-col ">
+              <ul className="min-w-full mt-20 text-white ">
+                <li className="p-3" >
+                  <NavLink to="/admin/home" >
+                    <div className="side-menu flex flex-row items-center">
+                      <RiDashboard3Line size={20} className="mr-4" />
+                      Dashboard
+                    </div>
+                  </NavLink>
+                </li>
+                <li className="p-3">
+                  <NavLink to="/KelolaUser">
+                    <div className="side-menu flex flex-row items-center">
+                      <RiUser3Line size={20} className="mr-4" />
+                      Kelola User
+                    </div>
+                  </NavLink>
+                </li>
+                <li className="p-3">
+                  <NavLink to="/KelolaThread">
+                    <div className="side-menu flex flex-row items-center">
+                      <RiListSettingsLine size={20} className="mr-4" />
+                      Kelola Thread
+                    </div>
+                  </NavLink>
+                </li>
+
+                <li className="p-3">
+                  <NavLink to="/Setting">
+                    <div className="side-menu flex flex-row items-center">
+                      <RiSettings3Line size={20} className="mr-4" />
+                      Setting
+                    </div>
+                  </NavLink>
+                </li>
+
+                <li className="p-3 mt-[170px] flex justify-center logout ">
+                  <div className="flex flex-row items-center">
+                    <img src={Logout} className="mr-4 w-[20px]" alt="Icon_logout" />
+                    <input type="submit" onClick={handleLogout} value="Logout" className="logout" />
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

@@ -1,56 +1,47 @@
-import jokowi from "../../../assets/img/Admin/JOK.png"
+
+const data = [
+    {
+        id: 1,
+        profpic: "https://i.pinimg.com/736x/9c/a2/5a/9ca25a9fe7aaaa1c7cb65e472c6820a8.jpg",
+        reportText: "This thread contains inappropriate and pornographic elements",
+        date: "Sat. 24.04.2022",
+        time: "12:00 PM"
+    },
+    {
+        id: 2,
+        profpic: "https://divedigital.id/wp-content/uploads/2021/11/74.jpg",
+        reportText: "This account is indicated to violate....",
+        date: "Sat. 24.04.2022",
+        time: "10:00 PM"
+    },
+    {
+        id: 3,
+        profpic: "https://i.pinimg.com/736x/a0/a1/75/a0a175df85e1abceada797d39310fee2.jpg",
+        reportText: "This thread contains inappropriate and pornographic elements",
+        date: "Sat. 24.04.2022",
+        time: "08:00 AM"
+    },
+
+]
 
 export default function NoticeBoard () {
     return (
         <div>
             <div className="rounded-md border-gray-500/10 border-2 p-2 h-content w-[100%]">
                 <div className="flex flex-col">
-                <div className="p-5 flex justify-center font-bold xl:text-base lg:text-sm ">Notice Board</div>
-
-                <div className="rounded-md border-gray-500/10 border-2 p-5 mb-2">
-                    <div className="flex items-center">
-                        <img src={jokowi} alt="img user" className="w-[30px] rounded-full"/>
-                        <div className="text-sm ml-3 lg:text-xs xl:text-sm">This thread contains inappropriate....</div>
-                    </div>
-                    <div className="flex flex-row items-center mt-2 justify-end">
-                            <div className="text-secondary-red xl:text-xs lg:text-[10px] xl:mr-3 lg:mr-8">Sat. 24.04.2022</div>
-                            <div className="xl:text-xs lg:text-[10px] text-white-600/25">12:00 Pm</div>
-                    </div> 
-                </div>
-
-                <div className="rounded-md border-gray-500/10 border-2 p-5 mb-2">
-                    <div className="flex items-center">
-                        <img src={jokowi} alt="img user" className="w-[30px] rounded-full"/>
-                        <div className="text-sm ml-3 lg:text-xs xl:text-sm">This thread contains inappropriate....</div>
-                    </div>
-                    <div className="flex flex-row items-center mt-2 justify-end">
-                            <div className="text-secondary-red xl:text-xs lg:text-[10px] xl:mr-3 lg:mr-8">Sat. 24.04.2022</div>
-                            <div className="xl:text-xs lg:text-[10px] text-white-600/25">12:00 Pm</div>
-                    </div> 
-                </div>
-
-                <div className="rounded-md border-gray-500/10 border-2 p-5 mb-2">
-                    <div className="flex items-center">
-                        <img src={jokowi} alt="img user" className="w-[30px] rounded-full"/>
-                        <div className="text-sm ml-3 lg:text-xs xl:text-sm">This thread contains inappropriate....</div>
-                    </div>
-                    <div className="flex flex-row items-center mt-2 justify-end">
-                            <div className="text-secondary-red xl:text-xs lg:text-[10px] xl:mr-3 lg:mr-8">Sat. 24.04.2022</div>
-                            <div className="xl:text-xs lg:text-[10px] text-white-600/25">12:00 Pm</div>
-                    </div> 
-                </div>
-
-                <div className="rounded-md border-gray-500/10 border-2 p-5 mb-2">
-                    <div className="flex items-center">
-                        <img src={jokowi} alt="img user" className="w-[30px] rounded-full"/>
-                        <div className="text-sm ml-3 lg:text-xs xl:text-sm">This thread contains inappropriate....</div>
-                    </div>
-                    <div className="flex flex-row items-center mt-2 justify-end">
-                            <div className="text-secondary-red xl:text-xs lg:text-[10px] xl:mr-3 lg:mr-8">Sat. 24.04.2022</div>
-                            <div className="xl:text-xs lg:text-[10px] text-white-600/25">12:00 Pm</div>
-                    </div> 
-                </div>
-
+                    <div className="p-5 font-bold text-sm xl:text-base text-center">Notice Board</div>
+                    {data?.map(item=>(
+                        <div key={item.id} className="rounded-md border-gray-500/10 border-2 px-3 py-5 mb-2">
+                            <div className="flex items-center">
+                                <img src={item.profpic} alt="img user" className="w-[30px] h-[30px] rounded-full"/>
+                                <div className="text-report ml-3 text-xs xl:text-sm">{item.reportText}</div>
+                            </div>
+                            <div className="flex flex-row items-center mt-2 justify-between xl:ml-[40px]">
+                                <div className="text-secondary-orange text-xs lg:text-[10px] font-semibold">{item.date}</div>
+                                <div className="xl:text-xs text-[10px] text-white-600/25">{item.time}</div>
+                            </div> 
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

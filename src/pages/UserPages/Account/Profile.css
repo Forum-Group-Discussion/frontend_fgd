@@ -4,6 +4,11 @@
     border-radius: 10px;
     padding: 20px 44px 30px 44px;
 }
+@media screen and (max-width: 480px) {
+    #account #thread{
+        padding: 12px;
+    }
+}
 
 #account #thread #thread-header div:nth-child(1) img {
     width: 80px;
@@ -134,7 +139,7 @@
     background-color: rgb(255, 255, 255, 0.3);
 }
 
-#account #close-popup svg {
+#account #close-popup #close-button svg {
     width: 30px;
     height: 30px;
     cursor: pointer;

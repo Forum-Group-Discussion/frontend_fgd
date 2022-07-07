@@ -4,18 +4,12 @@ import { BsCameraFill } from "react-icons/bs"
 import Banner from "../../../assets/img/account/banner.png"
 import Profile from "../../../assets/img/account/profile.png"
 import { useState } from "react";
-import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { useNavigate } from "react-router-dom"
 import ChangeProfilePic from "./components/ChangeProfilePic";
 
 export default function EditProfile(){
     const [showPassword, setShowPassword] = useState(false);
-    const [data, setData] = useState({username:"Berry burrie", email:"berryb@gmail.com", password:"Abcde1234", bio:"Hello Found", website:"https://medium.com/@berryb", location:"5001 MELROSE AVE , LOS ANGELES, CA 90038-4195, USA"})
-    const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    const regexPassword = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
-    const [nameValidation, setNameValidation] = useState("");
-    const [emailValidation, setEmailValidation] = useState("");
-    const [passwordValidation, setPasswordValidation] = useState("");
+    const [data, setData] = useState({fullname:"Berry Burrie", username:"Berry burrie", email:"berryb@gmail.com", bio:"Hello Found", website:"https://medium.com/@berryb", location:"5001 MELROSE AVE , LOS ANGELES, CA 90038-4195, USA"})
     const [popupProfPic, setPopupProfPic] = useState(false)
     const navigate = useNavigate()
 
@@ -31,38 +25,12 @@ export default function EditProfile(){
         setData({ ...data,
             [e.target.name]: e.target.value
         })
-        if (NAME === "username") {
-            if (data.username.length >= 5) {
-                setNameValidation("");
-            } else if (data.username.length < 5) {
-                setNameValidation("Username must be longer than 4 characters");
-            }
-        } 
-        else if (NAME === "email") {
-            if (regexEmail.test(data.email)) {
-                setEmailValidation("");
-            } else {
-                setEmailValidation("Email format does not match");
-            }
-        } 
-        else if (NAME === "password") {
-            if (regexPassword.test(data.password)) {
-                setPasswordValidation("");
-            } else {
-                setPasswordValidation("Password must contain at least 8 characters, including uppers/lowercase and numbers");
-            }
-        } 
     }
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (nameValidation !=="" || emailValidation !== "" || passwordValidation !== "") {
-            alert("Data does not match");
-        }
-        else{
-            navigate("/user/account")
-            scrollToTop()
+        navigate("/user/account")
+        scrollToTop()
             // edit data
-        }
     }
 
     const toggleShowPassword = () => {
@@ -98,22 +66,19 @@ export default function EditProfile(){
                 <div id="edit-profile">
                     <form onSubmit={handleSubmit} className="text-white relative">
                         <div className="mb-[6%] sm:mb-[2%] mt-[3%] text-sm sm:text-md">
+                            <label htmlFor="fullname" className="block text-gray-300 mb-2">Full Name</label>
+                            <input id="fullname" type="text" name="fullname" value={data.fullname} onChange={handleChange}
+                            className="w-full py-3 px-8 bg-primary-grey rounded-lg text-white" />
+                        </div>
+                        <div className="mb-[6%] sm:mb-[2%] text-sm sm:text-md">
                             <label htmlFor="username" className="block text-gray-300 mb-2">Username</label>
-                            <input id="username" type="text" name="username" value={data.username} onChange={handleChange}
+                            <input id="username" type="text" name="username" value={data.username} onChange={handleChange} 
                             className="w-full py-3 px-8 bg-primary-grey rounded-lg text-white" />
                         </div>
                         <div className="mb-[6%] sm:mb-[2%] text-sm sm:text-md">
-                            <label htmlFor="username" className="block text-gray-300 mb-2">Email</label>
-                            <input id="email" type="text" name="email" value={data.email} onChange={handleChange} 
+                            <label htmlFor="email" className="block text-gray-300 mb-2">Email</label>
+                            <input id="email" type="text" name="username" value={data.email} disabled={true} 
                             className="w-full py-3 px-8 bg-primary-grey rounded-lg text-white" />
-                        </div>
-                        <div className="mb-[6%] sm:mb-[2%] text-sm sm:text-md">
-                            <label htmlFor="pass" className="block text-gray-300 mb-2">Password</label>
-                            <div className="relative">
-                                <input id="pass" type={showPassword === false ? "password" : "text"} name="password" value={data.password} onChange={handleChange} 
-                                className="w-full py-3 px-8 bg-primary-grey rounded-lg text-white" />
-                                <div className="text-2xl top-3 right-5 absolute ">{showPassword === false ? <AiOutlineEye onClick={toggleShowPassword} /> : <AiOutlineEyeInvisible onClick={toggleShowPassword} />}</div>
-                            </div>
                         </div>
                         <div className="mb-[6%] sm:mb-[2%] text-sm sm:text-md">
                             <label htmlFor="bio" className="block text-gray-300 mb-2">Bio</label>

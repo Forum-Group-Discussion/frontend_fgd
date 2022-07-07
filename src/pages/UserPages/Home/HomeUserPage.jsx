@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import "./Home.css";
 import gambarProfile from "../../../assets/img/home/dashicons_games.png";
 import gambarThread from "../../../assets/img/home/image7.png";
+import { AiFillFire } from "react-icons/ai"
 import { Icon } from "react-icons-kit";
 import { thumbsUp } from "react-icons-kit/feather/thumbsUp";
 import { thumbsDown } from "react-icons-kit/feather/thumbsDown";
@@ -33,6 +34,7 @@ export default function HomeUserPage() {
   const [popupReport, setPopupReport] = useState(false);
   const [threadIndex, setThreadIdex] = useState("");
   const [loading, setLoading] = useState(true);
+  const [topic, setTopic] = useState(0)
   let { category } = useParams();
 
   const showPopupShare = () => {
@@ -109,31 +111,36 @@ export default function HomeUserPage() {
 
   const [filter, setFilter] = useState(null);
 
+  const handleFilter = e => {
+    setTopic(e.target.value)
+    setFilter(e.target.value)
+  }
   return (
     <>
       <Navbar />
       <div id="home" className="flex justify-center">
         <div id="container" className="flex flex-row w-4/5">
-          <div id="box-1" className="flex relative w-1/4 mr-8">
+          <div id="box-1" className="lg:flex relative w-1/4 mr-8 hidden">
             <div className="fixed w-1/5">
               <div id="kategori-list" className="flex absolute">
                 <ul id="kategori" className="text-center">
-                  <li onClick={() => setFilter(null)} className="cursor-pointer">
-                    Trending Topic
+                  <li onClick={handleFilter} value={null} className="flex gap-3 justify-center">
+                    <AiFillFire className="fill-secondary-orange w-6 h-6"></AiFillFire>
+                    <div className="text-secondary-orange">Trending Topic</div> 
                   </li>
-                  <li onClick={() => setFilter(1)} className="cursor-pointer">
+                  <li onClick={handleFilter} value={1} className={topic===1 ? "cursor-pointer bg-secondary-orange" : "cursor-pointer hover:bg-secondary-orange"}>
                     Games
                   </li>
-                  <li onClick={() => setFilter(2)} className="cursor-pointer">
+                  <li onClick={handleFilter} value={2} className={topic===2 ? "cursor-pointer bg-secondary-orange" : "cursor-pointer hover:bg-secondary-orange"}>
                     Health
                   </li>
-                  <li onClick={() => setFilter(3)} className="cursor-pointer">
+                  <li onClick={handleFilter} value={3} className={topic===3 ? "cursor-pointer bg-secondary-orange" : "cursor-pointer hover:bg-secondary-orange"}>
                     Food & Travel
                   </li>
-                  <li onClick={() => setFilter(4)} className="cursor-pointer">
+                  <li onClick={handleFilter} value={4} className={topic===4 ? "cursor-pointer bg-secondary-orange" : "cursor-pointer hover:bg-secondary-orange"}>
                     Technology
                   </li>
-                  <li onClick={() => setFilter(5)} className="cursor-pointer">
+                  <li onClick={handleFilter} value={5} className={topic===5 ? "cursor-pointer bg-secondary-orange" : "cursor-pointer hover:bg-secondary-orange"}>
                     Education
                   </li>
                 </ul>
@@ -144,6 +151,35 @@ export default function HomeUserPage() {
             <div className="trending-slider">
               <TrendingSlider />
             </div>
+            <div id="filter-hp" className="lg:hidden mb-6 lg:mb-0">
+              {/* <div className="w-1/5"> */}
+                {/* <div id="kategori-list" className="flex"> */}
+                  <div className="flex items-center justify-center gap-4 mb-4">
+                    <AiFillFire className="fill-secondary-orange"></AiFillFire>
+                    <div onClick={() => setFilter(null)} className="text-md sm:text-lg font-bold text-secondary-orange">Trending Topic</div>
+                  </div>
+                  <div className="overflow-auto w-full no-scrollbar">
+                  <ul id="kategori-hp" className="flex gap-3 text-center w-max text-sm sm:text-base">
+                    <li onClick={handleFilter} value={1} className={topic===1 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
+                      Games
+                    </li>
+                    <li onClick={handleFilter} value={2} className={topic===2 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
+                      Health
+                    </li>
+                    <li onClick={handleFilter} value={3} className={topic===3 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
+                      Food & Travel
+                    </li>
+                    <li onClick={handleFilter} value={4} className={topic===4 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
+                      Technology
+                    </li>
+                    <li onClick={handleFilter} value={5} className={topic===5 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
+                      Education
+                    </li>
+                  </ul>
+                  </div>
+                {/* </div> */}
+              {/* </div> */}
+          </div>
             {loading ? (
               <div id="thread">
                 <div id="thread-box" className="flex">
@@ -183,34 +219,34 @@ export default function HomeUserPage() {
                           <img src={gambarProfile} alt="gambar profile" />
                         </div>
                         <div className="flex items-center">
-                          <div className="flex-col text-white">
-                            <h5 className="font-semibold tracking-[2px]">{item.users.name}</h5>
-                            <h6 className="font-medium mt-1 opacity-30">2 days ago</h6>
+                          <div className="flex-col text-white max-w-[30vw]">
+                            <h5 className="text-sm md:text-md font-semibold tracking-[2px] truncate">{item.users.name}</h5>
+                            <h6 className="text-sm md:text-md font-medium mt-1 opacity-30">2 days ago</h6>
                           </div>
                         </div>
                       </div>
                       <div className="flex flex-1 justify-end items-center">
-                        <button id="thread-button">Follow</button>
+                        <button id="thread-button" className="text-sm sm:text-lg">Follow</button>
                       </div>
                     </div>
                     <div className="mt-4 mb-4">
-                      <h3 className="font-semibold text-white tracking-[1px]">{item.title}</h3>
+                      <h3 className="text-sm sm:text-lg md:font-semibold text-white tracking-[1px]">{item.title}</h3>
                     </div>
                     <div>
-                      <img src={gambarThread} alt="gambar thread" />
+                      <img src={gambarThread} alt="gambar thread" className="relative" />
                     </div>
                     <div id="thread-icon" className="flex flex-1 justify-between mt-5">
                       <div className="cursor-pointer">
                         <Icon icon={thumbsUp} />
-                        <span>100K</span>
+                        <span className="text-sm sm:text-lg text-white">68k</span>
                       </div>
                       <div className="cursor-pointer">
                         <Icon icon={thumbsDown} />
-                        <span>100K</span>
+                        <span className="text-sm sm:text-lg text-white">98k</span>
                       </div>
                       <div onClick={handleShowFull} className="cursor-pointer">
                         <Icon icon={commentingO} />
-                        <span>100K</span>
+                        <span className="text-sm sm:text-lg text-white">90</span>
                       </div>
                       <div onClick={handleSave} className="cursor-pointer">
                         <Icon icon={bookmark} />
@@ -251,25 +287,25 @@ export default function HomeUserPage() {
                 ))
             ) : (
               threads.map((item, index) => (
-                <div id="thread" key={index}>
+                <div id="thread" key={index} className="max-w-[1000px] mx-auto">
                   <div id="thread-box" className="flex">
                     <div id="thread-header" className="flex">
                       <div className="mr-2">
                         <img src={gambarProfile} alt="gambar profile" />
                       </div>
                       <div className="flex items-center">
-                        <div className="flex-col text-white">
-                          <h5 className="font-semibold tracking-[2px]">{item.users.name}</h5>
-                          <h6 className="font-medium mt-1 opacity-30">2 days ago</h6>
+                        <div className="flex-col text-white max-w-[30vw]">
+                          <h5 className="text-sm md:text-md font-semibold tracking-[2px] truncate">{item.users.name}</h5>
+                          <h6 className="text-sm md:text-md font-medium mt-1 opacity-30">2 days ago</h6>
                         </div>
                       </div>
                     </div>
                     <div className="flex flex-1 justify-end items-center">
-                      <button id="thread-button">Follow</button>
+                      <button id="thread-button" className="text-sm sm:text-lg">Follow</button>
                     </div>
                   </div>
                   <div className="mt-4 mb-4">
-                    <h3 className="font-semibold text-white tracking-[1px]">{item.title}</h3>
+                    <h3 className="text-sm sm:text-lg md:font-semibold text-white tracking-[1px]">{item.title}</h3>
                   </div>
                   <div>
                     <img src={gambarThread} alt="gambar thread" />
@@ -277,15 +313,15 @@ export default function HomeUserPage() {
                   <div id="thread-icon" className="flex flex-1 justify-between mt-5">
                     <div className="cursor-pointer">
                       <Icon icon={thumbsUp} />
-                      <span>100K</span>
+                      <span className="text-sm sm:text-lg text-white">90</span>
                     </div>
                     <div className="cursor-pointer">
                       <Icon icon={thumbsDown} />
-                      <span>100K</span>
+                      <span className="text-sm sm:text-lg text-white">90</span>
                     </div>
                     <div onClick={handleShowFull} className="cursor-pointer">
                       <Icon icon={commentingO} />
-                      <span>100K</span>
+                      <span className="text-sm sm:text-lg text-white">90</span>
                     </div>
                     <div onClick={handleSave} className="cursor-pointer">
                       <Icon icon={bookmark} />

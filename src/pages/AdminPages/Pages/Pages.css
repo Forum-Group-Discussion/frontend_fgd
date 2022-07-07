@@ -1,6 +1,5 @@
 .menu-content {
-  border-radius: 10px;
-  margin-left: 280px;
+	border-radius: 10px;
 }
 .inputfile {
 	opacity: 0;
@@ -10,5 +9,12 @@
 }
 
 .inputfile + label {
-  cursor: pointer;
+	cursor: pointer;
+}
+
+.text-report{
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;  
+	overflow: hidden;
 }
