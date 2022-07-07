@@ -7,17 +7,18 @@
     overflow: hidden;
     cursor: grab;
 }
+@media screen and (max-width: 480px) {
+    .carousel{
+        margin-bottom: 24px;
+        padding: 10px;
+    }
+}
 
 .inner-carousel {
     display: inline-flex;
 }
 
-.inner-carousel .item {
-    width: 100px;
-}
-
 .inner-carousel .item img {
-    width: 100px;
     pointer-events: none;
     background-color: aliceblue;
     border-radius: 50%;

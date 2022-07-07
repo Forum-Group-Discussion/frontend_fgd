@@ -142,9 +142,9 @@ export default function Save(){
                             <img src={gambarProfile} alt="gambar profile" />
                         </div>
                         <div className="flex items-center">
-                            <div className="flex-col text-white">
-                            <h5 className="font-semibold tracking-[2px]">amdar07</h5>
-                            <h6 className="font-medium mt-1 opacity-30">2 days ago</h6>
+                            <div className="flex-col text-white max-w-[30vw]">
+                            <h5 className="text-sm md:text-md font-semibold tracking-[2px] truncate">amdar07</h5>
+                            <h6 className="text-sm md:text-md font-medium mt-1 opacity-30">2 days ago</h6>
                             </div>
                         </div>
                     </div>

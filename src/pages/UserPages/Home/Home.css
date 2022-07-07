@@ -5,6 +5,11 @@
 #home #container {
   margin-top: 100px;
 }
+@media screen and (max-width:480px) {
+  #home #container {
+    margin-top: 80px;
+  }
+}
 
 #home #container #box-1 #kategori-list {
   width: 100%;
@@ -30,6 +35,11 @@
   border-radius: 10px;
   padding: 20px 44px 30px 44px;
 }
+@media screen and (max-width: 480px) {
+  #home #container #box-2 #thread{
+    padding: 12px;
+  }
+}
 
 #home #container #kategori li {
   padding: 25px 0px;
@@ -53,11 +63,11 @@
 
 #home #box-2 #thread #thread-button {
   background-color: #ff3d00;
-  padding: 10px 35px;
   border-radius: 40px;
   font-weight: bold;
   color: white;
   letter-spacing: 1px;
+  padding: 10px 35px;
 }
 
 #home #box-2 #thread #thread-icon svg {
@@ -66,18 +76,21 @@
   color: white;
   margin-right: 10px;
 }
-
-#home #box-2 #thread #thread-icon span {
-  font-size: 18px;
-  color: white;
-  font-weight: 500;
+@media screen and (max-width: 480px) {
+  #home #box-2 #thread #thread-icon svg {
+      width: 20px;
+      height: 20px;
+  }
+  #home #box-2 #thread #thread-button{
+    padding: 8px 15px;
+  }
 }
 
-#home #box-2 #thread #thread-icon div:nth-child(5) {
+#home #thread #thread-icon div:nth-child(5) {
   position: relative;
 }
 
-#home #box-2 #thread #thread-icon div:nth-child(5) svg {
+#home #thread #thread-icon div:nth-child(5) svg {
   color: white;
   margin: 0;
 }

@@ -4,6 +4,11 @@
     border-radius: 10px;
     padding: 20px 44px 30px 44px;
 }
+@media screen and (max-width: 480px) {
+    #topic #thread{
+        padding: 12px;
+    }
+}
 
 #topic #thread #thread-header div:nth-child(1) img {
     width: 80px;
