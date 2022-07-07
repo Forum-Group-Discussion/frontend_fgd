@@ -114,22 +114,38 @@ export default function Save(){
         setFull(false);
     }
 
-    const handleSave = () => {
+    const handleDelete = () => {
         Swal.fire({
-            toast: true,
-            icon: "success",
-            title: "Thread successfully saved",
-            animation: false,
-            background: "#222834",
-            color: "#18B015",
-            position: "bottom-end",
-            showConfirmButton: false,
-            timer: 4000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-            },
+            title: "Are you sure to delete this thread?",
+            icon: "warning",
+            showCancelButton: true,
+            showConfirmButton: true,
+            background: "#151921",
+            color: "#fff",
+            confirmButtonColor: "#FF3D00",
+            cancelButtonColor: "#D91E11",
+            confirmButtonText: "Yes, Delete!",
+            focusConfirm: false,
+            focusCancel: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                toast: true,
+                icon: "success",
+                title: "Delete Successfully",
+                animation: false,
+                background: "#222834",
+                color: "#18B015",
+                position: "bottom-end",
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener("mouseenter", Swal.stopTimer);
+                    toast.addEventListener("mouseleave", Swal.resumeTimer);
+                },
+                });
+            }
         });
     }
 
@@ -149,7 +165,7 @@ export default function Save(){
                         </div>
                     </div>
                     <div className="flex flex-1 justify-end items-center">
-                        <button id="thread-button" className="text-sm sm:text-lg">Delete</button>
+                        <button onClick={handleDelete} id="thread-button" className="text-sm sm:text-lg">Delete</button>
                     </div>
                 </div>
                 <div className="mt-4 mb-4">
@@ -171,7 +187,7 @@ export default function Save(){
                         <Icon icon={commentingO} />
                         <span className="text-sm sm:text-lg text-white">{statconv.comment}</span>
                     </div>
-                    <div onClick={handleSave} className="cursor-pointer">
+                    <div className="cursor-pointer">
                         <Icon icon={bookmark} />
                     </div>
                     <div onClick={showMoreMenu}>

@@ -3,6 +3,7 @@ import joko from "../../../../assets/img/Admin/JOK.png"
 import "../Pages.css";
 import { useState } from "react";
 import UploadPhoto from "../../../UserPages/components/UploadPhoto";
+import Swal from "sweetalert2";
 
 export default function Setting() {
   const [account, setAccount] = useState({fullname: "Andrew Gunawan", username: "Andrew Admin", email: "admin@mimin.com", password: "Andrew123"})
@@ -20,8 +21,24 @@ export default function Setting() {
     }
   };
 
-  const handleSubmit = () => {
-    
+  const handleSubmit = e => {
+    e.preventDefault()
+    Swal.fire({
+      toast: true,
+      icon: "success",
+      title: "Successfully Edited",
+      animation: false,
+      background: "#222834",
+      color: "#18B015",
+      position: "bottom-end",
+      showConfirmButton: false,
+      timer: 4000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+    });
   }
 
   return (
