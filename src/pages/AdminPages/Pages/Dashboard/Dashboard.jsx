@@ -13,33 +13,33 @@ export default function Dashboard() {
     <div className="bg-primary-black h-fit w-screen">
       <div className="container mx-auto xl:px-20 lg:px-15">
         <Sidebar/>
-          <div className="menu-content bg-primary-grey text-white p-7 h-content">
-            <div className="grid grid-cols-3 gap-3">
-              <div className="mb-3">
+          <div className="menu-content bg-primary-grey text-white p-3 sm:p-7 h-content w-[90%] lg:w-[70%] xl:w-[80%] mx-auto lg:mx-0 lg:ml-[280px]">
+            <div className="grid grid-cols-4 sm:grid-cols-3 gap-3">
+              <div className="mb-3 col-span-2 sm:col-span-1">
                 <TotalUser />
               </div>
-              <div className="mb-3">
+              <div className="mb-3 col-span-2 sm:col-span-1">
                 <OnlineUser />
               </div>
-              <div className="mb-3">
+              <div className="mb-3 col-span-2 sm:col-span-1">
                 <OnlineDiscusion />
               </div>
             </div>
-            <div className="flex flex-row">
-              <div className="flex flex-col w-2/3">
+            <div className="grid grid-cols-3 gap-3">
+              <div className="col-span-3 md:col-span-2">
                 <div className="w-full mb-3 ">
                   <ThreadStatistic />
                 </div>
-                <div className="flex flex-row  justify-between">
-                  <div className="w-full mr-3">
+                <div className="grid grid-cols-2 gap-2 justify-between">
+                  <div className="col-span-2 sm:col-span-1">
                     <TodayTrending />
                   </div>
-                  <div className="w-full">
+                  <div className="col-span-2 sm:col-span-1">
                     <TotalReport />
                   </div>
                 </div>
               </div>
-              <div className="flex justify-end w-1/3 ml-3">
+              <div className="col-span-3 md:col-span-1">
                 <NoticeBoard />
               </div>
             </div>

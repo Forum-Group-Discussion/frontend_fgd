@@ -8,18 +8,18 @@ function HomeAdminPage() {
 
   return (
     <div>
-      <div className="Navbar-admin text-white pt-7 pb-7 ">
-        <div className="flex flex-row items-center justify-between">
-          <div className="flex flex-row items-center">
+      <div className="Navbar-admin text-white pt-7 pb-7 lg:ml-[280px] lg:w-[70%] xl:w-[80%]">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
             <img src={Jokowi} className="rounded-full w-[50px]" alt="image_user"/>
-          <div className="ml-5 lg:text-sm xl:text-base">Admin Page, Welcome {user}!</div>
+            <div className="ml-5 lg:text-sm xl:text-base">Admin Page, Welcome {user}!</div>
           </div>
-          <div className="flex flex-row items-center">
-            <form className="flex flex-row items-center border-solid border rounded-full border-white ">
-            <input type="search" className="bg-transparent outline-0 ml-2 p-2 w-[300px]"/>
-            <RiSearch2Line size={20} className="mx-3"/>
+          <div className="flex items-center">
+            <form className="flex items-center border-solid sm:border rounded-full border-white ">
+            <input type="search" className="bg-transparent outline-0 ml-2 sm:p-2 w-0 sm:w-[250px]"/>
+              <RiSearch2Line className="mx-3 h-6 w-6"/>
             </form>
-            <RiNotificationLine size={30} className="ml-5" />
+              <RiNotificationLine className="ml-2 sm:ml-5 h-6 w-6 sm:h-8 sm:w-8" />
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
-import Profile from "../../../assets/img/account/profile.png"
+import gambarProfile from "../../../assets/img/home/dashicons_games.png";
 import gambarThread from "../../../assets/img/home/image7.png";
-import PopupShare from "../../UserPages/components/PopupShare"
+import PopupReport from "../../UserPages/components/PopupReport";
+import PopupShare from "../../UserPages/components/PopupShare";
 import FullThread from "../../UserPages/components/FullThread";
 import { Icon } from "react-icons-kit";
 import { thumbsUp } from "react-icons-kit/feather/thumbsUp";
@@ -8,17 +9,16 @@ import { thumbsDown } from "react-icons-kit/feather/thumbsDown";
 import { bookmark } from 'react-icons-kit/feather/bookmark'
 import { commentingO } from "react-icons-kit/fa/commentingO";
 import { moreVertical } from 'react-icons-kit/feather/moreVertical'
-import { useState, useEffect } from "react";
+import { useState,useEffect } from "react";
 import Swal from "sweetalert2";
-import { useNavigate, Link } from "react-router-dom";
 
-export default function DeleteThread(){
+export default function Save(){
     const [more, setMore] = useState(false)
     const [popupShare, setPopupShare] = useState(false)
+    const [popupReport, setPopupReport] = useState(false)
     const [showFull, setFull] = useState(false)
     const [stat, setStat] = useState({like:105500, dislike:99900, comment:100})
     const [statconv, setStatconv] = useState({like:"", dislike:"", comment:""})
-    const navigate = useNavigate()
 
     useEffect(()=>{
         let lk = stat.like
@@ -87,40 +87,16 @@ export default function DeleteThread(){
         }
     }
 
-    const showPopupDelete = () => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            iconColor: "#FDBB2E",
-            backdrop: "#ffffff4d",
-            background: "#222834",
-            color: "#FDBB2E",
-            showCancelButton: true,
-            confirmButtonColor: '#18B015',
-            cancelButtonColor: '#DE1508',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                navigate("/user/account");
-                Swal.fire({
-                    toast: true,
-                    icon: "success",
-                    title: "Thread successfully deleted",
-                    animation: false,
-                    background: "#222834",
-                    color: "#18B015",
-                    position: "bottom-end",
-                    showConfirmButton: false,
-                    timer: 4000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                    toast.addEventListener("mouseenter", Swal.stopTimer);
-                    toast.addEventListener("mouseleave", Swal.resumeTimer);
-                    },
-                });
-            }
-        })
+    const showPopupReport = () => {
+        if (popupReport === false) {
+            setPopupReport(true)
+        }
+    }
+
+    const closePopupReport = () => {
+        if(popupReport === true) {
+            setPopupReport(false)
+        }
     }
     
     const showMoreMenu = () => {
@@ -130,6 +106,7 @@ export default function DeleteThread(){
             setMore(false)
         }
     }
+
     const handleShowFull = () => {
         setFull(!showFull);
     }
@@ -159,17 +136,20 @@ export default function DeleteThread(){
     return(
         <>
             <div id="thread" className="max-w-[1000px] mx-auto" data-aos="zoom-in">
-                <div id="thread-box" className="flex">
+                <div id="thread-box" className="flex border-[#d9d9d91a]">
                     <div id="thread-header" className="flex">
                         <div className="mr-2">
-                            <img src={Profile} alt="gambar profile" />
+                            <img src={gambarProfile} alt="gambar profile" />
                         </div>
                         <div className="flex items-center">
-                            <div className="flex-col text-white">
-                            <h5 className="font-semibold tracking-[2px]">Berry burrie</h5>
-                            <h6 className="font-medium mt-1 opacity-30">2 days ago</h6>
+                            <div className="flex-col text-white max-w-[30vw]">
+                            <h5 className="text-sm md:text-md font-semibold tracking-[2px] truncate">amdar07</h5>
+                            <h6 className="text-sm md:text-md font-medium mt-1 opacity-30">2 days ago</h6>
                             </div>
                         </div>
+                    </div>
+                    <div className="flex flex-1 justify-end items-center">
+                        <button id="thread-button" className="text-sm sm:text-lg">Delete</button>
                     </div>
                 </div>
                 <div className="mt-4 mb-4">
@@ -196,11 +176,9 @@ export default function DeleteThread(){
                     </div>
                     <div onClick={showMoreMenu}>
                         <Icon icon={moreVertical} />
-                        <div className={more ? 'more-4 active' : 'more'}>
+                        <div className={more ? 'more-3 active' : 'more'}>
                             <span className="cursor-pointer" onClick={handleShowFull}>Open</span>
-                            <Link to="/user/edit"><div className="cursor-pointer">Edit</div></Link>
                             <span className="cursor-pointer" onClick={showPopupShare}>Share</span>
-                            <span className="cursor-pointer" onClick={showPopupDelete}>Delete</span>
                         </div>
                     </div>
                 </div>
@@ -209,6 +187,14 @@ export default function DeleteThread(){
                 <div>
                     <div className="flex absolute inset-0 m-auto justify-center p-4">
                         <PopupShare closePopupShare={closePopupShare} />
+                    </div>
+                </div>
+            </div>
+
+            <div id='close-popup' className={popupReport ? 'popupReport active' : 'popupReport'}>
+                <div>
+                    <div className="flex absolute inset-0 m-auto justify-center p-4">
+                        <PopupReport closePopupReport={closePopupReport}/>
                     </div>
                 </div>
             </div>

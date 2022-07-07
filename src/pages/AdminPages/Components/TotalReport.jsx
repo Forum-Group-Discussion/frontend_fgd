@@ -5,12 +5,12 @@ export default function TotalReport() {
     <div>
       <div className="rounded-md border-gray-500/10 border-2 p-5">
         <div className="">
-          <div className="flex flex-row items-center lg:mb-8 xl:mb-6">
-            <img src={Report} alt="Fire Icon" className="w-[20px]"/>
-            <div className="pl-6 font-bold xl:text-base lg:text-sm">Total Report</div>
+          <div className="grid grid-cols-4 mb-1 sm:mb-3">
+            <img src={Report} alt="Fire Icon" className="w-[20px] my-auto md:col-span-1 col-span-4 mx-auto"/>
+            <div className="md:col-span-3 col-span-4 font-bold xl:text-base lg:text-sm my-auto mt-3 md:mt-0 text-center md:text-left">Total Report</div>
           </div>
-          <div className="flex justify-center  p-7 ">
-            <div className="xl:py-5 lg:py-12 text-5xl font-black text-secondary-orange">200K</div>
+          <div className="flex justify-center py-5 lg:py-0">
+            <div className="xl:py-5 lg:py-12 text-3xl md:text-4xl lg:text-5l font-black text-secondary-orange">200K</div>
           </div>
         </div>
       </div>
