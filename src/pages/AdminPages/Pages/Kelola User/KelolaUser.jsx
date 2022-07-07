@@ -9,6 +9,7 @@ import Technology from "../../../../assets/img/Admin/Technology.png";
 import Sidebar from "../../Components/Sidebar";
 
 export default function KelolaUser() {
+
   return (
     <>
       <div className="bg-primary-black h-content w-screen">

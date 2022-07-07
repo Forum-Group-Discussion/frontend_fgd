@@ -2,15 +2,17 @@ import React from 'react'
 import { useState } from 'react'
 import Joko from "../../../../../assets/img/Admin/JOK.png"
 import Sidebar from '../../../Components/Sidebar'
-import Btnsuspen from '../../../Components/BtnSuspen'
 import Report from  '../../../Components/Report'
 import Thread from '../../../../UserPages/Account/components/Thread'
 import { useEffect } from 'react'
+import Sucess from "../../../../../assets/img/Admin/success.png"
 import AOS from "aos";
+import Swal from 'sweetalert2'
 
 
 export default function CategoryUser() {
     const [choose, setChoose] = useState("thread")
+    const [suspen, setSuspen] = useState(true)
 
     useEffect(() => {
     AOS.init();
@@ -22,6 +24,11 @@ export default function CategoryUser() {
     const handleAction = e => {
         setChoose(e.target.value)
     }
+
+    const handleSuspen = () => {
+      setSuspen(!suspen)
+    }
+
   return (
     <div className="bg-primary-black h-content w-screen">
         <div className="container mx-auto xl:px-20 lg:px-15">
@@ -43,12 +50,13 @@ export default function CategoryUser() {
                   </div>
                   <div className='grid justify-items-center'>
                     <div className='mb-5'>active since 2022</div>
-                    <Btnsuspen/>
+                    {/*  */}
+                    {suspen ? <button className='rounded-full bg-secondary-orange hover:bg-secondary-orange/80 px-8 p-2' onClick={handleSuspen}>Suspen</button> : <img src={Sucess}/>}
                   </div>
                 </div>
               </div>
 
-            <section id="account" className="py-2">
+            { suspen ?  <section id="account" className="py-2">
             <div className="max-w-[1240px] mx-auto">    
                 <div id="acc-button" className="my-5 mx-auto md:text-xl font-medium max-w-[500px]">
                     {choose === "thread"
@@ -70,7 +78,11 @@ export default function CategoryUser() {
                 }
             </div>
         </section>
-             
+        :
+        <div className='flex justify-center h-[450px]'>
+          <div className='py-9'>Temporarily deactivated account for 30 days</div>
+        </div>
+             }
 
             </div>
           </div>
