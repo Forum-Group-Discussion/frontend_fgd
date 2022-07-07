@@ -1,48 +1,71 @@
 import Sidebar from "../../Components/Sidebar";
 import joko from "../../../../assets/img/Admin/JOK.png"
 import "../Pages.css";
+import { useState } from "react";
+import UploadPhoto from "../../../UserPages/components/UploadPhoto";
 
 export default function Setting() {
+  const [account, setAccount] = useState({fullname: "Andrew Gunawan", username: "Andrew Admin", email: "admin@mimin.com", password: "Andrew123"})
+  const [upload, setUpload] = useState(false)
+
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    if (name === "fullname") {
+      setAccount({ ...account, fullname: value });
+    } 
+    else if (name === "username") {
+      setAccount({ ...account, username: value });
+    }
+  };
+
+  const handleSubmit = () => {
+    
+  }
+
   return (
-    <div className="bg-primary-black h-content w-screen">
+    <div id="setting" className="bg-primary-black h-content w-screen">
       <div className="container mx-auto xl:px-20 lg:px-15">
         <Sidebar/>
         <div>
-          <div className="menu-content bg-primary-grey text-white p-7 h-content pb-[10%]">
-            <div className="flex justify-between">
-              <div>Account</div>
-              <div>Edit</div>
-            </div>
-            <div className="px-8 flex flex-col">
-                <div className="py-5 place-self-center">
-                <img src={joko} className="rounded-full w-[100px]" alt="img-user"/>
-                <input type="file" name="file" id="file" className="inputfile"/>
-                <label for="file" className="text-xs flex justify-center pt-5 text-white/50 hover:text-white/25">Change photo</label>
-                </div>
-                <div className="place-self-center">
-                  <form className="">
-                    <div className="py-3">
-                      <div className="text-xs pb-2 text-white/50">Full name</div>
-                      <input type="input" className="bg-primary-black rounded-md 2xl:w-[750px] xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
-                    </div>
-                    <div className="py-3">
-                      <div className="text-xs pb-2 text-white/50">user name</div>
-                      <input type="input" className="bg-primary-black rounded-md 2xl:w-[750px] xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
-                    </div>
-                    <div className="py-3">
-                      <div className="text-xs pb-2 text-white/50">Email</div>
-                      <input type="email" className="bg-primary-black rounded-md 2xl:w-[750px] xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
-                    </div>
-                    <div className="py-3">
-                      <div className="text-xs pb-2 text-white/50">Password</div>
-                      <input type="password" className="bg-primary-black rounded-md 2xl:w-[750px] xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
-                    </div>
-                  </form>
-                </div>
+          <div className="menu-content bg-primary-grey text-white p-3 sm:p-7 max-h-[85vh] overflow-auto no-scrollbar w-[90%] lg:w-[70%] xl:w-[80%] mx-auto lg:mx-0 lg:ml-[280px]">
+            <div className="border-2 border-gray-500/10 rounded-lg p-5 relative">
+              <div id="setting-title" className="text-md font-semibold md:text-lg">
+                <div>Account</div>
+              </div>
+              <div id="setting-content" className="px-8 flex flex-col">
+                  <div id="setting-img" className="py-5 place-self-center">
+                    <img src={joko} className="rounded-full w-[100px]" alt="img-user"/>
+                    <button onClick={()=>{setUpload(true)}} className="text-sm sm:text:xl my-5 text-white/50 text-center">Upload Photo</button>
+                  </div>
+                  <div className="place-self-center">
+                    <form>
+                      <button type="submit" onSubmit={handleSubmit} className="text-secondary-yellow bg-none absolute top-8 right-8">Edit</button>
+                      <div id="setting-fullname" className="py-3">
+                        <div className="text-xs pb-2 text-white/50">Full name</div>
+                        <input type="text" onChange={handleChange} value={account.fullname} name="fullname" className="bg-primary-black rounded-md 2xl:w-[750px] xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
+                      </div>
+                      <div id="setting-username" className="py-3">
+                        <div className="text-xs pb-2 text-white/50">username</div>
+                        <input type="text" onChange={handleChange} value={account.username} name="username" className="bg-primary-black rounded-md 2xl:w-[750px] xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
+                      </div>
+                      <div id="setting-email" className="py-3">
+                        <div className="text-xs pb-2 text-white/50">Email</div>
+                        <input type="email" name="email" disabled={true} value={account.email} className="bg-primary-black rounded-md 2xl:w-[750px] xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
+                      </div>
+                      <div id="setting-password" className="py-3">
+                        <div className="text-xs pb-2 text-white/50">Password</div>
+                        <input type="password" name="password" disabled={true} value={account.password} className="bg-primary-black rounded-md 2xl:w-[750px] xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
+                      </div>
+                    </form>
+                  </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      {upload && <UploadPhoto onCancel={()=>{setUpload(false)}}/>}
     </div>
   );
 }

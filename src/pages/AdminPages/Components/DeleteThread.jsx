@@ -135,7 +135,7 @@ export default function Save(){
 
     return(
         <>
-            <div id="thread" className="max-w-[1000px] mx-auto" data-aos="zoom-in">
+            <div id="thread" className="max-w-[1000px] mx-auto z-10">
                 <div id="thread-box" className="flex border-[#d9d9d91a]">
                     <div id="thread-header" className="flex">
                         <div className="mr-2">
@@ -143,8 +143,8 @@ export default function Save(){
                         </div>
                         <div className="flex items-center">
                             <div className="flex-col text-white max-w-[30vw]">
-                            <h5 className="text-sm md:text-md font-semibold tracking-[2px] truncate">amdar07</h5>
-                            <h6 className="text-sm md:text-md font-medium mt-1 opacity-30">2 days ago</h6>
+                                <h5 className="text-sm md:text-md font-semibold tracking-[2px] truncate">amdar07</h5>
+                                <h6 className="text-sm md:text-md font-medium mt-1 text-gray-300">2 days ago</h6>
                             </div>
                         </div>
                     </div>

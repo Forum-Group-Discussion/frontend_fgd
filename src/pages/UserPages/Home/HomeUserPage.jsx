@@ -221,7 +221,7 @@ export default function HomeUserPage() {
                         <div className="flex items-center">
                           <div className="flex-col text-white max-w-[30vw]">
                             <h5 className="text-sm md:text-md font-semibold tracking-[2px] truncate">{item.users.name}</h5>
-                            <h6 className="text-sm md:text-md font-medium mt-1 opacity-30">2 days ago</h6>
+                            <h6 className="text-sm md:text-md font-medium mt-1 text-gray-300">2 days ago</h6>
                           </div>
                         </div>
                       </div>
@@ -296,7 +296,7 @@ export default function HomeUserPage() {
                       <div className="flex items-center">
                         <div className="flex-col text-white max-w-[30vw]">
                           <h5 className="text-sm md:text-md font-semibold tracking-[2px] truncate">{item.users.name}</h5>
-                          <h6 className="text-sm md:text-md font-medium mt-1 opacity-30">2 days ago</h6>
+                          <h6 className="text-sm md:text-md font-medium mt-1 text-gray-300">2 days ago</h6>
                         </div>
                       </div>
                     </div>

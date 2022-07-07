@@ -15,17 +15,15 @@ export default function CategoryThread() {
 
 
   return (
-    <div className="bg-primary-black h-content w-screen">
+    <div id='thread-category' className="bg-primary-black h-screen w-screen overflow-hidden">
         <div className="container mx-auto xl:px-20 lg:px-15">
           <Sidebar />
-          <div>
-            <div className="menu-content bg-primary-grey text-white p-6 h-content">
-          
-               <div className='p-5'>
-               <DeleteThread/>
-               <Report/>
-               </div>
-             
+          <div id='category-content'>
+            <div className="menu-content bg-primary-grey text-white p-3 sm:p-7 max-h-[85vh] overflow-auto no-scrollbar w-[90%] lg:w-[70%] xl:w-[80%] mx-auto lg:mx-0 lg:ml-[280px]">
+              <div className='p-5'>
+                <DeleteThread/>
+                <Report/>
+              </div>
             </div>
           </div>
         </div>
