@@ -187,6 +187,8 @@ export default function ProfileUserPage() {
   const profile = useSelector((state) => state.profile.profile);
   console.log(profile);
 
+  console.log(<Navbar />);
+
   return (
     <>
       <Navbar />

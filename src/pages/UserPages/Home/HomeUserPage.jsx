@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import "./Home.css";
 import gambarProfile from "../../../assets/img/home/dashicons_games.png";
 import gambarThread from "../../../assets/img/home/image7.png";
-import { AiFillFire } from "react-icons/ai"
+import { AiFillFire } from "react-icons/ai";
 import { Icon } from "react-icons-kit";
 import { thumbsUp } from "react-icons-kit/feather/thumbsUp";
 import { thumbsDown } from "react-icons-kit/feather/thumbsDown";
@@ -21,6 +21,8 @@ import { DATA_THREAD } from "../../../redux/threadSlice";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Swal from "sweetalert2";
+import { removeUserSession } from "../../../utils/helpers";
+import { useNavigate } from "react-router-dom";
 
 export default function HomeUserPage() {
   const dispatch = useDispatch();
@@ -34,7 +36,7 @@ export default function HomeUserPage() {
   const [popupReport, setPopupReport] = useState(false);
   const [threadIndex, setThreadIdex] = useState("");
   const [loading, setLoading] = useState(true);
-  const [topic, setTopic] = useState(0)
+  const [topic, setTopic] = useState(0);
   let { category } = useParams();
 
   const showPopupShare = () => {
@@ -66,15 +68,50 @@ export default function HomeUserPage() {
     setThreadIdex(index);
   };
 
+  const navigate = useNavigate();
   const fetchData = useCallback(() => {
     const response = axiosInstance
-      .get("v1/thread")
+      .get("v1/thread/desc")
       .then((response) => {
         dispatch(DATA_THREAD(response.data.data));
         setLoading(false);
       })
       .catch((error) => {
-        console.log(error.response);
+        console.log(error);
+        if (error.response.data.message === "TOKEN_INVALID_OR_TOKEN_NULL") {
+          Swal.fire({
+            title: "Sorry, Your Session has expired, please Login again!",
+            icon: "warning",
+            showConfirmButton: true,
+            background: "#151921",
+            color: "#fff",
+            confirmButtonColor: "#FF3D00",
+            cancelButtonColor: "#D91E11",
+            confirmButtonText: "Login",
+            focusConfirm: true,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                toast: true,
+                icon: "success",
+                title: "Log Out Successfully",
+                animation: false,
+                background: "#222834",
+                color: "#18B015",
+                position: "bottom-end",
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener("mouseenter", Swal.stopTimer);
+                  toast.addEventListener("mouseleave", Swal.resumeTimer);
+                  removeUserSession(navigate);
+                  window.location.reload();
+                },
+              });
+            }
+          });
+        }
       });
     return response;
   }, [dispatch]);
@@ -111,10 +148,10 @@ export default function HomeUserPage() {
 
   const [filter, setFilter] = useState(null);
 
-  const handleFilter = e => {
-    setTopic(e.target.value)
-    setFilter(e.target.value)
-  }
+  const handleFilter = (e) => {
+    setTopic(e.target.value);
+    setFilter(e.target.value);
+  };
   return (
     <>
       <Navbar />
@@ -126,21 +163,21 @@ export default function HomeUserPage() {
                 <ul id="kategori" className="text-center">
                   <li onClick={handleFilter} value={null} className="flex gap-3 justify-center">
                     <AiFillFire className="fill-secondary-orange w-6 h-6"></AiFillFire>
-                    <div className="text-secondary-orange">Trending Topic</div> 
+                    <div className="text-secondary-orange">Trending Topic</div>
                   </li>
-                  <li onClick={handleFilter} value={1} className={topic===1 ? "cursor-pointer bg-secondary-orange" : "cursor-pointer hover:bg-secondary-orange"}>
+                  <li onClick={handleFilter} value={1} className={topic === 1 ? "cursor-pointer bg-secondary-orange" : "cursor-pointer hover:bg-secondary-orange"}>
                     Games
                   </li>
-                  <li onClick={handleFilter} value={2} className={topic===2 ? "cursor-pointer bg-secondary-orange" : "cursor-pointer hover:bg-secondary-orange"}>
+                  <li onClick={handleFilter} value={2} className={topic === 2 ? "cursor-pointer bg-secondary-orange" : "cursor-pointer hover:bg-secondary-orange"}>
                     Health
                   </li>
-                  <li onClick={handleFilter} value={3} className={topic===3 ? "cursor-pointer bg-secondary-orange" : "cursor-pointer hover:bg-secondary-orange"}>
+                  <li onClick={handleFilter} value={3} className={topic === 3 ? "cursor-pointer bg-secondary-orange" : "cursor-pointer hover:bg-secondary-orange"}>
                     Food & Travel
                   </li>
-                  <li onClick={handleFilter} value={4} className={topic===4 ? "cursor-pointer bg-secondary-orange" : "cursor-pointer hover:bg-secondary-orange"}>
+                  <li onClick={handleFilter} value={4} className={topic === 4 ? "cursor-pointer bg-secondary-orange" : "cursor-pointer hover:bg-secondary-orange"}>
                     Technology
                   </li>
-                  <li onClick={handleFilter} value={5} className={topic===5 ? "cursor-pointer bg-secondary-orange" : "cursor-pointer hover:bg-secondary-orange"}>
+                  <li onClick={handleFilter} value={5} className={topic === 5 ? "cursor-pointer bg-secondary-orange" : "cursor-pointer hover:bg-secondary-orange"}>
                     Education
                   </li>
                 </ul>
@@ -153,33 +190,35 @@ export default function HomeUserPage() {
             </div>
             <div id="filter-hp" className="lg:hidden mb-6 lg:mb-0">
               {/* <div className="w-1/5"> */}
-                {/* <div id="kategori-list" className="flex"> */}
-                  <div className="flex items-center justify-center gap-4 mb-4">
-                    <AiFillFire className="fill-secondary-orange"></AiFillFire>
-                    <div onClick={() => setFilter(null)} className="text-md sm:text-lg font-bold text-secondary-orange">Trending Topic</div>
-                  </div>
-                  <div className="overflow-auto w-full no-scrollbar">
-                  <ul id="kategori-hp" className="flex gap-3 text-center w-max text-sm sm:text-base">
-                    <li onClick={handleFilter} value={1} className={topic===1 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
-                      Games
-                    </li>
-                    <li onClick={handleFilter} value={2} className={topic===2 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
-                      Health
-                    </li>
-                    <li onClick={handleFilter} value={3} className={topic===3 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
-                      Food & Travel
-                    </li>
-                    <li onClick={handleFilter} value={4} className={topic===4 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
-                      Technology
-                    </li>
-                    <li onClick={handleFilter} value={5} className={topic===5 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
-                      Education
-                    </li>
-                  </ul>
-                  </div>
-                {/* </div> */}
+              {/* <div id="kategori-list" className="flex"> */}
+              <div className="flex items-center justify-center gap-4 mb-4">
+                <AiFillFire className="fill-secondary-orange"></AiFillFire>
+                <div onClick={() => setFilter(null)} className="text-md sm:text-lg font-bold text-secondary-orange">
+                  Trending Topic
+                </div>
+              </div>
+              <div className="overflow-auto w-full no-scrollbar">
+                <ul id="kategori-hp" className="flex gap-3 text-center w-max text-sm sm:text-base">
+                  <li onClick={handleFilter} value={1} className={topic === 1 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
+                    Games
+                  </li>
+                  <li onClick={handleFilter} value={2} className={topic === 2 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
+                    Health
+                  </li>
+                  <li onClick={handleFilter} value={3} className={topic === 3 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
+                    Food & Travel
+                  </li>
+                  <li onClick={handleFilter} value={4} className={topic === 4 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
+                    Technology
+                  </li>
+                  <li onClick={handleFilter} value={5} className={topic === 5 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
+                    Education
+                  </li>
+                </ul>
+              </div>
               {/* </div> */}
-          </div>
+              {/* </div> */}
+            </div>
             {loading ? (
               <div id="thread">
                 <div id="thread-box" className="flex">
@@ -226,7 +265,9 @@ export default function HomeUserPage() {
                         </div>
                       </div>
                       <div className="flex flex-1 justify-end items-center">
-                        <button id="thread-button" className="text-sm sm:text-lg">Follow</button>
+                        <button id="thread-button" className="text-sm sm:text-lg">
+                          Follow
+                        </button>
                       </div>
                     </div>
                     <div className="mt-4 mb-4">
@@ -301,7 +342,9 @@ export default function HomeUserPage() {
                       </div>
                     </div>
                     <div className="flex flex-1 justify-end items-center">
-                      <button id="thread-button" className="text-sm sm:text-lg">Follow</button>
+                      <button id="thread-button" className="text-sm sm:text-lg">
+                        Follow
+                      </button>
                     </div>
                   </div>
                   <div className="mt-4 mb-4">

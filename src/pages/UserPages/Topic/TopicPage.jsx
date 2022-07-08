@@ -6,8 +6,13 @@ import { BiFilterAlt, BiFilter } from "react-icons/bi";
 import { IoIosClose } from "react-icons/io";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useCallback } from "react";
+import axiosInstance from "../../../networks/api";
+import { DATA_THREAD } from "../../../redux/threadSlice";
 
 export default function TopicPage() {
+  const dispatch = useDispatch();
   const [keyword, setKeyword] = useState("");
   const [topic, setTopic] = useState(new Array(5).fill(false));
   // Keterangan index = 0: Games, 1: Health, 2: Food&Travel, 3: Technology, 4: Education
@@ -29,6 +34,22 @@ export default function TopicPage() {
       setFiltering("process");
     }
   });
+
+  const fetchData = useCallback(() => {
+    const response = axiosInstance
+      .get("v1/thread")
+      .then((response) => {
+        dispatch(DATA_THREAD(response.data.data));
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+    return response;
+  }, [dispatch]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const handleChange = (e) => {
     setFiltering("process");
@@ -65,7 +86,7 @@ export default function TopicPage() {
     console.log(keyword);
     // Kalo gada hasilnya
     // setRes(false)
-    if(isOpen) setOpen(false)
+    if (isOpen) setOpen(false);
   };
 
   // passing datanya di sini yak
@@ -83,7 +104,7 @@ export default function TopicPage() {
           return <Thread />;
         } else {
           // buat filter topic
-          return <Thread />;
+          return <Thread topic={topic} />;
         }
       } else {
         // kalo hasilnya filter/search gaada
@@ -92,26 +113,26 @@ export default function TopicPage() {
     } else if (isFiltering === "no") {
       return (
         <>
-        <Thread />
-        <Thread />
-        <Thread />
+          <Thread />
+          <Thread />
+          <Thread />
         </>
       );
     }
   };
 
-const handleOpen = () => {
+  const handleOpen = () => {
     setOpen(!isOpen);
-}
-const handleClose = () => {
+  };
+  const handleClose = () => {
     setOpen(false);
-}
+  };
 
-const openFilter = () => {
-  return(
-    <div id="filter-mobile-tablet">
-      <div className="fixed z-50 inset-0 m-auto">
-      <div onClick={handleClose} className="fixed inset-0 bg-[#ffffff4d]"></div>
+  const openFilter = () => {
+    return (
+      <div id="filter-mobile-tablet">
+        <div className="fixed z-50 inset-0 m-auto">
+          <div onClick={handleClose} className="fixed inset-0 bg-[#ffffff4d]"></div>
           <div className="px-3">
             <div id="box" className="scrollbar-hp rounded-lg p-8 mt-[85%] -translate-y-[50%] relative max-w-md mx-auto bg-white shadow-lg max-h-[80vh] overflow-auto ring-1 ring-slate-900/5 -my-px">
               <div className="flex justify-between">
@@ -166,11 +187,11 @@ const openFilter = () => {
                 <input type="submit" value="Apply" className="text-sm sm:text-md mt-4 w-full py-1 rounded-lg bg-secondary-orange hover:bg-[#18B015] cursor-pointer" />
               </form>
             </div>
+          </div>
+        </div>
       </div>
-      </div>
-    </div>
-  )
-}
+    );
+  };
 
   return (
     <div id="topic" className="bg-black max-h-[100vh] overflow-hidden" style={{ backgroundColor: "black" }}>

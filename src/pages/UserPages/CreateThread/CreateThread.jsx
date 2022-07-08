@@ -1,6 +1,6 @@
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef } from "react";
 import "./createthread.css";
 import Navbar from "../components/Navbar";
 import UploadPhoto from "../components/UploadPhoto";
@@ -10,8 +10,6 @@ import { useNavigate } from "react-router";
 import axiosInstance from "../../../networks/api";
 import storage from "../../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import SimpleMDE from "react-simplemde-editor";
-import "easymde/dist/easymde.min.css";
 
 export default function CreateThread() {
   const [showUpload, setShowUpload] = useState(false);
@@ -28,8 +26,8 @@ export default function CreateThread() {
   //     console.log(value, content)
   // })
   const handleShowUpload = () => {
-      setShowUpload(!showUpload);
-  }
+    setShowUpload(!showUpload);
+  };
 
   const handleTitle = (e) => {
     setValue({ ...value, title: e.target.value });
@@ -44,42 +42,66 @@ export default function CreateThread() {
   const modules = {
     toolbar: [["bold", "underline", "italic", "strike"], ["code-block", "blockquote"], [{ header: [1, 2, 3, 4, 5] }], [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }], ["link", "image"]],
   };
-  const handleSubmit = async () => {
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = JSON.stringify({ topic: { id: parseInt(value.topic) }, title: value.title, content });
     if (error.errTitle === "" && error.errTopic === "" && content !== "") {
-      const imageName = ref(storage, `threads/${image.name}`);
-      const uploadTask = uploadBytes(imageName, image);
-
-      uploadTask.then((snapshot) => {
-        getDownloadURL(snapshot.ref).then(async (downloadURL) => {
-          await axiosInstance.post("/v1/thread", {
-            topic: { id: parseInt(value.topic) },
-            title: value.title,
-            content: content,
-            image: "test image",
-          });
+      axiosInstance
+        .post(
+          "/v1/thread",
+          {
+            json: data,
+            file: image,
+          },
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((response) => {
+          if (response.status === 200) {
+            navigate("/user/account");
+            Swal.fire({
+              toast: true,
+              icon: "success",
+              title: "Successfully Created",
+              animation: false,
+              background: "#222834",
+              color: "#18B015",
+              position: "bottom-end",
+              showConfirmButton: false,
+              timer: 4000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+          } else {
+            Swal.fire({
+              toast: true,
+              icon: "error",
+              title: "Error, Check your connection Internet or contact Admin",
+              animation: false,
+              background: "#222834",
+              color: "#DE1508",
+              position: "bottom-end",
+              showConfirmButton: false,
+              timer: 4000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+          }
         });
-      });
-
-      navigate("/user/account");
-      Swal.fire({
-        toast: true,
-        icon: "success",
-        title: "Successfully Created",
-        animation: false,
-        background: "#222834",
-        color: "#18B015",
-        position: "bottom-end",
-        showConfirmButton: false,
-        timer: 4000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener("mouseenter", Swal.stopTimer);
-          toast.addEventListener("mouseleave", Swal.resumeTimer);
-        },
-      });
       // set jadi kosong lagi
       setValue({ title: "", topic: "" });
       setContent("");
+      setImage(null);
       setError({ errTitle: "Please add a title", errTopic: "Please add a topic" });
     } else {
       Swal.fire({
@@ -100,17 +122,12 @@ export default function CreateThread() {
       });
     }
   };
-
-  const onChangeContent = useCallback((content) => {
-    setValue(content);
-  }, []);
-
   return (
     <div className="bg-primary-black min-h-[100vh] overflow-hidden">
       <Navbar />
       <div id="create-thread" className="max-w-[1240px] xl:mx-auto mx-10">
         <div className="h-14 sm:h-20"></div>
-        <form id="form" onSubmit={handleSubmit}>
+        <form id="form" onSubmit={handleSubmit} encType="multipart/form-data">
           <div id="title-box" className="mb-[6%] sm:mb-[2%] mt-[3%] text-sm sm:text-md">
             <label htmlFor="title" className="block text-gray-300 mb-2">
               Add Title
@@ -124,7 +141,34 @@ export default function CreateThread() {
             <label htmlFor="img" className="block text-gray-300 mb-4">
               Add Image
             </label>
-            <div id="upload-button" onClick={handleShowUpload} className="bg-secondary-orange w-fit px-6 py-2 text-white rounded-lg cursor-pointer text-center">Choose Image</div>
+            <label htmlFor="img" className="bg-secondary-orange px-6 py-2 text-white rounded-lg cursor-pointer text-center">
+              Choose Image
+            </label>
+            <input
+              className="hidden"
+              id="img"
+              type="file"
+              ref={fotoThread}
+              onChange={(e) => {
+                setImage(e.target.files[0]);
+              }}
+              name="image"
+            />
+            {/* <label htmlFor="img" className="bg-secondary-blue px-6 py-2 text-white rounded-lg cursor-pointer text-center">
+              Choose Image
+            </label>
+            <input
+              id="img"
+              type="file"
+              ref={fotoThread}
+              onChange={(e) => {
+                setImage(e.target.files[0]);
+              }}
+              name="image"
+            /> */}
+            {/* <div id="upload-button" onClick={handleShowUpload} className="bg-secondary-orange w-fit px-6 py-2 text-white rounded-lg cursor-pointer text-center">
+              Choose Image
+            </div> */}
           </div>
           <div id="topic-box" className="mb-[6%] sm:mb-[2%] mt-[3%] text-sm sm:text-md">
             <div className="block text-gray-300 mb-2">Choose topic</div>
@@ -157,13 +201,13 @@ export default function CreateThread() {
           <div id="content-box" className="mb-[6%] sm:mb-[2%] mt-[3%] text-sm sm:text-md">
             <div className="block text-gray-300 mb-2">Thread Content</div>
             <div id="text-editor" className="editor">
-              <SimpleMDE value={content} onChange={onChangeContent}/>
+              <ReactQuill modules={modules} theme="snow" onChange={setContent} placeholder="Write Something..." className="h-[60%]" />
             </div>
           </div>
           <input id="submit-button" type="submit" value="Submit" className="mb-[12%] sm:mb-[4%] mt-[3%] w-full bg-primary-grey hover:bg-secondary-orange py-4 rounded-xl text-white text-lg md:text-xl font-bold"></input>
         </form>
       </div>
-      {showUpload && <UploadPhoto onCancel={handleShowUpload}/>}
+      {showUpload && <UploadPhoto onCancel={handleShowUpload} />}
     </div>
   );
 }
