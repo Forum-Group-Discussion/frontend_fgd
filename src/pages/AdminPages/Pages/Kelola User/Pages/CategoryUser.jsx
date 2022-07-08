@@ -1,17 +1,19 @@
 import React from 'react'
 import { useState } from 'react'
-import Joko from "../../../../../assets/img/Admin/JOK.png"
 import Sidebar from '../../../Components/Sidebar'
-import Btnsuspen from '../../../Components/BtnSuspen'
+import True from '../../../../../assets/img/Admin/True.png'
 import Report from  '../../../Components/Report'
 import DeleteThread from "../../../Components/DeleteThread"
 import { useEffect } from 'react'
 import AOS from "aos";
+import Swal from 'sweetalert2';
 
 export default function CategoryUser() {
   const [account, setAccount] = useState({name: "Hacked Account", profpic: "https://media.baamboozle.com/uploads/images/185613/1618204459_7530_url.jpeg", following: 1093392, followers: 9128, active: 2019})
   const [choose, setChoose] = useState("thread")
   const [statconv, setStatconv] = useState({following:0, followers:0})
+  const [suspen, setSuspen] = useState("true")
+  
 
   useEffect(() => {
       AOS.init();
@@ -53,6 +55,43 @@ export default function CategoryUser() {
       setChoose(e.target.value)
   }
 
+  const handleSuspend = () => {
+    Swal.fire({
+      title: "Are you sure to suspend this account?",
+      icon: "warning",
+      showCancelButton: true,
+      showConfirmButton: true,
+      background: "#151921",
+      color: "#fff",
+      confirmButtonColor: "#FF3D00",
+      cancelButtonColor: "#D91E11",
+      confirmButtonText: "Yes, Suspend!",
+      focusConfirm: false,
+      focusCancel: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          title: "Suspend Successfully",
+          animation: false,
+          background: "#222834",
+          color: "#18B015",
+          position: "bottom-end",
+          showConfirmButton: false,
+          timer: 4000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+        setSuspen(!suspen)
+      }
+    });
+    
+  }
+
   return (
     <div id='user' className="bg-primary-black h-screen w-screen overflow-hidden">
         <div className="container mx-auto xl:px-20 lg:px-15">
@@ -76,18 +115,21 @@ export default function CategoryUser() {
                     </div>
                   <div className='sm:col-span-5 md:col-span-2 mt-10 mx-auto md:mt-0'>
                     <div className='hidden md:block mb-5 text-xs sm:text-sm'>Active since {account.active}</div>
-                    <Btnsuspen id="suspend-button"/>
+                    <div id='suspend-button'>
+                      {suspen ?< button onClick={handleSuspend} className='rounded-full bg-secondary-orange hover:bg-secondary-orange/80 px-4 sm:px-8 py-2'>Suspend</button>
+                      : <img src={True}/>}
+                    </div>
                   </div>
                 </div>
               </div>
-              <section id="select-box" className="py-2">
+              {suspen ? <section id="select-box" className="py-2">
                 <div className="max-w-[1240px] mx-auto">    
                   <div id="select-button" className="my-5 mx-auto md:text-xl font-medium max-w-[500px]">
                     {choose === "thread"
                     ?
                       <div className="flex justify-around">
                           <button onClick={handleAction} value="thread" className="text-white">Thread</button>
-                          <button onClick={handleAction} value="activity" className="text-white/30">Report</button>
+                          <button onClick={handleAction} value="Report" className="text-white/30">Report</button>
                       </div>
                     :
                       <div className="flex justify-around">
@@ -101,7 +143,8 @@ export default function CategoryUser() {
                     : <Report/>
                   }
                 </div>
-              </section>
+              </section> 
+              : <div className='flex justify-center py-[190px]'> Temporarily deactivated account for 30 days </div>}
             </div>
           </div>
         </div>

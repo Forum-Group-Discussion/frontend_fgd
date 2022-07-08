@@ -9,8 +9,10 @@ import { thumbsDown } from "react-icons-kit/feather/thumbsDown";
 import { bookmark } from 'react-icons-kit/feather/bookmark'
 import { commentingO } from "react-icons-kit/fa/commentingO";
 import { moreVertical } from 'react-icons-kit/feather/moreVertical'
+import True from '../../../assets/img/Admin/True.png'
 import { useState,useEffect } from "react";
 import Swal from "sweetalert2";
+import Report from "./Report";
 
 export default function DeleteThread({page}){
     const [more, setMore] = useState(false)
@@ -19,6 +21,7 @@ export default function DeleteThread({page}){
     const [showFull, setFull] = useState(false)
     const [stat, setStat] = useState({like:105500, dislike:99900, comment:100})
     const [statconv, setStatconv] = useState({like:"", dislike:"", comment:""})
+    const [Delete, setDelete] = useState("true")
 
     useEffect(()=>{
         let lk = stat.like
@@ -146,6 +149,7 @@ export default function DeleteThread({page}){
                 },
                 });
             }
+            setDelete(!Delete)
         });
     }
 
@@ -166,10 +170,13 @@ export default function DeleteThread({page}){
                     </div>
                     {page==="thread" &&
                         <div className="flex flex-1 justify-end items-center">
-                            <button onClick={handleDelete} id="thread-button" className="text-sm sm:text-lg">Delete</button>
+                            {Delete ? <button onClick={handleDelete} id="thread-button" className="text-sm sm:text-lg">Delete</button>
+                            : <img src={True}/>}
                         </div>
                     }
                 </div>
+                {Delete ? 
+                <>
                 <div className="mt-4 mb-4">
                     <h3 className="text-sm sm:text-lg md:font-semibold text-white tracking-[1px]">Rekomendasi 5 Game Mobile yang Menarik di Minggu Keempat Bulan Mei 2022</h3>
                 </div>
@@ -200,7 +207,10 @@ export default function DeleteThread({page}){
                         </div>
                     </div>
                 </div>
+                </>
+                : " "}
             </div>
+            {Delete ? <Report/> : <div className="flex justify-center py-[190px]">Tidack ada Thread</div>} 
             <div id='close-popup' className={popupShare ? 'popupShare active' : 'popupShare'}>
                 <div>
                     <div className="flex absolute inset-0 m-auto justify-center p-4">
