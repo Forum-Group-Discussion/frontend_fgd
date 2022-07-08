@@ -33,20 +33,24 @@
 }
 
 /* text editor */
-.ql-snow.ql-toolbar {
-    display: block;
-    background: #eaecec;
-    border-top-left-radius: 0.5em;
-    border-top-right-radius: 0.5em;
+ul{
+    list-style: disc;;
 }
-.ql-container {
-    border-bottom-left-radius: 0.5em;
-    border-bottom-right-radius: 0.5em;
-    background: #fefcfc;
+ol{
+    list-style: decimal;
 }
-.ql-editor {
-    min-height: 18em;
+a:link{
+    color: blue;
 }
-.quill > .ql-container > .ql-editor.ql-blank::before{
-    font-size: 15px;
+.editor-toolbar{
+    background-color: #eaecec;
+    color: black;
+}
+.editor-toolbar .heading, .editor-toolbar .quote, .editor-toolbar .image, .editor-toolbar .preview, .editor-toolbar .side-by-side, .editor-toolbar .fullscreen, .editor-toolbar .guide{
+    visibility: hidden;
+    width: 0%;
+}
+.editor-toolbar .separator{
+    visibility: hidden;
+    width: 0%;
 }

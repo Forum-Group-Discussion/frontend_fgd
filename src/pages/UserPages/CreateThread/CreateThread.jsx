@@ -1,6 +1,6 @@
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import "./createthread.css";
 import Navbar from "../components/Navbar";
 import UploadPhoto from "../components/UploadPhoto";
@@ -10,6 +10,8 @@ import { useNavigate } from "react-router";
 import axiosInstance from "../../../networks/api";
 import storage from "../../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import SimpleMDE from "react-simplemde-editor";
+import "easymde/dist/easymde.min.css";
 
 export default function CreateThread() {
   const [showUpload, setShowUpload] = useState(false);
@@ -25,9 +27,9 @@ export default function CreateThread() {
   // useEffect(()=>{
   //     console.log(value, content)
   // })
-const handleShowUpload = () => {
-    setShowUpload(!showUpload);
-}
+  const handleShowUpload = () => {
+      setShowUpload(!showUpload);
+  }
 
   const handleTitle = (e) => {
     setValue({ ...value, title: e.target.value });
@@ -98,6 +100,11 @@ const handleShowUpload = () => {
       });
     }
   };
+
+  const onChangeContent = useCallback((content) => {
+    setValue(content);
+  }, []);
+
   return (
     <div className="bg-primary-black min-h-[100vh] overflow-hidden">
       <Navbar />
@@ -117,18 +124,6 @@ const handleShowUpload = () => {
             <label htmlFor="img" className="block text-gray-300 mb-4">
               Add Image
             </label>
-            {/* <label htmlFor="img" className="bg-secondary-blue px-6 py-2 text-white rounded-lg cursor-pointer text-center">
-              Choose Image
-            </label>
-            <input
-              id="img"
-              type="file"
-              ref={fotoThread}
-              onChange={(e) => {
-                setImage(e.target.files[0]);
-              }}
-              name="image"
-            /> */}
             <div id="upload-button" onClick={handleShowUpload} className="bg-secondary-orange w-fit px-6 py-2 text-white rounded-lg cursor-pointer text-center">Choose Image</div>
           </div>
           <div id="topic-box" className="mb-[6%] sm:mb-[2%] mt-[3%] text-sm sm:text-md">
@@ -162,7 +157,7 @@ const handleShowUpload = () => {
           <div id="content-box" className="mb-[6%] sm:mb-[2%] mt-[3%] text-sm sm:text-md">
             <div className="block text-gray-300 mb-2">Thread Content</div>
             <div id="text-editor" className="editor">
-              <ReactQuill modules={modules} theme="snow" onChange={setContent} placeholder="Write Something..." className="h-[60%]" />
+              <SimpleMDE value={content} onChange={onChangeContent}/>
             </div>
           </div>
           <input id="submit-button" type="submit" value="Submit" className="mb-[12%] sm:mb-[4%] mt-[3%] w-full bg-primary-grey hover:bg-secondary-orange py-4 rounded-xl text-white text-lg md:text-xl font-bold"></input>
