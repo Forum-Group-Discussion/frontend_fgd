@@ -33,15 +33,17 @@
 }
 
 /* text editor */
-ul{
-    list-style: disc;;
-}
-ol{
-    list-style: decimal;
-}
-a:link{
-    color: blue;
-}
+    /* Dipake pas nampilin yaa */
+        /* #id ul{
+            list-style: disc;;
+        }
+        #id ol{
+            list-style: decimal;
+        }
+        #id a:link{
+            color: blue;
+        } */
+    /*  */
 .editor-toolbar{
     background-color: #eaecec;
     color: black;
