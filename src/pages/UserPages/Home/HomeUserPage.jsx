@@ -155,7 +155,7 @@ export default function HomeUserPage() {
   return (
     <>
       <Navbar />
-      <div id="home" className="flex justify-center">
+      <div id="home" className="flex justify-center min-h-screen">
         <div id="container" className="flex flex-row w-4/5">
           <div id="box-1" className="lg:flex relative w-1/4 mr-8 hidden">
             <div className="fixed w-1/5">
@@ -188,36 +188,30 @@ export default function HomeUserPage() {
             <div className="trending-slider">
               <TrendingSlider />
             </div>
-            <div id="filter-hp" className="lg:hidden mb-6 lg:mb-0">
-              {/* <div className="w-1/5"> */}
-              {/* <div id="kategori-list" className="flex"> */}
-              <div className="flex items-center justify-center gap-4 mb-4">
-                <AiFillFire className="fill-secondary-orange"></AiFillFire>
-                <div onClick={() => setFilter(null)} className="text-md sm:text-lg font-bold text-secondary-orange">
-                  Trending Topic
-                </div>
-              </div>
-              <div className="overflow-auto w-full no-scrollbar">
+            <div className="lg:hidden flex items-center justify-center gap-4">
+              <AiFillFire className="fill-secondary-orange"></AiFillFire>
+              <div onClick={() => setFilter(null)} className="text-md sm:text-lg font-bold text-secondary-orange">Trending Topic</div>
+            </div>
+            <div id="filter-hp" className="lg:hidden py-4 sticky top-[8%] sm:top-[12%] bg-primary-black z-10">
+                <div className="overflow-auto w-full no-scrollbar">
                 <ul id="kategori-hp" className="flex gap-3 text-center w-max text-sm sm:text-base">
-                  <li onClick={handleFilter} value={1} className={topic === 1 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
+                  <li onClick={handleFilter} value={1} className={topic===1 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
                     Games
                   </li>
-                  <li onClick={handleFilter} value={2} className={topic === 2 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
+                  <li onClick={handleFilter} value={2} className={topic===2 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
                     Health
                   </li>
-                  <li onClick={handleFilter} value={3} className={topic === 3 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
+                  <li onClick={handleFilter} value={3} className={topic===3 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
                     Food & Travel
                   </li>
-                  <li onClick={handleFilter} value={4} className={topic === 4 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
+                  <li onClick={handleFilter} value={4} className={topic===4 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
                     Technology
                   </li>
-                  <li onClick={handleFilter} value={5} className={topic === 5 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
+                  <li onClick={handleFilter} value={5} className={topic===5 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
                     Education
                   </li>
                 </ul>
-              </div>
-              {/* </div> */}
-              {/* </div> */}
+                </div>
             </div>
             {loading ? (
               <div id="thread">
@@ -248,6 +242,7 @@ export default function HomeUserPage() {
                 </div>
               </div>
             ) : filter !== null ? (
+              threads?.filter((d) => d.topic.id === filter).length>0 ? 
               threads
                 ?.filter((d) => d.topic.id === filter)
                 .map((item, index) => (
@@ -326,6 +321,15 @@ export default function HomeUserPage() {
                     {showFull && <FullThread onCancel={handleCloseFull} />}
                   </div>
                 ))
+              :
+              <div className="border border-solid border-[#d9d9d91a] rounded-xl h-60 py-10">
+                <div className="text-md xl:text-lg text-grey text-center mb-10">No threads yet</div>
+                <div className="flex w-full justify-center">
+                  <Link to="/user/create" className="px-8 py-4 bg-secondary-orange rounded-xl text-white text-md xl:text-lg">
+                    Create Here
+                  </Link>
+                </div>
+              </div>
             ) : (
               threads.map((item, index) => (
                 <div id="thread" key={index} className="max-w-[1000px] mx-auto">

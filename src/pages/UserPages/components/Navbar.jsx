@@ -57,7 +57,7 @@ const Navbar = () => {
   };
 
   return (
-    <div id="navbar" className="bg-primary-black w-full border-b border-b-primary-grey fixed z-10">
+    <div id="navbar" className="bg-primary-black w-full border-b border-b-primary-grey fixed z-20">
       <div id="nav-box" className="grid grid-cols-4 sm:flex sm:justify-between sm:items-center sm:h-20 sm:w-[80%] h-14 mx-auto px-4 text-white">
         <div id="nav-toggler" onClick={handleNav} className="sm:hidden flex flex-col justify-center">
           {nav ? <AiOutlineClose size={25} /> : <AiOutlineMenu size={25} />}

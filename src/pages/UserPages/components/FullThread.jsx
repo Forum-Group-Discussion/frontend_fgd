@@ -190,8 +190,8 @@ export default function FullThread({onCancel}){
         <div id="full-thread" className="fixed z-50 inset-0 m-auto">
             <div onClick={onCancel} className="fixed inset-0 bg-[#ffffff4d]"></div>
             <div className="px-3">
-                <div id="box" className="overflow-auto no-scrollbar lg:overflow-hidden md:h-[80vh] xl:h-[90vh] rounded-md mt-[85%] -translate-y-[40%] md:mt-[45%] lg:mt-[35%] xl:mt-[25%] md:-translate-y-[50%] relative w-[90%] md:w-[70%] mx-auto bg-white shadow-lg ring-1 ring-slate-900/5 -my-px">
-                    <div className="relative">
+                <div id="box" className="overflow-auto no-scrollbar lg:overflow-hidden md:h-[80vh] xl:h-[90vh] rounded-md mt-[85%] -translate-y-[40%] md:mt-[45%] lg:mt-[35%] xl:mt-[25%] md:-translate-y-[50%] relative w-[90%] md:w-[70%] mx-auto shadow-lg ring-1 ring-slate-900/5 -my-px">
+                    <div className="relative bg-white">
                         <div id="content" className="lg:grid grid-cols-2 h-[80vh] md:h-[80vh] xl:h-[90vh]">
                             <div className="">
                                 <img src={data.img} className="w-full object-cover h-[40vh] md:h-[80vh] xl:h-[90vh] lg:absolute lg:w-[50%] top-0 left-0" />
