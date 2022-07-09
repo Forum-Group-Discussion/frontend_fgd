@@ -12,6 +12,7 @@ import "./FullThread.css";
 import axiosInstance from "../../../networks/api";
 import { useEffect } from "react";
 import { useCallback } from "react";
+import ReactMarkdown from "react-markdown";
 
 const data = {
   id: 1,
@@ -258,7 +259,9 @@ export default function FullThread() {
                         {detailThread?.users.name}
                       </div>
                     </div>
-                    <div className="mb-2 ml-10">{detailThread?.content}</div>
+                    <div className="mb-2 ml-10">
+                      <ReactMarkdown>{detailThread?.content}</ReactMarkdown>
+                    </div>
                     <div className="mb-6 ml-10 text-grey">{timestamp}</div>
                     {data.replies?.map((item) => (
                       <div id="post-comment" key={item.id} className="relative">
