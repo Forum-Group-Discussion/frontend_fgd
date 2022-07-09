@@ -114,7 +114,7 @@ export default function ProfileUserPage() {
       // kalo gada hasilnya uncomment ini yaa
       // setRes(false)
       if (res) {
-        return <Thread />;
+        return <Thread threadUser={true} />;
       } else {
         return (
           <div className="border border-solid border-[#d9d9d91a] rounded-xl h-60 py-10">

@@ -39,6 +39,14 @@ export default function HomeUserPage() {
   const [topic, setTopic] = useState(0);
   let { category } = useParams();
 
+  useEffect(() => {
+    if (threads.length !== 0) {
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+  }, [threads]);
+
   const showPopupShare = () => {
     if (popupShare === false) {
       setPopupShare(true);
@@ -69,56 +77,6 @@ export default function HomeUserPage() {
   };
 
   const navigate = useNavigate();
-  const fetchData = useCallback(() => {
-    const response = axiosInstance
-      .get("v1/thread/desc")
-      .then((response) => {
-        dispatch(DATA_THREAD(response.data.data));
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        if (error.response.data.message === "TOKEN_INVALID_OR_TOKEN_NULL") {
-          Swal.fire({
-            title: "Sorry, Your Session has expired, please Login again!",
-            icon: "warning",
-            showConfirmButton: true,
-            background: "#151921",
-            color: "#fff",
-            confirmButtonColor: "#FF3D00",
-            cancelButtonColor: "#D91E11",
-            confirmButtonText: "Login",
-            focusConfirm: true,
-          }).then((result) => {
-            if (result.isConfirmed) {
-              Swal.fire({
-                toast: true,
-                icon: "success",
-                title: "Log Out Successfully",
-                animation: false,
-                background: "#222834",
-                color: "#18B015",
-                position: "bottom-end",
-                showConfirmButton: false,
-                timer: 4000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.addEventListener("mouseenter", Swal.stopTimer);
-                  toast.addEventListener("mouseleave", Swal.resumeTimer);
-                  removeUserSession(navigate);
-                  window.location.reload();
-                },
-              });
-            }
-          });
-        }
-      });
-    return response;
-  }, [dispatch]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
 
   const handleShowFull = () => {
     setFull(!showFull);
@@ -152,6 +110,7 @@ export default function HomeUserPage() {
     setTopic(e.target.value);
     setFilter(e.target.value);
   };
+
   return (
     <>
       <Navbar />
@@ -190,28 +149,30 @@ export default function HomeUserPage() {
             </div>
             <div className="lg:hidden flex items-center justify-center gap-4">
               <AiFillFire className="fill-secondary-orange"></AiFillFire>
-              <div onClick={() => setFilter(null)} className="text-md sm:text-lg font-bold text-secondary-orange">Trending Topic</div>
+              <div onClick={() => setFilter(null)} className="text-md sm:text-lg font-bold text-secondary-orange">
+                Trending Topic
+              </div>
             </div>
             <div id="filter-hp" className="lg:hidden py-4 sticky top-[8%] sm:top-[12%] bg-primary-black z-10">
-                <div className="overflow-auto w-full no-scrollbar">
+              <div className="overflow-auto w-full no-scrollbar">
                 <ul id="kategori-hp" className="flex gap-3 text-center w-max text-sm sm:text-base">
-                  <li onClick={handleFilter} value={1} className={topic===1 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
+                  <li onClick={handleFilter} value={1} className={topic === 1 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
                     Games
                   </li>
-                  <li onClick={handleFilter} value={2} className={topic===2 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
+                  <li onClick={handleFilter} value={2} className={topic === 2 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
                     Health
                   </li>
-                  <li onClick={handleFilter} value={3} className={topic===3 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
+                  <li onClick={handleFilter} value={3} className={topic === 3 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
                     Food & Travel
                   </li>
-                  <li onClick={handleFilter} value={4} className={topic===4 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
+                  <li onClick={handleFilter} value={4} className={topic === 4 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
                     Technology
                   </li>
-                  <li onClick={handleFilter} value={5} className={topic===5 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
+                  <li onClick={handleFilter} value={5} className={topic === 5 ? "bg-secondary-orange px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto" : "bg-primary-grey px-6 py-3 text-white rounded-lg cursor-pointer text-center my-auto"}>
                     Education
                   </li>
                 </ul>
-                </div>
+              </div>
             </div>
             {loading ? (
               <div id="thread">
@@ -242,94 +203,95 @@ export default function HomeUserPage() {
                 </div>
               </div>
             ) : filter !== null ? (
-              threads?.filter((d) => d.topic.id === filter).length>0 ? 
-              threads
-                ?.filter((d) => d.topic.id === filter)
-                .map((item, index) => (
-                  <div id="thread" key={index}>
-                    <div id="thread-box" className="flex">
-                      <div id="thread-header" className="flex">
-                        <div className="mr-2">
-                          <img src={gambarProfile} alt="gambar profile" />
+              threads?.filter((d) => d.topic.id === filter).length > 0 ? (
+                threads
+                  ?.filter((d) => d.topic.id === filter)
+                  .map((item, index) => (
+                    <div id="thread" key={index}>
+                      <div id="thread-box" className="flex">
+                        <div id="thread-header" className="flex">
+                          <div className="mr-2">
+                            <img src={gambarProfile} alt="gambar profile" />
+                          </div>
+                          <div className="flex items-center">
+                            <div className="flex-col text-white max-w-[30vw]">
+                              <h5 className="text-sm md:text-md font-semibold tracking-[2px] truncate">{item.users.name}</h5>
+                              <h6 className="text-sm md:text-md font-medium mt-1 text-gray-300">2 days ago</h6>
+                            </div>
+                          </div>
                         </div>
-                        <div className="flex items-center">
-                          <div className="flex-col text-white max-w-[30vw]">
-                            <h5 className="text-sm md:text-md font-semibold tracking-[2px] truncate">{item.users.name}</h5>
-                            <h6 className="text-sm md:text-md font-medium mt-1 text-gray-300">2 days ago</h6>
+                        <div className="flex flex-1 justify-end items-center">
+                          <button id="thread-button" className="text-sm sm:text-lg">
+                            Follow
+                          </button>
+                        </div>
+                      </div>
+                      <div className="mt-4 mb-4">
+                        <h3 className="text-sm sm:text-lg md:font-semibold text-white tracking-[1px]">{item.title}</h3>
+                      </div>
+                      <div>
+                        <img src={gambarThread} alt="gambar thread" className="relative" />
+                      </div>
+                      <div id="thread-icon" className="flex flex-1 justify-between mt-5">
+                        <div className="cursor-pointer">
+                          <Icon icon={thumbsUp} />
+                          <span className="text-sm sm:text-lg text-white">68k</span>
+                        </div>
+                        <div className="cursor-pointer">
+                          <Icon icon={thumbsDown} />
+                          <span className="text-sm sm:text-lg text-white">98k</span>
+                        </div>
+                        <div onClick={handleShowFull} className="cursor-pointer">
+                          <Icon icon={commentingO} />
+                          <span className="text-sm sm:text-lg text-white">90</span>
+                        </div>
+                        <div onClick={handleSave} className="cursor-pointer">
+                          <Icon icon={bookmark} />
+                        </div>
+                        <div onClick={() => showMoreMenu(index)}>
+                          <Icon icon={moreVertical} />
+                          <div className={more && index === threadIndex ? "more-3 active" : "more"}>
+                            <span className="cursor-pointer" onClick={handleShowFull}>
+                              Open
+                            </span>
+                            <span className="cursor-pointer" onClick={showPopupShare}>
+                              Share
+                            </span>
+                            <span className="cursor-pointer" onClick={showPopupReport}>
+                              Report
+                            </span>
                           </div>
                         </div>
                       </div>
-                      <div className="flex flex-1 justify-end items-center">
-                        <button id="thread-button" className="text-sm sm:text-lg">
-                          Follow
-                        </button>
-                      </div>
-                    </div>
-                    <div className="mt-4 mb-4">
-                      <h3 className="text-sm sm:text-lg md:font-semibold text-white tracking-[1px]">{item.title}</h3>
-                    </div>
-                    <div>
-                      <img src={gambarThread} alt="gambar thread" className="relative" />
-                    </div>
-                    <div id="thread-icon" className="flex flex-1 justify-between mt-5">
-                      <div className="cursor-pointer">
-                        <Icon icon={thumbsUp} />
-                        <span className="text-sm sm:text-lg text-white">68k</span>
-                      </div>
-                      <div className="cursor-pointer">
-                        <Icon icon={thumbsDown} />
-                        <span className="text-sm sm:text-lg text-white">98k</span>
-                      </div>
-                      <div onClick={handleShowFull} className="cursor-pointer">
-                        <Icon icon={commentingO} />
-                        <span className="text-sm sm:text-lg text-white">90</span>
-                      </div>
-                      <div onClick={handleSave} className="cursor-pointer">
-                        <Icon icon={bookmark} />
-                      </div>
-                      <div onClick={() => showMoreMenu(index)}>
-                        <Icon icon={moreVertical} />
-                        <div className={more && index === threadIndex ? "more-3 active" : "more"}>
-                          <span className="cursor-pointer" onClick={handleShowFull}>
-                            Open
-                          </span>
-                          <span className="cursor-pointer" onClick={showPopupShare}>
-                            Share
-                          </span>
-                          <span className="cursor-pointer" onClick={showPopupReport}>
-                            Report
-                          </span>
-                        </div>
-                      </div>
-                    </div>
 
-                    <div id="close-popup" className={popupShare ? "popupShare active" : "popupShare"}>
-                      <div>
-                        <div className="flex absolute inset-0 m-auto justify-center p-4">
-                          <PopupShare closePopupShare={closePopupShare} />
+                      <div id="close-popup" className={popupShare ? "popupShare active" : "popupShare"}>
+                        <div>
+                          <div className="flex absolute inset-0 m-auto justify-center p-4">
+                            <PopupShare closePopupShare={closePopupShare} />
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div id="close-popup" className={popupReport ? "popupReport active" : "popupReport"}>
-                      <div>
-                        <div className="flex absolute inset-0 m-auto justify-center p-4">
-                          <PopupReport closePopupReport={closePopupReport} />
+                      <div id="close-popup" className={popupReport ? "popupReport active" : "popupReport"}>
+                        <div>
+                          <div className="flex absolute inset-0 m-auto justify-center p-4">
+                            <PopupReport closePopupReport={closePopupReport} />
+                          </div>
                         </div>
                       </div>
+                      {showFull && <FullThread onCancel={handleCloseFull} />}
                     </div>
-                    {showFull && <FullThread onCancel={handleCloseFull} />}
+                  ))
+              ) : (
+                <div className="border border-solid border-[#d9d9d91a] rounded-xl h-60 py-10">
+                  <div className="text-md xl:text-lg text-grey text-center mb-10">No threads yet</div>
+                  <div className="flex w-full justify-center">
+                    <Link to="/user/create" className="px-8 py-4 bg-secondary-orange rounded-xl text-white text-md xl:text-lg">
+                      Create Here
+                    </Link>
                   </div>
-                ))
-              :
-              <div className="border border-solid border-[#d9d9d91a] rounded-xl h-60 py-10">
-                <div className="text-md xl:text-lg text-grey text-center mb-10">No threads yet</div>
-                <div className="flex w-full justify-center">
-                  <Link to="/user/create" className="px-8 py-4 bg-secondary-orange rounded-xl text-white text-md xl:text-lg">
-                    Create Here
-                  </Link>
                 </div>
-              </div>
+              )
             ) : (
               threads.map((item, index) => (
                 <div id="thread" key={index} className="max-w-[1000px] mx-auto">
@@ -376,9 +338,11 @@ export default function HomeUserPage() {
                     <div onClick={() => showMoreMenu(index)}>
                       <Icon icon={moreVertical} />
                       <div className={more && index === threadIndex ? "more-3 active" : "more"}>
-                        <span className="cursor-pointer" onClick={handleShowFull}>
-                          Open
-                        </span>
+                        <Link to={`/user/thread/${item.id}`}>
+                          <span className="cursor-pointer" onClick={handleShowFull}>
+                            Open
+                          </span>
+                        </Link>
                         <span className="cursor-pointer" onClick={showPopupShare}>
                           Share
                         </span>
@@ -404,7 +368,7 @@ export default function HomeUserPage() {
                       </div>
                     </div>
                   </div>
-                  {showFull && <FullThread onCancel={handleCloseFull} />}
+                  {/* {showFull && <FullThread thread={item && index === threadIndex} onCancel={handleCloseFull} />} */}
                 </div>
               ))
             )}

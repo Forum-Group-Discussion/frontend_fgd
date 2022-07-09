@@ -1,6 +1,6 @@
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import "./createthread.css";
 import Navbar from "../components/Navbar";
 import UploadPhoto from "../components/UploadPhoto";
@@ -10,6 +10,8 @@ import { useNavigate } from "react-router";
 import axiosInstance from "../../../networks/api";
 import storage from "../../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import SimpleMDE from "react-simplemde-editor";
+import "easymde/dist/easymde.min.css";
 
 export default function CreateThread() {
   const [showUpload, setShowUpload] = useState(false);
@@ -42,6 +44,10 @@ export default function CreateThread() {
   const modules = {
     toolbar: [["bold", "underline", "italic", "strike"], ["code-block", "blockquote"], [{ header: [1, 2, 3, 4, 5] }], [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }], ["link", "image"]],
   };
+
+  const onChangeContent = useCallback((content) => {
+    setContent(content);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -201,7 +207,7 @@ export default function CreateThread() {
           <div id="content-box" className="mb-[6%] sm:mb-[2%] mt-[3%] text-sm sm:text-md">
             <div className="block text-gray-300 mb-2">Thread Content</div>
             <div id="text-editor" className="editor">
-              <ReactQuill modules={modules} theme="snow" onChange={setContent} placeholder="Write Something..." className="h-[60%]" />
+              <SimpleMDE value={content} onChange={onChangeContent} />
             </div>
           </div>
           <input id="submit-button" type="submit" value="Submit" className="mb-[12%] sm:mb-[4%] mt-[3%] w-full bg-primary-grey hover:bg-secondary-orange py-4 rounded-xl text-white text-lg md:text-xl font-bold"></input>
