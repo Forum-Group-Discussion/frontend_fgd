@@ -9,8 +9,8 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import axiosInstance from "../../networks/api";
 import Swal from "sweetalert2";
-import { Icon } from "react-icons-kit";
-import { image } from 'react-icons-kit/feather/image'
+import { AiFillFileImage } from "react-icons/ai";
+import { useRef } from "react";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -31,11 +31,12 @@ function RegisterPage() {
     email: "",
     password: "",
     confirmpassword: "",
-    image: "",
   };
 
   const [users, setUsers] = useState(DEFAULT_USER);
+  const [image, setImage] = useState(null)
   const [imageProfile, setImageProfile] = useState('');
+  const fotoProfile = useRef()
 
   const handleOnChange = (e) => {
     const values = e.target.value;
@@ -68,24 +69,27 @@ function RegisterPage() {
       } else {
         setConfirmPasswordValidation("Confirm password does not match with password");
       }
-    } else if (NAME === "image") {
-      setUsers({ ...users, image: e.target.files[0] })
     }
   };
 
-  console.log(users.image)
-
   const [error, setError] = useState("");
   const handleSubmit = (e) => {
-    const data = new FormData()
-    data.append('file', users.image)
-
     e.preventDefault();
+    const data = JSON.stringify({ name: users.name, email: users.email, password: users.password })
     if (users.name.length < 5 || emailValidation !== "" || passwordValidation !== "" || users.confirmpassword !== users.password) {
       alert("Data does not match");
     } else {
       axiosInstance
-        .post("v1/auth/register", { name: users.name, email: users.email, password: users.password })
+        .post("v1/auth/register", {
+          json: data,
+          file: image,
+        },
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            }
+          }
+        )
         .then(() => {
           Swal.fire({
             toast: true,
@@ -156,9 +160,9 @@ function RegisterPage() {
                 <label for="inputTag" className="flex items-center justify-center text-black bg-white-600 w-4/5 p-2">
                   Choose Image <br />
                   <div className="flex justify-center ml-2 ">
-                    <Icon icon={image} />
+                    <AiFillFileImage />
                   </div>
-                  <input name="image" id="inputTag" type="file" className="hidden" onChange={handleOnChange} />
+                  <input name="image" id="inputTag" type="file" className="hidden" ref={fotoProfile} onChange={(e) => setImage(e.target.files[0])} />
                   <br />
                 </label>
               </div>
