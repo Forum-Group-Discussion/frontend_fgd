@@ -29,6 +29,7 @@ import Swal from "sweetalert2";
 import { useEffect } from "react";
 import { DATA_THREAD } from "./redux/threadSlice";
 import { getToken, removeUserSession } from "./utils/helpers";
+import Coba from "./coba";
 
 function App() {
   const dispatch = useDispatch();
@@ -104,7 +105,7 @@ function App() {
       <Route path="/KelolaThread/category/thread" element={<CategoryThread />} />
       <Route path="/KelolaUser" element={<KelolaUSer />} />
       <Route path="/KelolaUser/category" element={<Category />} />
-      <Route path="/KelolaUser/category/user" element={<CategoryUser />} />
+      <Route path="/KelolaUser/category/user/:nameUser" element={<CategoryUser />} />
       <Route path="/Setting" element={<Setting />} />
 
       <Route element={<UserRoute />}>
@@ -117,6 +118,7 @@ function App() {
         <Route path="/user/create" element={<CreateThread />} />
         <Route path="/user/edit" element={<EditThread />} />
         <Route path="/user/topic" element={<TopicPage />} />
+        <Route path="/coba" element={<Coba />} />
       </Route>
 
       <Route path="*" element={<ErrorPage code="404" title="Ooopss Page Not Found" />} />
