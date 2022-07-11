@@ -10,8 +10,8 @@ import { useNavigate } from "react-router";
 import axiosInstance from "../../../networks/api";
 import storage from "../../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import SimpleMDE from "react-simplemde-editor";
-import "easymde/dist/easymde.min.css";
+// import SimpleMDE from "react-simplemde-editor";
+// import "easymde/dist/easymde.min.css";
 
 export default function CreateThread() {
   const [showUpload, setShowUpload] = useState(false);
@@ -157,7 +157,7 @@ export default function CreateThread() {
           <div id="content-box" className="mb-[6%] sm:mb-[2%] mt-[3%] text-sm sm:text-md">
             <div className="block text-gray-300 mb-2">Thread Content</div>
             <div id="text-editor" className="editor">
-              <SimpleMDE value={content} onChange={onChangeContent}/>
+              {/* <SimpleMDE value={content} onChange={onChangeContent}/> */}
             </div>
           </div>
           <input id="submit-button" type="submit" value="Submit" className="mb-[12%] sm:mb-[4%] mt-[3%] w-full bg-primary-grey hover:bg-secondary-orange py-4 rounded-xl text-white text-lg md:text-xl font-bold"></input>
