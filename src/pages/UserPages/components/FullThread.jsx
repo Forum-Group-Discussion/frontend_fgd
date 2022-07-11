@@ -135,8 +135,8 @@ export default function FullThread() {
     setLike(!like);
   };
 
-  const otherProfile = () => {
-    navigate("/user/account/other");
+  const otherProfile = (id) => {
+    navigate("/user/account/" + id);
   };
 
   // console.log(showReplies)
@@ -212,18 +212,19 @@ export default function FullThread() {
     });
   };
 
-  // const [imgThread, setImgThread] = useState("");
-  // useEffect(() => {
-  //   axiosInstance
-  //     .get("v1/thread/photo/" + thread.id, {
-  //       headers: {
-  //         "Content-Type": "application/octet-stream",
-  //       },
-  //     })
-  //     .then((res) => {
-  //       setImgThread(res);
-  //     });
-  // }, []);
+  const [imgThread, setImgThread] = useState("");
+  useEffect(() => {
+    axiosInstance
+      .get("v1/thread/photo/" + params.id, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        setImgThread(res.data.data.image_base64);
+      });
+  }, []);
+  console.log(imgThread);
 
   // const fileReader = new FileReader();
 
@@ -236,13 +237,13 @@ export default function FullThread() {
           <div className="relative bg-white">
             <div id="content" className="lg:grid grid-cols-2 h-[80vh] md:h-[80vh] xl:h-[90vh]">
               <div className="">
-                <img src={data.img} className="w-full object-cover h-[40vh] md:h-[80vh] xl:h-[90vh] lg:absolute lg:w-[50%] top-0 left-0" />
+                <img src={`data:image/jpeg;base64,${imgThread}`} className="w-full object-contain h-[40vh] md:h-[80vh] xl:h-[90vh] lg:absolute lg:w-[50%] top-0 left-0" />
               </div>
               <div className="">
                 <div id="header" className="lg:absolute top-0 right-0 left-[50%] px-4 py-3 font-semibold text-xs md:text-sm text-slate-900 bg-slate-50/90 ring-1 ring-slate-900/10">
                   <div id="identity" className="flex gap-4">
-                    <img id="profpic-header" onClick={otherProfile} src={data.profpic} className="w-6 h-6 rounded-full cursor-pointer" />
-                    <div id="name-follow" onClick={otherProfile} className="my-auto cursor-pointer">
+                    <img id="profpic-header" onClick={() => otherProfile(detailThread?.users.id)} src={data.profpic} className="w-6 h-6 rounded-full cursor-pointer" />
+                    <div id="name-follow" onClick={() => otherProfile(detailThread?.users.id)} className="my-auto cursor-pointer">
                       {detailThread?.users.name}
                       <span className={data.followed ? "ml-2" : "ml-2 text-secondary-orange opacity-80"}>
                         <button className="font-bold">{data.followed ? "Following" : "Follow"}</button>

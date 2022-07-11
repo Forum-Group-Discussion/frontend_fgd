@@ -27,7 +27,7 @@ import axiosInstance from "./networks/api";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
-import { DATA_THREAD } from "./redux/threadSlice";
+import { DATA_IMAGES, DATA_THREAD } from "./redux/threadSlice";
 import { getToken, removeUserSession } from "./utils/helpers";
 import Coba from "./coba";
 
@@ -98,15 +98,14 @@ function App() {
         <Route path="KelolaThread" element={<KelolaThread />} />
         <Route path="KelolaUser" element={<KelolaUSer />} />
         <Route path="Setting" element={<Setting />} /> */}
+        <Route path="/admin/home" element={<Dashboard />} />
+        <Route path="/KelolaThread" element={<KelolaThread />} />
+        <Route path="/KelolaThread/category/:id" element={<CategoryThread />} />
+        <Route path="/KelolaUser" element={<KelolaUSer />} />
+        <Route path="/KelolaUser/category" element={<Category />} />
+        <Route path="/KelolaUser/category/user/:nameUser" element={<CategoryUser />} />
+        <Route path="/Setting" element={<Setting />} />
       </Route>
-
-      <Route path="/admin/home" element={<Dashboard />} />
-      <Route path="/KelolaThread" element={<KelolaThread />} />
-      <Route path="/KelolaThread/category/thread" element={<CategoryThread />} />
-      <Route path="/KelolaUser" element={<KelolaUSer />} />
-      <Route path="/KelolaUser/category" element={<Category />} />
-      <Route path="/KelolaUser/category/user/:nameUser" element={<CategoryUser />} />
-      <Route path="/Setting" element={<Setting />} />
 
       <Route element={<UserRoute />}>
         <Route path="/user/home" element={<HomeUserPage />} />
@@ -114,7 +113,7 @@ function App() {
         <Route path="/user/home/:category" element={<HomeUserPage />} />
         <Route path="/user/account" element={<ProfileUserPage />} />
         <Route path="/user/account/edit" element={<EditProfile />} />
-        <Route path="/user/account/other" element={<ProfileOtherUserPage />} />
+        <Route path="/user/account/:id" element={<ProfileOtherUserPage />} />
         <Route path="/user/create" element={<CreateThread />} />
         <Route path="/user/edit" element={<EditThread />} />
         <Route path="/user/topic" element={<TopicPage />} />

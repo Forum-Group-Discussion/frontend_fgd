@@ -17,6 +17,7 @@ import { getUserId } from "../../../../utils/helpers";
 import { useParams } from "react-router-dom";
 import PopupReport from "../../components/PopupReport";
 import axiosInstance from "../../../../networks/api";
+import ButtonFollow from "../../components/ButtonFollow";
 
 export default function Thread({ threadUser }) {
   console.log(threadUser);
@@ -206,9 +207,7 @@ export default function Thread({ threadUser }) {
                   </div>
                 </div>
                 <div className="flex flex-1 justify-end items-center">
-                  <button id="thread-button" className="text-sm sm:text-lg">
-                    Follow
-                  </button>
+                  <div className="flex flex-1 justify-end items-center">{item.users.id !== parseInt(getUserId()) ? <ButtonFollow user={item.users} /> : []}</div>
                 </div>
               </div>
               <div className="mt-4 mb-4">

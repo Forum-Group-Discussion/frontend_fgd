@@ -184,6 +184,20 @@ export default function ProfileUserPage() {
     fetchData();
   }, [fetchData]);
 
+  const [following, setFollowing] = useState(null);
+  useEffect(() => {
+    axiosInstance.get("v1/following").then((response) => {
+      setFollowing(response.data.data);
+    });
+  }, []);
+
+  const [follower, setFollower] = useState(null);
+  useEffect(() => {
+    axiosInstance.get("v1/following/followers").then((response) => {
+      setFollower(response.data.data);
+    });
+  }, []);
+
   const profile = useSelector((state) => state.profile.profile);
   console.log(profile);
 
@@ -211,10 +225,10 @@ export default function ProfileUserPage() {
               </div>
               <div id="stat" className="mt-2 mb-3 sm:mt-0 text-sm md:text-lg inline-flex gap-3 sm:gap-10 text-gray-400">
                 <button id="stat-following" onClick={handleShowFollowing} className="text-left">
-                  {statconv.following} Following
+                  {following?.length} Following
                 </button>
                 <button id="stat-followers" onClick={handleShowFollowers} className="text-left">
-                  {statconv.followers} Followers
+                  {follower?.length} Followers
                 </button>
                 <div id="stat-threads">{statconv.threads} Threads</div>
               </div>
@@ -262,8 +276,8 @@ export default function ProfileUserPage() {
             )}
           </div>
           {chooseFunction()}
-          {showFollowers && <Followers onCancel={handleCloseFollowers} page={page} />}
-          {showFollowing && <Following onCancel={handleCloseFollowing} page={page} />}
+          {showFollowers && <Followers onCancel={handleCloseFollowers} page={page} data={follower} />}
+          {showFollowing && <Following onCancel={handleCloseFollowing} page={page} data={following} />}
         </div>
       </section>
     </>

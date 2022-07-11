@@ -21,8 +21,11 @@ import { DATA_THREAD } from "../../../redux/threadSlice";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Swal from "sweetalert2";
-import { removeUserSession } from "../../../utils/helpers";
+import { getUserId, removeUserSession } from "../../../utils/helpers";
 import { useNavigate } from "react-router-dom";
+import ButtonFollow from "../components/ButtonFollow";
+import ButtonFollowBack from "../components/ButtonFollowBack";
+import ButtonUnfollow from "../components/ButtonUnfollow";
 
 export default function HomeUserPage() {
   const dispatch = useDispatch();
@@ -110,6 +113,43 @@ export default function HomeUserPage() {
     setTopic(e.target.value);
     setFilter(e.target.value);
   };
+
+  const [follower, setFollower] = useState(null);
+  useEffect(() => {
+    axiosInstance.get("v1/following/followers").then((response) => {
+      setFollower(response.data);
+    });
+  }, []);
+
+  const [following, setFollowing] = useState(null);
+  useEffect(() => {
+    axiosInstance.get("v1/following").then((response) => {
+      setFollowing(response.data);
+    });
+  }, []);
+
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    threads?.forEach((d) => {
+      console.log(d.id);
+      axiosInstance
+        .get("v1/thread/photo/" + d.id, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          setImages((images) => [...images, res.data.data]);
+        });
+    });
+  }, [threads]);
+
+  console.log(following);
+  console.log(follower);
+
+  console.log(threads);
+  console.log(images);
 
   return (
     <>
@@ -207,7 +247,7 @@ export default function HomeUserPage() {
                 threads
                   ?.filter((d) => d.topic.id === filter)
                   .map((item, index) => (
-                    <div id="thread" key={index}>
+                    <div id="thread" key={index} className="max-w-[1000px] mx-auto">
                       <div id="thread-box" className="flex">
                         <div id="thread-header" className="flex">
                           <div className="mr-2">
@@ -230,16 +270,16 @@ export default function HomeUserPage() {
                         <h3 className="text-sm sm:text-lg md:font-semibold text-white tracking-[1px]">{item.title}</h3>
                       </div>
                       <div>
-                        <img src={gambarThread} alt="gambar thread" className="relative" />
+                        <img src={gambarThread} alt="gambar thread" />
                       </div>
                       <div id="thread-icon" className="flex flex-1 justify-between mt-5">
                         <div className="cursor-pointer">
                           <Icon icon={thumbsUp} />
-                          <span className="text-sm sm:text-lg text-white">68k</span>
+                          <span className="text-sm sm:text-lg text-white">90</span>
                         </div>
                         <div className="cursor-pointer">
                           <Icon icon={thumbsDown} />
-                          <span className="text-sm sm:text-lg text-white">98k</span>
+                          <span className="text-sm sm:text-lg text-white">90</span>
                         </div>
                         <div onClick={handleShowFull} className="cursor-pointer">
                           <Icon icon={commentingO} />
@@ -251,9 +291,11 @@ export default function HomeUserPage() {
                         <div onClick={() => showMoreMenu(index)}>
                           <Icon icon={moreVertical} />
                           <div className={more && index === threadIndex ? "more-3 active" : "more"}>
-                            <span className="cursor-pointer" onClick={handleShowFull}>
-                              Open
-                            </span>
+                            <Link to={`/user/thread/${item.id}`}>
+                              <span className="cursor-pointer" onClick={handleShowFull}>
+                                Open
+                              </span>
+                            </Link>
                             <span className="cursor-pointer" onClick={showPopupShare}>
                               Share
                             </span>
@@ -279,7 +321,7 @@ export default function HomeUserPage() {
                           </div>
                         </div>
                       </div>
-                      {showFull && <FullThread onCancel={handleCloseFull} />}
+                      {/* {showFull && <FullThread thread={item && index === threadIndex} onCancel={handleCloseFull} />} */}
                     </div>
                   ))
               ) : (
@@ -297,9 +339,7 @@ export default function HomeUserPage() {
                 <div id="thread" key={index} className="max-w-[1000px] mx-auto">
                   <div id="thread-box" className="flex">
                     <div id="thread-header" className="flex">
-                      <div className="mr-2">
-                        <img src={gambarProfile} alt="gambar profile" />
-                      </div>
+                      <img src={gambarProfile} alt="gambar profile" />
                       <div className="flex items-center">
                         <div className="flex-col text-white max-w-[30vw]">
                           <h5 className="text-sm md:text-md font-semibold tracking-[2px] truncate">{item.users.name}</h5>
@@ -307,17 +347,13 @@ export default function HomeUserPage() {
                         </div>
                       </div>
                     </div>
-                    <div className="flex flex-1 justify-end items-center">
-                      <button id="thread-button" className="text-sm sm:text-lg">
-                        Follow
-                      </button>
-                    </div>
+                    <div className="flex flex-1 justify-end items-center">{item.users.id !== parseInt(getUserId()) ? <ButtonFollow user={item.users} /> : []}</div>
                   </div>
                   <div className="mt-4 mb-4">
                     <h3 className="text-sm sm:text-lg md:font-semibold text-white tracking-[1px]">{item.title}</h3>
                   </div>
                   <div>
-                    <img src={gambarThread} alt="gambar thread" />
+                    <img src={`data:image/jpeg;base64,${images.filter((d) => d.id === item.id)}`} alt="gambar profile" />
                   </div>
                   <div id="thread-icon" className="flex flex-1 justify-between mt-5">
                     <div className="cursor-pointer">
