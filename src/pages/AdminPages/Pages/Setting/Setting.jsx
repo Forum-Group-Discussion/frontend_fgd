@@ -1,44 +1,77 @@
 import Sidebar from "../../Components/Sidebar";
 import joko from "../../../../assets/img/Admin/JOK.png"
 import "../Pages.css";
-import { useState } from "react";
 import UploadPhoto from "../../../UserPages/components/UploadPhoto";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom"
+import axiosInstance from "../../../../networks/api";
+import { useState, useEffect, useCallback } from "react";
+import { getUserId } from "../../../../utils/helpers";
 
 export default function Setting() {
-  const [account, setAccount] = useState({fullname: "Andrew Gunawan", username: "Andrew Admin", email: "admin@mimin.com", password: "Andrew123"})
   const [upload, setUpload] = useState(false)
+  const [adminProfileAPI, setAdminProfileAPI] = useState([])
+  const navigate = useNavigate()
+  
+  const fetchData = useCallback(() => {
+    const response = axiosInstance
+    .get("v1/user/" + getUserId())
+    .then((response) => {
+      setAdminProfileAPI(response.data.data)
+        })
+        .catch((error) => {
+            console.log(error.response);
+        });
+    return response;
+}, [adminProfileAPI]);
 
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
 
-    if (name === "fullname") {
-      setAccount({ ...account, fullname: value });
-    } 
-    else if (name === "username") {
-      setAccount({ ...account, username: value });
-    }
-  };
+useEffect(() => {
+  fetchData();
+}, [fetchData]);
 
-  const handleSubmit = e => {
+const [account, setAccount] = useState({name: "", username: ""})
+
+const handleChange = (e) => {
+  const name = e.target.name;
+  const value = e.target.value;
+  
+  if (name === "name") {
+    setAccount({ ...account, name: value });
+  } 
+  else if (name === "username") {
+    setAccount({ ...account, username: value });
+  }
+};
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    Swal.fire({
-      toast: true,
-      icon: "success",
-      title: "Successfully Edited",
-      animation: false,
-      background: "#222834",
-      color: "#18B015",
-      position: "bottom-end",
-      showConfirmButton: false,
-      timer: 4000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener("mouseenter", Swal.stopTimer);
-        toast.addEventListener("mouseleave", Swal.resumeTimer);
-      },
-    });
+
+    await axiosInstance.put("v1/user/update/" + adminProfileAPI.id, account)
+            .then((response) => {
+              console.log("updated", response.data.data)
+              Swal.fire({
+                toast: true,
+                icon: "success",
+                title: "Successfully Edited",
+                animation: false,
+                background: "#222834",
+                color: "#18B015",
+                position: "bottom-end",
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener("mouseenter", Swal.stopTimer);
+                  toast.addEventListener("mouseleave", Swal.resumeTimer);
+                },
+              });
+                setAdminProfileAPI(account)
+                // navigate("/admin/home")
+            })
+            .catch((error) => {
+                console.log(error)
+            })
   }
 
   return (
@@ -57,11 +90,11 @@ export default function Setting() {
                     <button onClick={()=>{setUpload(true)}} className="text-sm sm:text:xl my-5 text-white/50 text-center">Upload Photo</button>
                   </div>
                   <div className="place-self-center">
-                    <form>
-                      <button type="submit" onSubmit={handleSubmit} className="text-secondary-yellow bg-none absolute top-8 right-8">Edit</button>
+                    <form onSubmit={handleSubmit}>
+                      <button type="submit" className="text-secondary-yellow bg-none absolute top-8 right-8">Edit</button>
                       <div id="setting-fullname" className="py-3">
                         <div className="text-xs pb-2 text-white/50">Full name</div>
-                        <input type="text" onChange={handleChange} value={account.fullname} name="fullname" className="bg-primary-black rounded-md 2xl:w-[750px] xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
+                        <input type="text" onChange={handleChange} value={account.name} name="name" className="bg-primary-black rounded-md 2xl:w-[750px] xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
                       </div>
                       <div id="setting-username" className="py-3">
                         <div className="text-xs pb-2 text-white/50">username</div>
@@ -69,11 +102,11 @@ export default function Setting() {
                       </div>
                       <div id="setting-email" className="py-3">
                         <div className="text-xs pb-2 text-white/50">Email</div>
-                        <input type="email" name="email" disabled={true} value={account.email} className="bg-primary-black rounded-md 2xl:w-[750px] xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
+                        <input type="email" name="email" disabled={true} value={adminProfileAPI.email} className="text-white text-opacity-50 bg-primary-black rounded-md 2xl:w-[750px] xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
                       </div>
                       <div id="setting-password" className="py-3">
                         <div className="text-xs pb-2 text-white/50">Password</div>
-                        <input type="password" name="password" disabled={true} value={account.password} className="bg-primary-black rounded-md 2xl:w-[750px] xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
+                        <input type="password" name="password" disabled={true} value={adminProfileAPI.password} className="text-white text-opacity-50 bg-primary-black rounded-md 2xl:w-[750px] xl:w-[500px] lg:w-[500px] md:w-[350px] p-2 text-sm"></input>
                       </div>
                     </form>
                   </div>
