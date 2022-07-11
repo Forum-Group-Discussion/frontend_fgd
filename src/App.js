@@ -21,6 +21,7 @@ import TopicPage from "./pages/UserPages/Topic/TopicPage";
 import Category from "./pages/AdminPages/Pages/Kelola User/Pages/Category";
 import CategoryUser from "./pages/AdminPages/Pages/Kelola User/Pages/CategoryUser";
 import CategoryThread from "./pages/AdminPages/Pages/Kelola Thread/Pages/CategoryThread";
+import Notifications from "./pages/AdminPages/Pages/Notifications/Notifications";
 
 function App() {
   return (
@@ -32,19 +33,25 @@ function App() {
       </Route>
 
       <Route element={<AdminRoute />}>
-        {/* <Route path="/admin/home" element={<Dashboard />} />
-        <Route path="KelolaThread" element={<KelolaThread />} />
-        <Route path="KelolaUser" element={<KelolaUSer />} />
-        <Route path="Setting" element={<Setting />} /> */}
+      {/* <Route path="/admin/home" element={<Dashboard />} />
+        <Route path="/KelolaThread" element={<KelolaThread />} />
+        <Route path="/KelolaThread/category/thread" element={<CategoryThread/>} />
+        <Route path="/KelolaUser" element={<KelolaUSer />} />
+        <Route path="/KelolaUser/category" element={<Category/>} />
+        <Route path="/KelolaUser/category/user" element={<CategoryUser/>} />
+        <Route path="/Notifications" element={<Notifications/>}/>
+        <Route path="/Setting" element={<Setting />} /> */}
       </Route>
-
       <Route path="/admin/home" element={<Dashboard />} />
         <Route path="/KelolaThread" element={<KelolaThread />} />
         <Route path="/KelolaThread/category/thread" element={<CategoryThread/>} />
         <Route path="/KelolaUser" element={<KelolaUSer />} />
         <Route path="/KelolaUser/category" element={<Category/>} />
         <Route path="/KelolaUser/category/user" element={<CategoryUser/>} />
+        <Route path="/Notifications" element={<Notifications/>}/>
         <Route path="/Setting" element={<Setting />} />
+
+      
 
       <Route element={<UserRoute />}>
         <Route path="/user/home" element={<HomeUserPage />} />

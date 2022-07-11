@@ -105,9 +105,6 @@
   }
 }
 @media screen and (min-width: 481px) {
-   #thread #thread-icon .more-3.active {
-      top: -230%;
-  }
    #thread-icon .more-3.active span,  #thread-icon .more-3.active a {
       padding: 15px 60px;
       font-size: 16px;

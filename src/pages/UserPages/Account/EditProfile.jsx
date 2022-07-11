@@ -6,6 +6,7 @@ import Profile from "../../../assets/img/account/profile.png"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import ChangeProfilePic from "./components/ChangeProfilePic";
+import Swal from "sweetalert2";
 
 export default function EditProfile(){
     const [showPassword, setShowPassword] = useState(false);
@@ -21,7 +22,6 @@ export default function EditProfile(){
     };
 
     const handleChange = e => {
-        const NAME = e.target.name;
         setData({ ...data,
             [e.target.name]: e.target.value
         })
@@ -31,6 +31,22 @@ export default function EditProfile(){
         navigate("/user/account")
         scrollToTop()
             // edit data
+        Swal.fire({
+            toast: true,
+            icon: "success",
+            title: "Successfully Edited",
+            animation: false,
+            background: "#222834",
+            color: "#18B015",
+            position: "bottom-end",
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+        });
     }
 
     const toggleShowPassword = () => {

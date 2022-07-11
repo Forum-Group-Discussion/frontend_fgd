@@ -48,7 +48,7 @@ export default function Graphic() {
   };
 
   return (
-    <div className="w-3/4">
+    <div id="graphic" className="w-3/4">
       <Line options={options} data={data} />
     </div>
   );
