@@ -67,7 +67,7 @@ const handleChange = (e) => {
                 },
               });
                 setAdminProfileAPI(account)
-                // navigate("/admin/home")
+                navigate("/admin/home")
             })
             .catch((error) => {
                 console.log(error)
