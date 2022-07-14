@@ -203,16 +203,43 @@ export default function ProfileUserPage() {
 
   console.log(<Navbar />);
 
+  const [imgProfileBG, setImgProfileBG] = useState("");
+  useEffect(() => {
+    axiosInstance
+      .get("v1/user/imagebackground", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        setImgProfileBG(res.data.data.image_base64);
+      });
+  }, []);
+
+  const [imgProfile, setImgProfile] = useState("");
+  useEffect(() => {
+    axiosInstance
+      .get("v1/user/image", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        setImgProfile(res.data.data.image_base64);
+      });
+  }, []);
+  console.log(imgProfile);
+
   return (
     <>
       <Navbar />
       <section id="account" className="bg-primary-black p-[10%]">
         <div className="max-w-[1240px] mx-auto">
           <div id="acc-details" className="border-b-2 border-[#d9d9d91a] pb-[5%] text-white md:mx-[0] mx-auto">
-            <img src={Banner} alt="banner-pic" />
+            <img src={`data:image/jpeg;base64,${imgProfileBG}`} className="h-[240px] w-full rounded-lg" alt="banner-pic" />
             <div id="acc-details" className="grid gap-2 md:gap-y-5 mt-[-20%] sm:mt-[-7%] ml-[3%]">
               <div className="flex justify-between relative">
-                <img id="profile-pic" src={Profile} alt="profile-pic" className="scale-50 ml-[-10%] sm:ml-0 sm:scale-100 aspect-square" />
+                <img id="profile-pic" src={`data:image/jpeg;base64,${imgProfile}`} alt="profile-pic" className="h-[150px] w-[150px] rounded-full scale-50 ml-[-10%] sm:ml-0 sm:scale-100 aspect-square" />
                 <Link to="/user/account/edit" className="bottom-0 md:-bottom-5 right-[3%] absolute text-md sm-text-xl md:text-2xl px-4 py-2 md:px-6 md:py-3 bg-secondary-orange rounded-xl sm:rounded-2xl text-white">
                   Edit
                 </Link>
@@ -221,7 +248,7 @@ export default function ProfileUserPage() {
                 {profile.name}
               </div>
               <div id="bio" className="text-md md:text-2xl">
-                Hello Found
+                {profile.bio}
               </div>
               <div id="stat" className="mt-2 mb-3 sm:mt-0 text-sm md:text-lg inline-flex gap-3 sm:gap-10 text-gray-400">
                 <button id="stat-following" onClick={handleShowFollowing} className="text-left">

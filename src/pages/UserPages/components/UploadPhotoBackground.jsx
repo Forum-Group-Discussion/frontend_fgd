@@ -5,13 +5,13 @@ import axiosInstance from "../../../networks/api";
 import Swal from "sweetalert2";
 
 
-export default function UploadPhoto({ onCancel }) {
+export default function UploadPhotoBackground({ onCancel }) {
     const fotoThread = useRef(null);
     const [image, setImage] = useState(null);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axiosInstance.post("v1/user/editimage",
+        axiosInstance.post("v1/user/editimagebackground",
             {
                 file: image
             },
@@ -25,7 +25,7 @@ export default function UploadPhoto({ onCancel }) {
                 Swal.fire({
                     toast: true,
                     icon: "success",
-                    title: "Successfully Updated",
+                    title: "Successfully Updated Background Image",
                     animation: false,
                     background: "#222834",
                     color: "#18B015",
@@ -61,6 +61,8 @@ export default function UploadPhoto({ onCancel }) {
         });
     }
 
+    console.log(image)
+
     return (
         <div id="filter-mobile-tablet">
             <div className="fixed z-50 inset-0 m-auto">
@@ -69,13 +71,13 @@ export default function UploadPhoto({ onCancel }) {
                     <div id="box" className="no-scrollbar rounded-xl mt-[85%] md:mt-[45%] lg:mt-[35%] xl:mt-[25%] -translate-y-[50%] relative max-w-md mx-auto bg-white shadow-lg overflow-auto ring-1 ring-slate-900/5 -my-px">
                         <div className="relative">
                             <div id="header" className="sticky top-0 px-4 py-3 font-semibold text-sm text-slate-900 bg-slate-50/90 backdrop-blur-sm ring-1 ring-slate-900/10">
-                                <div id="title" className="text-center">Upload Photo</div>
+                                <div id="title" className="text-center">Upload Photo Background</div>
                                 <IoIosClose id="close-button" onClick={onCancel} size={40} className="absolute right-1 top-1 cursor-pointer" />
                             </div>
                             <div id="list-account" className="py-20">
                                 <div className="">
                                     <CgImage size={100} className="text-gray-400 mx-auto mb-2" />
-                                    <div className="text-center mb-12">Drag your photo here</div>
+                                    <div className="text-center mb-12">Drag your photo here fesfsdfef</div>
                                     <div className="mx-auto w-fit">
                                         {/* <button className="mx-auto text-center text-white font-semibold px-6 py-3 bg-secondary-orange rounded-2xl block">
                                             Select from computer

@@ -9,10 +9,12 @@ import ChangeProfilePic from "./components/ChangeProfilePic";
 import axiosInstance from "../../../networks/api";
 import Swal from "sweetalert2";
 import { getUserId } from "../../../utils/helpers";
+import ChangeProfileBackground from "./components/ChangeProfileBackground";
 
 export default function EditProfile() {
     const [showPassword, setShowPassword] = useState(false);
     const [popupProfPic, setPopupProfPic] = useState(false)
+    const [popupProfBG, setPopupProfBG] = useState(false)
     const [profileAPI, setProfileAPI] = useState([])
     const navigate = useNavigate()
 
@@ -95,6 +97,12 @@ export default function EditProfile() {
         setShowPassword(!showPassword);
     };
 
+    const showPopupProfBG = () => {
+        if (popupProfBG === false) {
+            setPopupProfBG(true)
+        }
+    }
+
     const showPopupProfPic = () => {
         if (popupProfPic === false) {
             setPopupProfPic(true)
@@ -104,8 +112,36 @@ export default function EditProfile() {
     const closePopupProfPic = () => {
         if (popupProfPic === true) {
             setPopupProfPic(false)
+        } else if (popupProfBG === true) {
+            setPopupProfBG(false)
         }
     }
+
+    const [imgProfileBG, setImgProfileBG] = useState("");
+    useEffect(() => {
+        axiosInstance
+            .get("v1/user/imagebackground", {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            .then((res) => {
+                setImgProfileBG(res.data.data.image_base64);
+            });
+    }, []);
+
+    const [imgProfile, setImgProfile] = useState("");
+    useEffect(() => {
+        axiosInstance
+            .get("v1/user/image", {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            .then((res) => {
+                setImgProfile(res.data.data.image_base64);
+            });
+    }, []);
 
     return (
         <>
@@ -113,10 +149,17 @@ export default function EditProfile() {
             <section id="account" className="bg-primary-black p-[10%]">
                 <div className="max-w-[1240px] mx-auto">
                     <div id="acc-details" className="border-b-2 border-[#d9d9d91a] pb-[5%] text-white md:mx-[0] mx-auto">
-                        <img src={Banner} alt="banner-pic" />
+                        <div id="image-bg">
+                            <div id="image-button">
+                                <div onClick={showPopupProfBG} id="image-text">
+                                    Change Background
+                                </div>
+                            </div>
+                            <img src={`data:image/jpeg;base64,${imgProfileBG}`} className="h-[240px] w-full rounded-lg" alt="banner-pic" />
+                        </div>
                         <div id="acc-profile" className="flex justify-between">
                             <div className="grid gap-y-5 mt-[-20%] sm:mt-[-7%] ml-[3%]">
-                                <img id="profile-pic" src={Profile} name="image" alt="profile-pic" className="scale-50 ml-[-10%] sm:ml-0 sm:scale-100 aspect-square" />
+                                <img id="profile-pic" src={`data:image/jpeg;base64,${imgProfile}`} alt="profile-pic" className="h-[150px] w-[150px] rounded-full scale-50 ml-[-10%] sm:ml-0 sm:scale-100 aspect-square" />
                                 <div onClick={showPopupProfPic} className="mt-[-20%] sm:mt-[0%] text-sm sm:text-md cursor-pointer">Change profil photo</div>
                             </div>
                         </div>
@@ -160,7 +203,14 @@ export default function EditProfile() {
                     <div id='close-popup' className={popupProfPic ? 'popupProfPic active' : 'popupProfPic'}>
                         <div>
                             <div className="flex absolute inset-0 m-auto justify-center p-4">
-                                <ChangeProfilePic closePopupProfPic={closePopupProfPic} />
+                                <ChangeProfilePic closePopupProfPic={closePopupProfPic} imgProfile={imgProfile} />
+                            </div>
+                        </div>
+                    </div>
+                    <div id='close-popup' className={popupProfBG ? 'popupProfBG active' : 'popupProfBG'}>
+                        <div>
+                            <div className="flex absolute inset-0 m-auto justify-center p-4">
+                                <ChangeProfileBackground closePopupProfPic={closePopupProfPic} imgProfile={imgProfileBG} />
                             </div>
                         </div>
                     </div>
