@@ -27,7 +27,7 @@
     "react-scripts": "5.0.1",
     "react-simplemde-editor": "^5.0.2",
     "react-use-localstorage": "^3.5.3",
-    "sweetalert2": "^11.4.17",
+    "sweetalert2": "^11.4.22",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

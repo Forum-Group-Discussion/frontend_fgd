@@ -101,8 +101,8 @@ export default function Sidebar(){
               </NavLink>
             </li>
 
-            <li id="logout-button" className="p-3 mt-[170px] flex justify-center logout ">
-              <div className="flex flex-row items-center">
+            <li id="logout-button" className="p-3">
+              <div className="side-menu flex flex-row items-center">
                 <img src={Logout} className="mr-4 w-[20px]" alt="Icon_logout" />
                 <input type="submit" onClick={handleLogout} value="Logout" className="logout" />
               </div>
@@ -154,8 +154,8 @@ export default function Sidebar(){
                   </NavLink>
                 </li>
 
-                <li id="sidebar-logout-button" className="p-3 mt-[170px] flex justify-center logout ">
-                  <div className="flex flex-row items-center">
+                <li id="sidebar-logout-button" className="p-3">
+                  <div className="side-menu flex flex-row items-center">
                     <img src={Logout} className="mr-4 w-[20px]" alt="Icon_logout" />
                     <input type="submit" onClick={handleLogout} value="Logout" className="logout" />
                   </div>
