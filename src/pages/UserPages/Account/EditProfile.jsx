@@ -10,6 +10,7 @@ import axiosInstance from "../../../networks/api";
 import Swal from "sweetalert2";
 import { getUserId } from "../../../utils/helpers";
 import ChangeProfileBackground from "./components/ChangeProfileBackground";
+import { FaUserAlt } from "react-icons/fa";
 
 export default function EditProfile() {
     const [showPassword, setShowPassword] = useState(false);
@@ -36,7 +37,7 @@ export default function EditProfile() {
 
     const DEFAULT_USER_UPDATE = {
         name: "",
-        username: "",
+        ausername: "",
         bio: "",
         website: "",
         location: "",
@@ -149,17 +150,34 @@ export default function EditProfile() {
             <section id="account" className="bg-primary-black p-[10%]">
                 <div className="max-w-[1240px] mx-auto">
                     <div id="acc-details" className="border-b-2 border-[#d9d9d91a] pb-[5%] text-white md:mx-[0] mx-auto">
-                        <div id="image-bg">
-                            <div id="image-button">
-                                <div onClick={showPopupProfBG} id="image-text">
-                                    Change Background
+                        {imgProfileBG === null || imgProfileBG === "" ?
+                            <div id="image-bg" className="border-4 border-[#d9d9d91a] rounded-lg">
+                                <div id="image-button" className="">
+                                    <div onClick={showPopupProfBG} id="image-text">
+                                        Change Background
+                                    </div>
                                 </div>
+                                <div className="h-[240px] w-full rounded-lg"></div>
                             </div>
-                            <img src={`data:image/jpeg;base64,${imgProfileBG}`} className="h-[240px] w-full rounded-lg" alt="banner-pic" />
-                        </div>
+                            :
+                            <div id="image-bg">
+                                <div id="image-button">
+                                    <div onClick={showPopupProfBG} id="image-text">
+                                        Change Background
+                                    </div>
+                                </div>
+                                <img src={`data:image/jpeg;base64,${imgProfileBG}`} className="h-[240px] w-full rounded-lg" alt="banner-pic" />
+                            </div>
+                        }
                         <div id="acc-profile" className="flex justify-between">
                             <div className="grid gap-y-5 mt-[-20%] sm:mt-[-7%] ml-[3%]">
-                                <img id="profile-pic" src={`data:image/jpeg;base64,${imgProfile}`} alt="profile-pic" className="h-[150px] w-[150px] rounded-full scale-50 ml-[-10%] sm:ml-0 sm:scale-100 aspect-square" />
+                                {imgProfile === null || imgProfile === "" ?
+                                    <div className="bg-primary-black border-2 border-[#d9d9d91a] rounded-full relative">
+                                        <FaUserAlt className="p-2 h-[150px] w-[150px] rounded-full scale-50 ml-[-10%] sm:ml-0 sm:scale-100 aspect-square" />
+                                    </div>
+                                    :
+                                    <img id="profile-pic" src={`data:image/jpeg;base64,${imgProfile}`} alt="profile-pic" className="h-[150px] w-[150px] rounded-full scale-50 ml-[-10%] sm:ml-0 sm:scale-100 aspect-square" />
+                                }
                                 <div onClick={showPopupProfPic} className="mt-[-20%] sm:mt-[0%] text-sm sm:text-md cursor-pointer">Change profil photo</div>
                             </div>
                         </div>
@@ -173,7 +191,7 @@ export default function EditProfile() {
                             </div>
                             <div className="mb-[6%] sm:mb-[2%] text-sm sm:text-md">
                                 <label htmlFor="username" className="block text-gray-300 mb-2">Username</label>
-                                <input id="username" type="text" name="username" value={data.username} onChange={handleChange}
+                                <input id="username" type="text" name="ausername" value={data.ausername} onChange={handleChange}
                                     className="w-full py-3 px-8 bg-primary-grey rounded-lg text-white" />
                             </div>
                             <div className="mb-[6%] sm:mb-[2%] text-sm sm:text-md">

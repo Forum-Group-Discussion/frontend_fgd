@@ -38,6 +38,7 @@ export default function UploadPhotoBackground({ onCancel }) {
                         toast.addEventListener("mouseleave", Swal.resumeTimer);
                     },
                 });
+                window.location.reload();
             } else {
                 Swal.fire({
                     toast: true,
