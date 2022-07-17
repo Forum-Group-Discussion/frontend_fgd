@@ -114,43 +114,62 @@ export default function HomeUserPage() {
     setFilter(e.target.value);
   };
 
-  const [follower, setFollower] = useState(null);
-  useEffect(() => {
-    axiosInstance.get("v1/following/followers").then((response) => {
-      setFollower(response.data);
-    });
-  }, []);
+  // const [follower, setFollower] = useState(null);
+  // useEffect(() => {
+  //   axiosInstance.get("v1/following/followers").then((response) => {
+  //     setFollower(response.data);
+  //   });
+  // }, []);
 
-  const [following, setFollowing] = useState(null);
-  useEffect(() => {
-    axiosInstance.get("v1/following").then((response) => {
-      setFollowing(response.data);
-    });
-  }, []);
+  // const [following, setFollowing] = useState(null);
+  // useEffect(() => {
+  //   axiosInstance.get("v1/following").then((response) => {
+  //     setFollowing(response.data);
+  //   });
+  // }, []);
+
+  const [countLike, setCountLike] = useState([]);
+
+  const fetchApi = (idTread) => {
+    axiosInstance
+      .get("v1/likethread/like", {
+        id: idTread,
+      })
+      .then((response) => {
+        countLike.push(response.data.data);
+      });
+  };
+
+  const handleLike = () => {
+    axiosInstance
+      .post("v1/likethread", {
+        thread_like: {
+          id: 1,
+        },
+        is_like: true,
+        is_dislike: false,
+      })
+      .then(() => {
+        console.log("sukses");
+      });
+  };
 
   const [images, setImages] = useState([]);
-
   useEffect(() => {
-    threads?.forEach((d) => {
-      console.log(d.id);
-      axiosInstance
-        .get("v1/thread/photo/" + d.id, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-        .then((res) => {
-          setImages((images) => [...images, res.data.data]);
-        });
-    });
+    if (threads !== []) {
+      threads?.forEach((d) => {
+        axiosInstance
+          .get("v1/thread/photo/" + d.id, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          .then((res) => {
+            setImages((images) => [...images, res.data.data]);
+          });
+      });
+    }
   }, [threads]);
-
-  console.log(following);
-  console.log(follower);
-
-  console.log(threads);
-  console.log(images);
-
   return (
     <>
       <Navbar />
@@ -352,13 +371,17 @@ export default function HomeUserPage() {
                   <div className="mt-4 mb-4">
                     <h3 className="text-sm sm:text-lg md:font-semibold text-white tracking-[1px]">{item.title}</h3>
                   </div>
-                  <div>
-                    <img src={`data:image/jpeg;base64,${images.filter((d) => d.id === item.id)}`} alt="gambar profile" />
-                  </div>
+                  <div>{item.image !== null && <img src={`data:image/jpeg;base64,${images.filter((d) => d.id === item.id).map((d) => d.image_base64)}`} alt="gambar profile" />}</div>
                   <div id="thread-icon" className="flex flex-1 justify-between mt-5">
-                    <div className="cursor-pointer">
+                    <div
+                      className="cursor-pointer"
+                      onClick={() => {
+                        // handleLike();
+                        // fetchApi(item.id);
+                      }}
+                    >
                       <Icon icon={thumbsUp} />
-                      <span className="text-sm sm:text-lg text-white">90</span>
+                      <span className="text-sm sm:text-lg text-white">{countLike !== 0 && countLike.filter((index) => index)}</span>
                     </div>
                     <div className="cursor-pointer">
                       <Icon icon={thumbsDown} />
