@@ -167,6 +167,31 @@ export default function FullThread() {
     // if balas post thread
     else {
       console.log("balas thread");
+      console.log(comment)
+      console.log(params.id)
+      const thread_id = JSON.stringify({ id: params.id })
+      if (comment !== "") {
+        axiosInstance
+          .post("/v1/comment",
+            {
+              thread: {
+                id: params.id
+              },
+              comment: comment
+            }, {
+            headers: {
+              "Content-Type": "application/json"
+            }
+          })
+          .then((response) => {
+            console.log(response.data.data)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      } else {
+        console.log("tidak masuk")
+      }
     }
   };
 
@@ -224,7 +249,21 @@ export default function FullThread() {
         setImgThread(res.data.data.image_base64);
       });
   }, []);
-  console.log(imgThread);
+
+  const [commentThread, setCommentThread] = useState([])
+  useEffect(() => {
+    axiosInstance
+      .get("v1/comment?thread=" + params.id, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        setCommentThread(res.data.data);
+      });
+  }, []);
+
+  console.log("commnet: ", commentThread);
 
   // const fileReader = new FileReader();
 
@@ -264,7 +303,36 @@ export default function FullThread() {
                       <ReactMarkdown>{detailThread?.content}</ReactMarkdown>
                     </div>
                     <div className="mb-6 ml-10 text-grey">{timestamp}</div>
-                    {data.replies?.map((item) => (
+                    {commentThread.map((item, index) => {
+                      console.log("itemnya", item)
+                      return (
+                        <div id="post-comment" key={index} className="relative">
+                          <div>
+                            <div id="post-comment-identity" onClick={otherProfile} className="flex gap-4 mb-2 cursor-pointer max-w-[85%]">
+                              <img id="post-comment-profpic" src="https://images.unsplash.com/photo-1526116977494-90748acc0cad?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDB8fGFlc3RoZXRpY3xlbnwwfHwwfHw%3D&w=1000&q=80" className="w-6 h-6 rounded-full" alt="gambar profile" />
+                              <div id="post-comment-name" className="my-auto font-semibold">
+                                {item.users.name}
+                              </div>
+                            </div>
+                            <div id="post-comment-content" className="mb-2 ml-10 max-w-[85%]">
+                              {item.comment}
+                            </div>
+                            <div className="flex gap-4 mb-4 ml-10">
+                              <div id="post-comment-time" className="text-grey">
+                                3 days ago
+                              </div>
+                              <div id="post-comment-sum-likes" className="text-grey">
+                                1,234 Likes
+                              </div>
+                              <button id="post-comment-reply-button" onClick={handleReply} value={item.users.name} className="text-grey cursor-pointer">
+                                Reply
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    })}
+                    {/* {data.replies?.map((item) => (
                       <div id="post-comment" key={item.id} className="relative">
                         <div>
                           <div id="post-comment-identity" onClick={otherProfile} className="flex gap-4 mb-2 cursor-pointer max-w-[85%]">
@@ -346,7 +414,7 @@ export default function FullThread() {
                           {like ? <FcLike className="fill-secondary-red w-4 h-4 md:w-6 md:h-6" /> : <FcLikePlaceholder className="fill-grey w-4 h-4 md:w-6 md:h-6" />}
                         </div>
                       </div>
-                    ))}
+                    ))} */}
                   </div>
                 </div>
                 <div className="lg:fixed bottom-0 right-0 left-[50%] bg-white">
