@@ -43,7 +43,7 @@ export default function HomeUserPage() {
   let { category } = useParams();
 
   useEffect(() => {
-    if (threads.length !== 0) {
+    if (threads?.length !== 0) {
       setLoading(false);
     } else {
       setLoading(true);
@@ -354,7 +354,7 @@ export default function HomeUserPage() {
                 </div>
               )
             ) : (
-              threads.map((item, index) => (
+              threads?.map((item, index) => (
                 <div id="thread" key={index} className="max-w-[1000px] mx-auto">
                   <div id="thread-box" className="flex">
                     <div id="thread-header" className="flex">
