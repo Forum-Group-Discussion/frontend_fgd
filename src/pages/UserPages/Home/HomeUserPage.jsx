@@ -129,25 +129,65 @@ export default function HomeUserPage() {
   // }, []);
 
   const [countLike, setCountLike] = useState([]);
+  const [countDisLike, setCountDisLike] = useState([]);
+  const [threadId, setThreadId] = useState()
 
-  const fetchApi = (idTread) => {
-    axiosInstance
-      .get("v1/likethread/like", {
-        id: idTread,
-      })
-      .then((response) => {
-        countLike.push(response.data.data);
-      });
-  };
+  useEffect(() => {
+    if (threads !== []) {
+      axiosInstance
+        .get("v1/likethread/likethreadbythread", {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+        .then((response) => {
+          setCountLike(response.data.data);
+        });
+    }
 
-  const handleLike = () => {
+    if (threads !== []) {
+      axiosInstance
+        .get("v1/likethread/dislikethreadbythread", {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+        .then((response) => {
+          setCountDisLike(response.data.data);
+        });
+    }
+  })
+
+  const handleLike = (idx) => {
     axiosInstance
       .post("v1/likethread", {
         thread_like: {
-          id: 1,
+          id: idx,
         },
         is_like: true,
         is_dislike: false,
+      }, {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(() => {
+        console.log("sukses");
+      });
+  };
+
+  const handleDisLike = (idx) => {
+    axiosInstance
+      .post("v1/likethread", {
+        thread_like: {
+          id: idx,
+        },
+        is_like: false,
+        is_dislike: true,
+      }, {
+        headers: {
+          "Content-Type": "application/json"
+        }
       })
       .then(() => {
         console.log("sukses");
@@ -376,16 +416,18 @@ export default function HomeUserPage() {
                     <div
                       className="cursor-pointer"
                       onClick={() => {
-                        // handleLike();
+                        handleLike(item.id);
+                        setThreadId(item.id);
                         // fetchApi(item.id);
                       }}
                     >
                       <Icon icon={thumbsUp} />
-                      <span className="text-sm sm:text-lg text-white">{countLike !== 0 && countLike.filter((index) => index)}</span>
+                      <span className="text-sm sm:text-lg text-white">{countLike?.filter((like) => item.id === like.thread_id).map((like) => like.count_like_thread)}</span>
                     </div>
-                    <div className="cursor-pointer">
+                    <div className="cursor-pointer"
+                      onClick={() => handleDisLike(item.id)}>
                       <Icon icon={thumbsDown} />
-                      <span className="text-sm sm:text-lg text-white">90</span>
+                      <span className="text-sm sm:text-lg text-white">{countDisLike?.filter((like) => item.id === like.thread_id).map((like) => like.count_dislike_thread)}</span>
                     </div>
                     <div onClick={handleShowFull} className="cursor-pointer">
                       <Icon icon={commentingO} />
