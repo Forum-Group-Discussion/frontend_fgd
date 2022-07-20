@@ -2,7 +2,7 @@ import React from "react";
 import { Icon } from "react-icons-kit";
 import { x } from 'react-icons-kit/feather/x'
 
-function PopupReport({closePopupReport}) {
+function PopupReport({ closePopupReport }) {
 
     return (
         <div className="flex w-[80%] max-w-[500px] text-xs sm:text-sm md:text-base justify-center items-center">

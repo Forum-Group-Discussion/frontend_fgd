@@ -23,13 +23,51 @@ import { FaUserAlt } from "react-icons/fa";
 export default function ProfileUserPage() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.name);
+  const threads = useSelector((state) => state.thread.thread);
   const [stat, setStat] = useState({ following: 105500, followers: 99900, threads: 100 });
   const [statconv, setStatconv] = useState({ following: "", followers: "", threads: "" });
   const [choose, setChoose] = useState("thread");
   const [res, setRes] = useState(true);
   const [showFollowing, setShowFollowing] = useState(false);
   const [showFollowers, setShowFollowers] = useState(false);
+  const [saveThread, setSaveThread] = useState()
   const page = "profile";
+
+  const ThreadSaveData = useCallback(() => {
+    const response = axiosInstance
+      .get("v1/savethread/byuser")
+      .then((response) => {
+        setSaveThread(response.data.data)
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+    return response
+  }, [saveThread]);
+
+  useEffect(() => {
+    ThreadSaveData()
+  }, [ThreadSaveData])
+
+  const [images, setImages] = useState([]);
+  // useEffect(() => {
+  //   if (saveThread !== []) {
+  //     saveThread?.forEach((d) => {
+  //       console.log("datah thread", d)
+  //       console.log("id", d.threads.id)
+  //       axiosInstance
+  //         .get("v1/thread/photo/" + d.threads.id, {
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //         })
+  //         .then((res) => {
+  //           setImages((images) => [...images, res.data.data]);
+  //         });
+  //     });
+  //   }
+  // }, [saveThread]);
+
 
   useEffect(() => {
     AOS.init();
@@ -151,7 +189,7 @@ export default function ProfileUserPage() {
       // kalo gada hasilnya uncomment ini yaa
       // setRes(false)
       if (res) {
-        return <Save />;
+        return <Save saveThread={saveThread} images={images} />;
       } else {
         return (
           <div className="border border-solid border-[#d9d9d91a] rounded-xl h-60 py-10">
@@ -200,9 +238,6 @@ export default function ProfileUserPage() {
   }, []);
 
   const profile = useSelector((state) => state.profile.profile);
-  console.log(profile);
-
-  console.log(<Navbar />);
 
   const [imgProfileBG, setImgProfileBG] = useState("");
   useEffect(() => {
@@ -229,7 +264,6 @@ export default function ProfileUserPage() {
         setImgProfile(res.data.data.image_base64);
       });
   }, []);
-  console.log(imgProfile);
 
   return (
     <>

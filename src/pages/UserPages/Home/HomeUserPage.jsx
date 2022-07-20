@@ -88,23 +88,38 @@ export default function HomeUserPage() {
     setFull(false);
   };
 
-  const handleSave = () => {
-    Swal.fire({
-      toast: true,
-      icon: "success",
-      title: "Thread successfully saved",
-      animation: false,
-      background: "#222834",
-      color: "#18B015",
-      position: "bottom-end",
-      showConfirmButton: false,
-      timer: 4000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener("mouseenter", Swal.stopTimer);
-        toast.addEventListener("mouseleave", Swal.resumeTimer);
-      },
-    });
+  const handleSave = (idx) => {
+    console.log("id thread", idx)
+    axiosInstance
+      .post("v1/savethread", {
+        threads: {
+          id: idx
+        }
+      }, {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then((res) => {
+        console.log("sukses");
+        console.log(res.data.data)
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          title: "Thread successfully saved",
+          animation: false,
+          background: "#222834",
+          color: "#18B015",
+          position: "bottom-end",
+          showConfirmButton: false,
+          timer: 4000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+      });
   };
 
   const [filter, setFilter] = useState(null);
@@ -131,32 +146,6 @@ export default function HomeUserPage() {
   const [countLike, setCountLike] = useState([]);
   const [countDisLike, setCountDisLike] = useState([]);
   const [threadId, setThreadId] = useState()
-
-  useEffect(() => {
-    if (threads !== []) {
-      axiosInstance
-        .get("v1/likethread/likethreadbythread", {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        })
-        .then((response) => {
-          setCountLike(response.data.data);
-        });
-    }
-
-    if (threads !== []) {
-      axiosInstance
-        .get("v1/likethread/dislikethreadbythread", {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        })
-        .then((response) => {
-          setCountDisLike(response.data.data);
-        });
-    }
-  })
 
   const handleLike = (idx) => {
     axiosInstance
@@ -193,6 +182,30 @@ export default function HomeUserPage() {
         console.log("sukses");
       });
   };
+
+  useEffect(() => {
+    axiosInstance
+      .get("v1/likethread/likethreadbythread", {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then((response) => {
+        setCountLike(response.data.data);
+      });
+  }, [countLike])
+
+  useEffect(() => {
+    axiosInstance
+      .get("v1/likethread/dislikethreadbythread", {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then((response) => {
+        setCountDisLike(response.data.data);
+      });
+  }, [countDisLike])
 
   const [images, setImages] = useState([]);
   useEffect(() => {
@@ -433,7 +446,7 @@ export default function HomeUserPage() {
                       <Icon icon={commentingO} />
                       <span className="text-sm sm:text-lg text-white">90</span>
                     </div>
-                    <div onClick={handleSave} className="cursor-pointer">
+                    <div onClick={() => handleSave(item.id)} className="cursor-pointer">
                       <Icon icon={bookmark} />
                     </div>
                     <div onClick={() => showMoreMenu(index)}>
