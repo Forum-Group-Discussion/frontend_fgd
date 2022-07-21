@@ -200,7 +200,6 @@ export default function ProfileUserPage() {
   }, []);
 
   const profile = useSelector((state) => state.profile.profile);
-  console.log("profile " + profile);
 
   console.log(<Navbar />);
 
@@ -226,7 +225,6 @@ export default function ProfileUserPage() {
         },
       })
       .then((res) => {
-        console.log("profile user page " + res.data.data);
         setImgProfile(res.data.data?.image_base64);
       });
   }, []);
@@ -252,10 +250,10 @@ export default function ProfileUserPage() {
                 </Link>
               </div>
               <div id="username" className="mt-[-8%] sm:mt-[0%] text-xl sm:text-3xl md:text-4xl font-bold">
-                {profile.name}
+                {profile?.name}
               </div>
               <div id="bio" className="text-md md:text-2xl">
-                {profile.bio}
+                {profile?.bio}
               </div>
               <div id="stat" className="mt-2 mb-3 sm:mt-0 text-sm md:text-lg inline-flex gap-3 sm:gap-10 text-gray-400">
                 <button id="stat-following" onClick={handleShowFollowing} className="text-left">

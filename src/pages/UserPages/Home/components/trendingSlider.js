@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 function TrendingSlider() {
   const [width, setWidth] = useState(0);
   const carousel = useRef();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     // console.log(carousel.current.scrollWidth - carousel.current.offsetWidth)
@@ -16,14 +16,14 @@ function TrendingSlider() {
   }, []);
 
   const handleClick = () => {
-    navigate("/user/account/other")
-  }
+    navigate("/user/account/other");
+  };
 
   return (
     <div className="sliderTrending">
       <motion.div className="carousel" ref={carousel}>
         <motion.div drag="x" dragConstraints={{ right: 0, left: -width }} className="inner-carousel">
-          {trendingPicture.map((data, index) => {
+          {trendingPicture?.map((data, index) => {
             return (
               <motion.div key={index} className="item mr-3 w-[76px] sm:w-[108px] cursor-pointer" onClick={handleClick}>
                 <img src={data} alt="gambar" className="h-16 w-16 sm:h-24 sm:w-24 mx-auto" />

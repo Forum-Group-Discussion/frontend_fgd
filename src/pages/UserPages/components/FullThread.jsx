@@ -141,7 +141,7 @@ export default function FullThread() {
 
   // console.log(showReplies)
   const handleShowReplies = (e) => {
-    const updatedShowReplies = showReplies.map((item, index) => (index === Number(e.target.value) - 1 ? !item : item));
+    const updatedShowReplies = showReplies?.map((item, index) => (index === Number(e.target.value) - 1 ? !item : item));
     setShowReplies(updatedShowReplies);
   };
 
@@ -167,30 +167,33 @@ export default function FullThread() {
     // if balas post thread
     else {
       console.log("balas thread");
-      console.log(comment)
-      console.log(params.id)
-      const thread_id = JSON.stringify({ id: params.id })
+      console.log(comment);
+      console.log(params.id);
+      const thread_id = JSON.stringify({ id: params.id });
       if (comment !== "") {
         axiosInstance
-          .post("/v1/comment",
+          .post(
+            "/v1/comment",
             {
               thread: {
-                id: params.id
+                id: params.id,
               },
-              comment: comment
-            }, {
-            headers: {
-              "Content-Type": "application/json"
+              comment: comment,
+            },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
             }
-          })
+          )
           .then((response) => {
-            console.log(response.data.data)
+            console.log(response.data.data);
           })
           .catch((error) => {
-            console.log(error)
-          })
+            console.log(error);
+          });
       } else {
-        console.log("tidak masuk")
+        console.log("tidak masuk");
       }
     }
   };
@@ -250,7 +253,7 @@ export default function FullThread() {
       });
   }, []);
 
-  const [commentThread, setCommentThread] = useState([])
+  const [commentThread, setCommentThread] = useState([]);
   useEffect(() => {
     axiosInstance
       .get("v1/comment?thread=" + params.id, {
@@ -303,8 +306,8 @@ export default function FullThread() {
                       <ReactMarkdown>{detailThread?.content}</ReactMarkdown>
                     </div>
                     <div className="mb-6 ml-10 text-grey">{timestamp}</div>
-                    {commentThread.map((item, index) => {
-                      console.log("itemnya", item)
+                    {commentThread?.map((item, index) => {
+                      console.log("itemnya", item);
                       return (
                         <div id="post-comment" key={index} className="relative">
                           <div>
@@ -330,7 +333,7 @@ export default function FullThread() {
                             </div>
                           </div>
                         </div>
-                      )
+                      );
                     })}
                     {/* {data.replies?.map((item) => (
                       <div id="post-comment" key={item.id} className="relative">

@@ -9,7 +9,7 @@ function HasSignInRoute() {
     return <Outlet />;
   } else {
     if (getIsAdmin() === "true") {
-      return <Dashboard/>;
+      return <Dashboard />;
     } else {
       return <HomeUserPage />;
     }

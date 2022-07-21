@@ -23,68 +23,9 @@ import CategoryUser from "./pages/AdminPages/Pages/Kelola User/Pages/CategoryUse
 import CategoryThread from "./pages/AdminPages/Pages/Kelola Thread/Pages/CategoryThread";
 import FullThread from "./pages/UserPages/components/FullThread";
 import { useCallback } from "react";
-import axiosInstance from "./networks/api";
-import { useDispatch } from "react-redux";
-import Swal from "sweetalert2";
-import { useEffect } from "react";
-import { DATA_IMAGES, DATA_THREAD } from "./redux/threadSlice";
-import { getToken, removeUserSession } from "./utils/helpers";
 import Coba from "./coba";
 
 function App() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const fetchData = useCallback(() => {
-    if (getToken() !== null) {
-      const response = axiosInstance
-        .get("v1/thread/desc")
-        .then((response) => {
-          dispatch(DATA_THREAD(response.data.data));
-        })
-        .catch((error) => {
-          console.log(error);
-          if (error.response.data.message === "TOKEN_INVALID_OR_TOKEN_NULL") {
-            Swal.fire({
-              title: "Sorry, Your Session has expired, please Login again!",
-              icon: "warning",
-              showConfirmButton: true,
-              background: "#151921",
-              color: "#fff",
-              confirmButtonColor: "#FF3D00",
-              cancelButtonColor: "#D91E11",
-              confirmButtonText: "Login",
-              focusConfirm: true,
-            }).then((result) => {
-              if (result.isConfirmed) {
-                Swal.fire({
-                  toast: true,
-                  icon: "success",
-                  title: "Log Out Successfully",
-                  animation: false,
-                  background: "#222834",
-                  color: "#18B015",
-                  position: "bottom-end",
-                  showConfirmButton: false,
-                  timer: 4000,
-                  timerProgressBar: true,
-                  didOpen: (toast) => {
-                    toast.addEventListener("mouseenter", Swal.stopTimer);
-                    toast.addEventListener("mouseleave", Swal.resumeTimer);
-                    removeUserSession(navigate);
-                    window.location.reload();
-                  },
-                });
-              }
-            });
-          }
-        });
-      return response;
-    }
-  }, [dispatch]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData, getToken()]);
   return (
     <Routes>
       <Route element={<HasSignInRoute />}>

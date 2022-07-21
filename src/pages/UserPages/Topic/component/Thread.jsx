@@ -213,5 +213,5 @@ export default function Activity({ topic }) {
     }
   }
 
-  return <>{topic === undefined ? threads.map((item, index) => result(item, index)) : threads.filter((thread) => thread.topic.id === 1).map((item, index) => result(item, index))}</>;
+  return <>{topic === undefined ? threads?.map((item, index) => result(item, index)) : threads?.filter((thread) => thread.topic.id === 1).map((item, index) => result(item, index))}</>;
 }

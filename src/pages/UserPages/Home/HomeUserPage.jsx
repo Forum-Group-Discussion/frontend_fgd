@@ -21,7 +21,7 @@ import { DATA_THREAD } from "../../../redux/threadSlice";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Swal from "sweetalert2";
-import { getUserId, removeUserSession } from "../../../utils/helpers";
+import { getUserId, removeUserSession, getToken } from "../../../utils/helpers";
 import { useNavigate } from "react-router-dom";
 import ButtonFollow from "../components/ButtonFollow";
 import ButtonFollowBack from "../components/ButtonFollowBack";
@@ -41,6 +41,61 @@ export default function HomeUserPage() {
   const [loading, setLoading] = useState(true);
   const [topic, setTopic] = useState(0);
   let { category } = useParams();
+  console.log(getToken());
+  const fetchData = useCallback(() => {
+    if (getToken() !== null) {
+      const response = axiosInstance
+        .get("v1/thread/desc")
+        .then((response) => {
+          console.log(response);
+          dispatch(DATA_THREAD(response.data.data));
+        })
+        .catch((error) => {
+          console.log("ada error " + error);
+          if (error.response.data.message === "TOKEN_INVALID_OR_TOKEN_NULL") {
+            Swal.fire({
+              title: "Sorry, Your Session has expired, please Login again!",
+              icon: "warning",
+              showConfirmButton: true,
+              background: "#151921",
+              color: "#fff",
+              confirmButtonColor: "#FF3D00",
+              cancelButtonColor: "#D91E11",
+              confirmButtonText: "Login",
+              focusConfirm: true,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                Swal.fire({
+                  toast: true,
+                  icon: "success",
+                  title: "Log Out Successfully",
+                  animation: false,
+                  background: "#222834",
+                  color: "#18B015",
+                  position: "bottom-end",
+                  showConfirmButton: false,
+                  timer: 4000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener("mouseenter", Swal.stopTimer);
+                    toast.addEventListener("mouseleave", Swal.resumeTimer);
+                    removeUserSession(navigate);
+                    window.location.reload();
+                  },
+                });
+              }
+            });
+          }
+        });
+      return response;
+    } else {
+      window.location.reload();
+    }
+  }, [getToken()]);
+
+  useEffect(() => {
+    fetchData();
+  }, [getToken()]);
 
   useEffect(() => {
     if (threads?.length !== 0) {
@@ -371,7 +426,7 @@ export default function HomeUserPage() {
                   <div className="mt-4 mb-4">
                     <h3 className="text-sm sm:text-lg md:font-semibold text-white tracking-[1px]">{item.title}</h3>
                   </div>
-                  <div>{item.image !== null && <img src={`data:image/jpeg;base64,${images.filter((d) => d.id === item.id).map((d) => d.image_base64)}`} alt="gambar profile" />}</div>
+                  <div>{item.image !== null && <img src={`data:image/jpeg;base64,${images?.filter((d) => d.id === item.id).map((d) => d.image_base64)}`} alt="gambar profile" />}</div>
                   <div id="thread-icon" className="flex flex-1 justify-between mt-5">
                     <div
                       className="cursor-pointer"
@@ -381,7 +436,7 @@ export default function HomeUserPage() {
                       }}
                     >
                       <Icon icon={thumbsUp} />
-                      <span className="text-sm sm:text-lg text-white">{countLike !== 0 && countLike.filter((index) => index)}</span>
+                      <span className="text-sm sm:text-lg text-white">{countLike !== 0 && countLike?.filter((index) => index)}</span>
                     </div>
                     <div className="cursor-pointer">
                       <Icon icon={thumbsDown} />

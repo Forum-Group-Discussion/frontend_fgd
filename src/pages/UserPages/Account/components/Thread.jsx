@@ -20,7 +20,6 @@ import axiosInstance from "../../../../networks/api";
 import ButtonFollow from "../../components/ButtonFollow";
 
 export default function Thread({ threadUser }) {
-  console.log(threadUser);
   const [stat, setStat] = useState({ like: 105500, dislike: 99900, comment: 100 });
   const [statconv, setStatconv] = useState({ like: "", dislike: "", comment: "" });
   const navigate = useNavigate();
@@ -87,7 +86,7 @@ export default function Thread({ threadUser }) {
   let { category } = useParams();
 
   useEffect(() => {
-    if (threads.length !== 0) {
+    if (threads?.length !== 0) {
       setLoading(false);
     } else {
       setLoading(true);
