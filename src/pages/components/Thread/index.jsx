@@ -19,6 +19,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { getUserId } from "../../../utils/helpers";
 import ButtonFollow from "../../UserPages/components/ButtonFollow";
 import LoadingSkeleton from "../LoadingSkeleton";
+import ButtonUnfollow from "../../UserPages/components/ButtonUnfollow";
 
 function Thread({ index, item, images, loading, photo }) {
   const [more, setMore] = useState({
@@ -180,12 +181,26 @@ function Thread({ index, item, images, loading, photo }) {
     });
   }, [countComment]);
 
+  const [following, setFollowing] = useState(null);
+  useEffect(() => {
+    axiosInstance.get("v1/following").then((response) => {
+      setFollowing(response.data.data);
+    });
+  }, [following]);
+
+  const [follower, setFollower] = useState(null);
+  useEffect(() => {
+    axiosInstance.get("v1/following/followers").then((response) => {
+      setFollower(response.data.data);
+    });
+  }, [follower]);
+
   return (
     <div id="thread" key={index} className="max-w-[1000px] mx-auto">
       <div id="thread-box" className="flex">
         <div id="thread-header" className="flex">
-          {/* <img src={`data:image/jpeg;base64,${photo?.filter((d) => d.id === item.users.id).map((d) => d.image_base64)}`} alt="gambar profile" className="h-16 w-16 sm:h-24 sm:w-24 mx-auto" /> */}
-          <img src={gambarProfile} alt="foto" />
+          <img src={`data:image/jpeg;base64,${photo?.filter((d) => d.id === item.users.id).map((d) => d.image_base64)}`} alt="gambar profile" className="rounded-full mr-4 h-16 w-16 sm:h-24 sm:w-24 mx-auto" />
+          {/* <img src={gambarProfile} alt="foto" /> */}
           <div className="flex items-center">
             <div className="flex-col text-white max-w-[30vw]">
               <h5 className="text-sm md:text-md font-semibold tracking-[2px] truncate">{item.users.name}</h5>
@@ -193,7 +208,7 @@ function Thread({ index, item, images, loading, photo }) {
             </div>
           </div>
         </div>
-        <div className="flex flex-1 justify-end items-center">{item.users.id !== parseInt(getUserId()) ? <ButtonFollow user={item.users} /> : []}</div>
+        <div className="flex flex-1 justify-end items-center">{item.users.id !== parseInt(getUserId()) ? following?.filter((d) => d.user_follow.id === item.users.id && d.type === "FOLLOW").length === 1 ? <ButtonUnfollow user={item.users} /> : <ButtonFollow user={item.users} /> : []}</div>
       </div>
       <div className="mt-4 mb-4">
         <h3 className="text-sm sm:text-lg md:font-semibold text-white tracking-[1px]">{item.title}</h3>

@@ -47,6 +47,8 @@ export default function HomeUserPage() {
             setImages((images) => [...images, res.data.data]);
             setLoadingImageThread(false);
           });
+      });
+      threads?.forEach((d) => {
         axiosInstance.get("v1/user/image/" + d.users.id).then((res) => {
           setPhotoProfile((photoProfile) => [...photoProfile, res.data.data]);
         });
@@ -120,7 +122,7 @@ export default function HomeUserPage() {
               <LoadingSkeleton />
             ) : filter !== null ? (
               threads?.filter((d) => d.topic.id === filter).length > 0 ? (
-                threads?.filter((d) => d.topic.id === filter).map((item, index) => <Thread item={item} index={index} images={images} loading={loadingImageThread} photo={photoProfile} />)
+                threads.map((item, index) => <Thread item={item} index={index} images={images} loading={loadingImageThread} photo={photoProfile} />)
               ) : (
                 <div className="border border-solid border-[#d9d9d91a] rounded-xl h-60 py-10">
                   <div className="text-md xl:text-lg text-grey text-center mb-10">No threads yet</div>

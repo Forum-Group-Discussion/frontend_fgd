@@ -60,21 +60,23 @@ export default function Followers({ onCancel, page, data }) {
               <IoIosClose id="close-button" onClick={onCancel} size={40} className="absolute right-1 top-1 cursor-pointer" />
             </div>
             <div id="list-account" className="">
-              {data?.map((item) => (
-                <div key={item.id} className="flex justify-between p-4">
-                  <button id="account" onClick={() => otherProfile(item.user.id)} className="flex items-center gap-4">
-                    <img id="profile-pic" className="w-12 h-12 rounded-full" src={item.img} />
-                    <strong id="profile-username" className="text-sm font-medium text-slate-900">
-                      {item.user.name}
-                    </strong>
-                  </button>
-                  {page === "profile" && (
-                    <button id="unfollow-button" className="my-3 border border-secondary-orange text-secondary-orange rounded-full px-6 -py-4 text-sm hover:bg-secondary-orange hover:text-slate-100">
-                      Unfollow
+              {data
+                ?.filter((item) => item.type === "FOLLOW")
+                .map((item) => (
+                  <div key={item.id} className="flex justify-between p-4">
+                    <button id="account" onClick={() => otherProfile(item.user.id)} className="flex items-center gap-4">
+                      <img id="profile-pic" className="w-12 h-12 rounded-full" src={item.img} />
+                      <strong id="profile-username" className="text-sm font-medium text-slate-900">
+                        {item.user.name}
+                      </strong>
                     </button>
-                  )}
-                </div>
-              ))}
+                    {page === "profile" && (
+                      <button id="unfollow-button" className="my-3 border border-secondary-orange text-secondary-orange rounded-full px-6 -py-4 text-sm hover:bg-secondary-orange hover:text-slate-100">
+                        Unfollow
+                      </button>
+                    )}
+                  </div>
+                ))}
             </div>
           </div>
         </div>

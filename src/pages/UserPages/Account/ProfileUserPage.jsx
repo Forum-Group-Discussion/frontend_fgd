@@ -269,10 +269,10 @@ export default function ProfileUserPage() {
               </div>
               <div id="stat" className="mt-2 mb-3 sm:mt-0 text-sm md:text-lg inline-flex gap-3 sm:gap-10 text-gray-400">
                 <button id="stat-following" onClick={handleShowFollowing} className="text-left">
-                  {following?.length} Following
+                  {following?.filter((d) => d.type === "FOLLOW").length} Following
                 </button>
                 <button id="stat-followers" onClick={handleShowFollowers} className="text-left">
-                  {follower?.length} Followers
+                  {follower?.filter((d) => d.type === "FOLLOW").length} Followers
                 </button>
                 <div id="stat-threads">{statconv.threads} Threads</div>
               </div>

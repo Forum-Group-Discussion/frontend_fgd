@@ -62,21 +62,23 @@ export default function Following({ onCancel, page, data }) {
               <IoIosClose id="close-button" onClick={onCancel} size={40} className="absolute right-1 top-1 cursor-pointer" />
             </div>
             <div id="list-account" className="">
-              {data?.map((item) => (
-                <div key={item.id} className="flex justify-between p-4">
-                  <button id="account" onClick={() => otherProfile(item.user_follow.id)} className="flex items-center gap-4">
-                    <img id="profile-pic" className="w-12 h-12 rounded-full" src={"https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=80"} />
-                    <strong id="profile-username" className="text-sm font-medium text-slate-900">
-                      {item.user_follow.name}
-                    </strong>
-                  </button>
-                  {page === "profile" && (
-                    <button id="delete-button" className="my-3 border border-secondary-orange text-secondary-orange rounded-full px-6 -py-4 text-sm hover:bg-secondary-orange hover:text-slate-100">
-                      Hapus
+              {data
+                ?.filter((item) => item.type === "FOLLOW")
+                .map((item) => (
+                  <div key={item.id} className="flex justify-between p-4">
+                    <button id="account" onClick={() => otherProfile(item.user_follow.id)} className="flex items-center gap-4">
+                      <img id="profile-pic" className="w-12 h-12 rounded-full" src={"https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=256&amp;h=256&amp;q=80"} />
+                      <strong id="profile-username" className="text-sm font-medium text-slate-900">
+                        {item.user_follow.name}
+                      </strong>
                     </button>
-                  )}
-                </div>
-              ))}
+                    {page === "profile" && (
+                      <button id="delete-button" className="my-3 border border-secondary-orange text-secondary-orange rounded-full px-6 -py-4 text-sm hover:bg-secondary-orange hover:text-slate-100">
+                        Hapus
+                      </button>
+                    )}
+                  </div>
+                ))}
             </div>
           </div>
         </div>
