@@ -18,6 +18,8 @@ import { useParams } from "react-router-dom";
 import PopupReport from "../../components/PopupReport";
 import axiosInstance from "../../../../networks/api";
 import ButtonFollow from "../../components/ButtonFollow";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
+import ButtonUnfollow from "../../components/ButtonUnfollow";
 
 export default function Thread({ threadUser }) {
   console.log(threadUser);
@@ -187,6 +189,125 @@ export default function Thread({ threadUser }) {
     });
   };
 
+  const [countLike, setCountLike] = useState([]);
+  const [countDisLike, setCountDisLike] = useState([]);
+  const [countComment, setCountComment] = useState([]);
+  const [threadId, setThreadId] = useState();
+
+  const handleLike = (idx) => {
+    axiosInstance
+      .post(
+        "v1/likethread",
+        {
+          thread_like: {
+            id: idx,
+          },
+          is_like: true,
+          is_dislike: false,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then(() => {
+        console.log("sukses");
+      });
+  };
+
+  const handleDisLike = (idx) => {
+    axiosInstance
+      .post(
+        "v1/likethread",
+        {
+          thread_like: {
+            id: idx,
+          },
+          is_like: false,
+          is_dislike: true,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then(() => {
+        console.log("sukses");
+      });
+  };
+
+  useEffect(() => {
+    axiosInstance
+      .get("v1/likethread/likethreadbythread", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setCountLike(response.data.data);
+      });
+  }, [countLike]);
+
+  useEffect(() => {
+    axiosInstance
+      .get("v1/likethread/dislikethreadbythread", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setCountDisLike(response.data.data);
+      });
+  }, [countDisLike]);
+
+  useEffect(() => {
+    axiosInstance.get("v1/comment/totalcommentbythread", {}).then((response) => {
+      setCountComment(response.data.data);
+    });
+  }, [countComment]);
+
+  const [following, setFollowing] = useState(null);
+  useEffect(() => {
+    axiosInstance.get("v1/following").then((response) => {
+      setFollowing(response.data.data);
+    });
+  }, [following]);
+
+  const [follower, setFollower] = useState(null);
+  useEffect(() => {
+    axiosInstance.get("v1/following/followers").then((response) => {
+      setFollower(response.data.data);
+    });
+  }, [follower]);
+
+  const [images, setImages] = useState([]);
+  const [loadingImageThread, setLoadingImageThread] = useState(true);
+  const [photo, setPhoto] = useState([]);
+
+  useEffect(() => {
+    if (threads !== []) {
+      threads?.forEach((d) => {
+        axiosInstance
+          .get("v1/thread/photo/" + d.id, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          .then((res) => {
+            setImages((images) => [...images, res.data.data]);
+            setLoadingImageThread(false);
+          });
+      });
+      threads?.forEach((d) => {
+        axiosInstance.get("v1/user/image/" + d.users.id).then((res) => {
+          setPhoto((photo) => [...photo, res.data.data]);
+        });
+      });
+    }
+  }, [threads]);
+
   return (
     <>
       {threadUser === true && threads.length > 0 ? (
@@ -196,40 +317,41 @@ export default function Thread({ threadUser }) {
             <div id="thread" key={index} className="max-w-[1000px] mx-auto">
               <div id="thread-box" className="flex">
                 <div id="thread-header" className="flex">
-                  <div className="mr-2">
-                    <img src={gambarProfile} alt="gambar profile" />
-                  </div>
+                  <img src={`data:image/jpeg;base64,${photo?.filter((d) => d.id === item.users.id).map((d) => d.image_base64)}`} alt="gambar profile" className="rounded-full mr-4 h-16 w-16 sm:h-24 sm:w-24 mx-auto" />
+                  {/* <img src={gambarProfile} alt="foto" /> */}
                   <div className="flex items-center">
                     <div className="flex-col text-white max-w-[30vw]">
                       <h5 className="text-sm md:text-md font-semibold tracking-[2px] truncate">{item.users.name}</h5>
-                      <h6 className="text-sm md:text-md font-medium mt-1 text-gray-300">2 days ago</h6>
+                      <h6 className="text-sm md:text-md font-medium mt-1 text-gray-300">{new Date(item.createdAt).toLocaleString()}</h6>
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-1 justify-end items-center">
-                  <div className="flex flex-1 justify-end items-center">{item.users.id !== parseInt(getUserId()) ? <ButtonFollow user={item.users} /> : []}</div>
-                </div>
+                <div className="flex flex-1 justify-end items-center">{item.users.id !== parseInt(getUserId()) ? following?.filter((d) => d.user_follow.id === item.users.id && d.type === "FOLLOW").length === 1 ? <ButtonUnfollow user={item.users} /> : <ButtonFollow user={item.users} /> : []}</div>
               </div>
               <div className="mt-4 mb-4">
                 <h3 className="text-sm sm:text-lg md:font-semibold text-white tracking-[1px]">{item.title}</h3>
               </div>
-              <div>
-                <img src={gambarThread} alt="gambar thread" />
-              </div>
+              {loading ? <LoadingSkeleton /> : <div>{item.image !== null && <img src={`data:image/jpeg;base64,${images.filter((d) => d.id === item.id).map((d) => d.image_base64)}`} alt="gambar profile" />}</div>}
               <div id="thread-icon" className="flex flex-1 justify-between mt-5">
-                <div className="cursor-pointer">
+                <div
+                  className="cursor-pointer"
+                  onClick={() => {
+                    handleLike(item.id);
+                    setThreadId(item.id);
+                  }}
+                >
                   <Icon icon={thumbsUp} />
-                  <span className="text-sm sm:text-lg text-white">90</span>
+                  <span className="text-sm sm:text-lg text-white">{countLike?.filter((like) => item.id === like.thread_id).length === 0 ? "0" : countLike?.filter((like) => item.id === like.thread_id).map((like) => like.count_like_thread)}</span>
                 </div>
-                <div className="cursor-pointer">
+                <div className="cursor-pointer" onClick={() => handleDisLike(item.id)}>
                   <Icon icon={thumbsDown} />
-                  <span className="text-sm sm:text-lg text-white">90</span>
+                  <span className="text-sm sm:text-lg text-white">{countDisLike?.filter((like) => item.id === like.thread_id).length === 0 ? "0" : countDisLike?.filter((like) => item.id === like.thread_id).map((like) => like.count_dislike_thread)}</span>
                 </div>
                 <div onClick={handleShowFull} className="cursor-pointer">
                   <Icon icon={commentingO} />
-                  <span className="text-sm sm:text-lg text-white">90</span>
+                  <span className="text-sm sm:text-lg text-white">{countComment?.filter((comment) => item.id === comment.thread_id).length === 0 ? "0" : countComment?.filter((comment) => item.id === comment.thread_id).length}</span>
                 </div>
-                <div onClick={handleSave} className="cursor-pointer">
+                <div onClick={() => handleSave(item.id)} className="cursor-pointer">
                   <Icon icon={bookmark} />
                 </div>
                 <div onClick={() => showMoreMenu(index)}>

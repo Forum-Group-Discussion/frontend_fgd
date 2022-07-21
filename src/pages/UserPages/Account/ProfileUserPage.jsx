@@ -33,9 +33,34 @@ export default function ProfileUserPage() {
   const [showFollowers, setShowFollowers] = useState(false);
   const [saveThread, setSaveThread] = useState();
   const page = "profile";
+  const [images, setImages] = useState([]);
+  const [photo, setPhoto] = useState([]);
 
-  const ThreadSaveData = useCallback(() => {
-    const response = axiosInstance
+  const [loadingImageThread, setLoadingImageThread] = useState(true);
+  const [photoProfile, setPhotoProfile] = useState([]);
+  useEffect(() => {
+    saveThread?.forEach((d) => {
+      axiosInstance
+        .get("v1/thread/photo/" + d.threads.id, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          setImages((images) => [...images, res.data.data]);
+          setLoadingImageThread(false);
+        });
+
+      saveThread?.forEach((d) => {
+        axiosInstance.get("v1/user/image/" + d.user.id).then((res) => {
+          setPhotoProfile((photoProfile) => [...photoProfile, res.data.data]);
+        });
+      });
+    });
+  }, [saveThread]);
+
+  useEffect(() => {
+    axiosInstance
       .get("v1/savethread/byuser")
       .then((response) => {
         setSaveThread(response.data.data);
@@ -43,14 +68,8 @@ export default function ProfileUserPage() {
       .catch((error) => {
         console.log(error.response);
       });
-    return response;
-  }, [saveThread]);
+  }, []);
 
-  useEffect(() => {
-    ThreadSaveData();
-  }, [ThreadSaveData]);
-
-  const [images, setImages] = useState([]);
   // useEffect(() => {
   //   if (saveThread !== []) {
   //     saveThread?.forEach((d) => {
@@ -73,62 +92,6 @@ export default function ProfileUserPage() {
     AOS.init();
     AOS.refresh();
   }, []);
-
-  useEffect(() => {
-    let ing = stat.following;
-    let ers = stat.followers;
-    let thr = stat.threads;
-    if (stat.following >= 1000) {
-      ing = ing / 1000;
-      ing = ing.toFixed(1);
-    } else {
-      setStatconv({ following: stat.following });
-    }
-    if (stat.followers >= 1000) {
-      ers = ers / 1000;
-      ers = ers.toFixed(1);
-      setStatconv({ followers: toString(ers) + "k" });
-    } else {
-      setStatconv({ followers: stat.followers });
-    }
-    if (stat.threads >= 1000) {
-      thr = thr / 1000;
-      thr = thr.toFixed(1);
-      setStatconv({ threads: thr + "k" });
-    } else {
-      setStatconv({ threads: stat.threads });
-    }
-
-    if (stat.following >= 1000) {
-      if (stat.followers >= 1000) {
-        if (stat.threads >= 1000) {
-          setStatconv({ following: ing + "k", followers: ers + "k", threads: thr + "k" });
-        } else {
-          setStatconv({ following: ing + "k", followers: ers + "k", threads: thr });
-        }
-      } else {
-        if (stat.threads >= 1000) {
-          setStatconv({ following: ing + "k", followers: ers, threads: thr + "k" });
-        } else {
-          setStatconv({ following: ing + "k", followers: ers, threads: thr });
-        }
-      }
-    } else {
-      if (stat.followers >= 1000) {
-        if (stat.threads >= 1000) {
-          setStatconv({ following: ing, followers: ers + "k", threads: thr + "k" });
-        } else {
-          setStatconv({ following: ing, followers: ers + "k", threads: thr });
-        }
-      } else {
-        if (stat.threads >= 1000) {
-          setStatconv({ following: ing, followers: ers, threads: thr + "k" });
-        } else {
-          setStatconv({ following: ing, followers: ers, threads: thr });
-        }
-      }
-    }
-  }, [stat]);
 
   const handleAction = (e) => {
     setChoose(e.target.value);
@@ -189,7 +152,7 @@ export default function ProfileUserPage() {
       // kalo gada hasilnya uncomment ini yaa
       // setRes(false)
       if (res) {
-        return <Save saveThread={saveThread} images={images} />;
+        return <Save saveThread={saveThread} loading={loadingImageThread} images={images} photo={photoProfile} />;
       } else {
         return (
           <div className="border border-solid border-[#d9d9d91a] rounded-xl h-60 py-10">
