@@ -19,6 +19,7 @@ import { useCallback } from "react";
 import axiosInstance from "../../../networks/api";
 import { getUserId } from "../../../utils/helpers";
 import { FaUserAlt } from "react-icons/fa";
+import Avatar from "../../components/Avatar";
 
 export default function ProfileUserPage() {
   const dispatch = useDispatch();
@@ -30,24 +31,24 @@ export default function ProfileUserPage() {
   const [res, setRes] = useState(true);
   const [showFollowing, setShowFollowing] = useState(false);
   const [showFollowers, setShowFollowers] = useState(false);
-  const [saveThread, setSaveThread] = useState()
+  const [saveThread, setSaveThread] = useState();
   const page = "profile";
 
   const ThreadSaveData = useCallback(() => {
     const response = axiosInstance
       .get("v1/savethread/byuser")
       .then((response) => {
-        setSaveThread(response.data.data)
+        setSaveThread(response.data.data);
       })
       .catch((error) => {
         console.log(error.response);
       });
-    return response
+    return response;
   }, [saveThread]);
 
   useEffect(() => {
-    ThreadSaveData()
-  }, [ThreadSaveData])
+    ThreadSaveData();
+  }, [ThreadSaveData]);
 
   const [images, setImages] = useState([]);
   // useEffect(() => {
@@ -67,7 +68,6 @@ export default function ProfileUserPage() {
   //     });
   //   }
   // }, [saveThread]);
-
 
   useEffect(() => {
     AOS.init();
@@ -252,43 +252,15 @@ export default function ProfileUserPage() {
       });
   }, []);
 
-  const [imgProfile, setImgProfile] = useState("");
-  useEffect(() => {
-    axiosInstance
-      .get("v1/user/image", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        setImgProfile(res.data.data.image_base64);
-      });
-  }, []);
-
   return (
     <>
       <Navbar />
       <section id="account" className="bg-primary-black p-[10%]">
         <div className="max-w-[1240px] mx-auto">
           <div id="acc-details" className="border-b-2 border-[#d9d9d91a] pb-[5%] text-white md:mx-[0] mx-auto">
-            {imgProfileBG === null || imgProfileBG === "" ?
-              <div className="h-[240px] w-full rounded-lg border-4 border-[#d9d9d91a]"></div>
-              :
-              <img src={`data:image/jpeg;base64,${imgProfileBG}`} className="h-[240px] w-full rounded-lg" alt="banner-pic" />
-            }
+            {imgProfileBG === null || imgProfileBG === "" ? <div className="h-[240px] w-full rounded-lg border-4 border-[#d9d9d91a]"></div> : <img src={`data:image/jpeg;base64,${imgProfileBG}`} className="h-[240px] w-full rounded-lg" alt="banner-pic" />}
             <div id="acc-details" className="grid gap-2 md:gap-y-5 mt-[-20%] sm:mt-[-7%] ml-[3%]">
-              <div className="flex justify-between relative">
-                {imgProfile === null || imgProfile === "" ?
-                  <div className="bg-primary-black border-2 border-[#d9d9d91a] rounded-full">
-                    <FaUserAlt className="p-2 h-[150px] w-[150px] rounded-full scale-50 ml-[-10%] sm:ml-0 sm:scale-100 aspect-square" />
-                  </div>
-                  :
-                  <img id="profile-pic" src={`data:image/jpeg;base64,${imgProfile}`} alt="profile-pic" className="h-[150px] w-[150px] rounded-full scale-50 ml-[-10%] sm:ml-0 sm:scale-100 aspect-square" />
-                }
-                <Link to="/user/account/edit" className="bottom-0 md:-bottom-5 right-[3%] absolute text-md sm-text-xl md:text-2xl px-4 py-2 md:px-6 md:py-3 bg-secondary-orange rounded-xl sm:rounded-2xl text-white">
-                  Edit
-                </Link>
-              </div>
+              <Avatar />
               <div id="username" className="mt-[-8%] sm:mt-[0%] text-xl sm:text-3xl md:text-4xl font-bold">
                 {profile.name}
               </div>

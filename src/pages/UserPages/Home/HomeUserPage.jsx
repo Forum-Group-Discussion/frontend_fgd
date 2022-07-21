@@ -1,46 +1,19 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./Home.css";
-import gambarProfile from "../../../assets/img/home/dashicons_games.png";
-import gambarThread from "../../../assets/img/home/image7.png";
 import { AiFillFire } from "react-icons/ai";
-import { Icon } from "react-icons-kit";
-import { thumbsUp } from "react-icons-kit/feather/thumbsUp";
-import { thumbsDown } from "react-icons-kit/feather/thumbsDown";
-import { bookmark } from "react-icons-kit/feather/bookmark";
-import { commentingO } from "react-icons-kit/fa/commentingO";
-import { moreVertical } from "react-icons-kit/feather/moreVertical";
 import Navbar from "../components/Navbar";
 import TrendingSlider from "./components/trendingSlider";
-import PopupShare from "../components/PopupShare";
-import PopupReport from "../components/PopupReport";
-import FullThread from "../components/FullThread";
 import axiosInstance from "../../../networks/api";
-import { useDispatch, useSelector } from "react-redux";
-import { DATA_THREAD } from "../../../redux/threadSlice";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
-import Swal from "sweetalert2";
-import { getUserId, removeUserSession } from "../../../utils/helpers";
-import { useNavigate } from "react-router-dom";
-import ButtonFollow from "../components/ButtonFollow";
-import ButtonFollowBack from "../components/ButtonFollowBack";
-import ButtonUnfollow from "../components/ButtonUnfollow";
+import { useSelector } from "react-redux";
+import Thread from "../../components/Thread";
+import LoadingSkeleton from "../../components/LoadingSkeleton";
 
 export default function HomeUserPage() {
-  const dispatch = useDispatch();
   const threads = useSelector((state) => state.thread.thread);
-  const [more, setMore] = useState({
-    index: "",
-    value: false,
-  });
-  const [showFull, setFull] = useState(false);
-  const [popupShare, setPopupShare] = useState(false);
-  const [popupReport, setPopupReport] = useState(false);
-  const [threadIndex, setThreadIdex] = useState("");
   const [loading, setLoading] = useState(true);
   const [topic, setTopic] = useState(0);
-  let { category } = useParams();
+  const [loadingImageThread, setLoadingImageThread] = useState(true);
 
   useEffect(() => {
     if (threads.length !== 0) {
@@ -50,78 +23,6 @@ export default function HomeUserPage() {
     }
   }, [threads]);
 
-  const showPopupShare = () => {
-    if (popupShare === false) {
-      setPopupShare(true);
-    }
-  };
-
-  const closePopupShare = () => {
-    if (popupShare === true) {
-      setPopupShare(false);
-    }
-  };
-
-  const showPopupReport = () => {
-    if (popupReport === false) {
-      setPopupReport(true);
-    }
-  };
-
-  const closePopupReport = () => {
-    if (popupReport === true) {
-      setPopupReport(false);
-    }
-  };
-
-  const showMoreMenu = (index) => {
-    setMore(!more);
-    setThreadIdex(index);
-  };
-
-  const navigate = useNavigate();
-
-  const handleShowFull = () => {
-    setFull(!showFull);
-  };
-  const handleCloseFull = () => {
-    setFull(false);
-  };
-
-  const handleSave = (idx) => {
-    console.log("id thread", idx)
-    axiosInstance
-      .post("v1/savethread", {
-        threads: {
-          id: idx
-        }
-      }, {
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-      .then((res) => {
-        console.log("sukses");
-        console.log(res.data.data)
-        Swal.fire({
-          toast: true,
-          icon: "success",
-          title: "Thread successfully saved",
-          animation: false,
-          background: "#222834",
-          color: "#18B015",
-          position: "bottom-end",
-          showConfirmButton: false,
-          timer: 4000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-          },
-        });
-      });
-  };
-
   const [filter, setFilter] = useState(null);
 
   const handleFilter = (e) => {
@@ -129,85 +30,10 @@ export default function HomeUserPage() {
     setFilter(e.target.value);
   };
 
-  // const [follower, setFollower] = useState(null);
-  // useEffect(() => {
-  //   axiosInstance.get("v1/following/followers").then((response) => {
-  //     setFollower(response.data);
-  //   });
-  // }, []);
-
-  // const [following, setFollowing] = useState(null);
-  // useEffect(() => {
-  //   axiosInstance.get("v1/following").then((response) => {
-  //     setFollowing(response.data);
-  //   });
-  // }, []);
-
-  const [countLike, setCountLike] = useState([]);
-  const [countDisLike, setCountDisLike] = useState([]);
-  const [threadId, setThreadId] = useState()
-
-  const handleLike = (idx) => {
-    axiosInstance
-      .post("v1/likethread", {
-        thread_like: {
-          id: idx,
-        },
-        is_like: true,
-        is_dislike: false,
-      }, {
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-      .then(() => {
-        console.log("sukses");
-      });
-  };
-
-  const handleDisLike = (idx) => {
-    axiosInstance
-      .post("v1/likethread", {
-        thread_like: {
-          id: idx,
-        },
-        is_like: false,
-        is_dislike: true,
-      }, {
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-      .then(() => {
-        console.log("sukses");
-      });
-  };
-
-  useEffect(() => {
-    axiosInstance
-      .get("v1/likethread/likethreadbythread", {
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-      .then((response) => {
-        setCountLike(response.data.data);
-      });
-  }, [countLike])
-
-  useEffect(() => {
-    axiosInstance
-      .get("v1/likethread/dislikethreadbythread", {
-        headers: {
-          "Content-Type": "application/json"
-        }
-      })
-      .then((response) => {
-        setCountDisLike(response.data.data);
-      });
-  }, [countDisLike])
-
   const [images, setImages] = useState([]);
+
+  const [photoProfile, setPhotoProfile] = useState([]);
+
   useEffect(() => {
     if (threads !== []) {
       threads?.forEach((d) => {
@@ -219,7 +45,11 @@ export default function HomeUserPage() {
           })
           .then((res) => {
             setImages((images) => [...images, res.data.data]);
+            setLoadingImageThread(false);
           });
+        axiosInstance.get("v1/user/image/" + d.users.id).then((res) => {
+          setPhotoProfile((photoProfile) => [...photoProfile, res.data.data]);
+        });
       });
     }
   }, [threads]);
@@ -287,115 +117,10 @@ export default function HomeUserPage() {
               </div>
             </div>
             {loading ? (
-              <div id="thread">
-                <div id="thread-box" className="flex">
-                  <div id="thread-header" className="flex">
-                    <div className="mr-2">
-                      <Skeleton height={30} baseColor="#202020" highlightColor="#444" />
-                    </div>
-                    <div className="flex items-center">
-                      <div className="flex-col text-white">
-                        <Skeleton height={30} baseColor="#202020" highlightColor="#444" />
-                        <Skeleton height={30} baseColor="#202020" highlightColor="#444" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex flex-1 justify-end items-center">
-                    <Skeleton height={30} baseColor="#202020" highlightColor="#444" />
-                  </div>
-                </div>
-                <div className="mt-4 mb-4">
-                  <Skeleton height={30} baseColor="#202020" highlightColor="#444" />
-                </div>
-                <div>
-                  <Skeleton height={30} baseColor="#202020" highlightColor="#444" />
-                </div>
-                <div id="thread-icon" className="flex flex-1 justify-between mt-5">
-                  <Skeleton height={30} baseColor="#202020" highlightColor="#444" />
-                </div>
-              </div>
+              <LoadingSkeleton />
             ) : filter !== null ? (
               threads?.filter((d) => d.topic.id === filter).length > 0 ? (
-                threads
-                  ?.filter((d) => d.topic.id === filter)
-                  .map((item, index) => (
-                    <div id="thread" key={index} className="max-w-[1000px] mx-auto">
-                      <div id="thread-box" className="flex">
-                        <div id="thread-header" className="flex">
-                          <div className="mr-2">
-                            <img src={gambarProfile} alt="gambar profile" />
-                          </div>
-                          <div className="flex items-center">
-                            <div className="flex-col text-white max-w-[30vw]">
-                              <h5 className="text-sm md:text-md font-semibold tracking-[2px] truncate">{item.users.name}</h5>
-                              <h6 className="text-sm md:text-md font-medium mt-1 text-gray-300">2 days ago</h6>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex flex-1 justify-end items-center">
-                          <button id="thread-button" className="text-sm sm:text-lg">
-                            Follow
-                          </button>
-                        </div>
-                      </div>
-                      <div className="mt-4 mb-4">
-                        <h3 className="text-sm sm:text-lg md:font-semibold text-white tracking-[1px]">{item.title}</h3>
-                      </div>
-                      <div>
-                        <img src={gambarThread} alt="gambar thread" />
-                      </div>
-                      <div id="thread-icon" className="flex flex-1 justify-between mt-5">
-                        <div className="cursor-pointer">
-                          <Icon icon={thumbsUp} />
-                          <span className="text-sm sm:text-lg text-white">90</span>
-                        </div>
-                        <div className="cursor-pointer">
-                          <Icon icon={thumbsDown} />
-                          <span className="text-sm sm:text-lg text-white">90</span>
-                        </div>
-                        <div onClick={handleShowFull} className="cursor-pointer">
-                          <Icon icon={commentingO} />
-                          <span className="text-sm sm:text-lg text-white">90</span>
-                        </div>
-                        <div onClick={handleSave} className="cursor-pointer">
-                          <Icon icon={bookmark} />
-                        </div>
-                        <div onClick={() => showMoreMenu(index)}>
-                          <Icon icon={moreVertical} />
-                          <div className={more && index === threadIndex ? "more-3 active" : "more"}>
-                            <Link to={`/user/thread/${item.id}`}>
-                              <span className="cursor-pointer" onClick={handleShowFull}>
-                                Open
-                              </span>
-                            </Link>
-                            <span className="cursor-pointer" onClick={showPopupShare}>
-                              Share
-                            </span>
-                            <span className="cursor-pointer" onClick={showPopupReport}>
-                              Report
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div id="close-popup" className={popupShare ? "popupShare active" : "popupShare"}>
-                        <div>
-                          <div className="flex absolute inset-0 m-auto justify-center p-4">
-                            <PopupShare closePopupShare={closePopupShare} />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div id="close-popup" className={popupReport ? "popupReport active" : "popupReport"}>
-                        <div>
-                          <div className="flex absolute inset-0 m-auto justify-center p-4">
-                            <PopupReport closePopupReport={closePopupReport} />
-                          </div>
-                        </div>
-                      </div>
-                      {/* {showFull && <FullThread thread={item && index === threadIndex} onCancel={handleCloseFull} />} */}
-                    </div>
-                  ))
+                threads?.filter((d) => d.topic.id === filter).map((item, index) => <Thread item={item} index={index} images={images} loading={loadingImageThread} photo={photoProfile} />)
               ) : (
                 <div className="border border-solid border-[#d9d9d91a] rounded-xl h-60 py-10">
                   <div className="text-md xl:text-lg text-grey text-center mb-10">No threads yet</div>
@@ -407,84 +132,7 @@ export default function HomeUserPage() {
                 </div>
               )
             ) : (
-              threads.map((item, index) => (
-                <div id="thread" key={index} className="max-w-[1000px] mx-auto">
-                  <div id="thread-box" className="flex">
-                    <div id="thread-header" className="flex">
-                      <img src={gambarProfile} alt="gambar profile" />
-                      <div className="flex items-center">
-                        <div className="flex-col text-white max-w-[30vw]">
-                          <h5 className="text-sm md:text-md font-semibold tracking-[2px] truncate">{item.users.name}</h5>
-                          <h6 className="text-sm md:text-md font-medium mt-1 text-gray-300">2 days ago</h6>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex flex-1 justify-end items-center">{item.users.id !== parseInt(getUserId()) ? <ButtonFollow user={item.users} /> : []}</div>
-                  </div>
-                  <div className="mt-4 mb-4">
-                    <h3 className="text-sm sm:text-lg md:font-semibold text-white tracking-[1px]">{item.title}</h3>
-                  </div>
-                  <div>{item.image !== null && <img src={`data:image/jpeg;base64,${images.filter((d) => d.id === item.id).map((d) => d.image_base64)}`} alt="gambar profile" />}</div>
-                  <div id="thread-icon" className="flex flex-1 justify-between mt-5">
-                    <div
-                      className="cursor-pointer"
-                      onClick={() => {
-                        handleLike(item.id);
-                        setThreadId(item.id);
-                        // fetchApi(item.id);
-                      }}
-                    >
-                      <Icon icon={thumbsUp} />
-                      <span className="text-sm sm:text-lg text-white">{countLike?.filter((like) => item.id === like.thread_id).map((like) => like.count_like_thread)}</span>
-                    </div>
-                    <div className="cursor-pointer"
-                      onClick={() => handleDisLike(item.id)}>
-                      <Icon icon={thumbsDown} />
-                      <span className="text-sm sm:text-lg text-white">{countDisLike?.filter((like) => item.id === like.thread_id).map((like) => like.count_dislike_thread)}</span>
-                    </div>
-                    <div onClick={handleShowFull} className="cursor-pointer">
-                      <Icon icon={commentingO} />
-                      <span className="text-sm sm:text-lg text-white">90</span>
-                    </div>
-                    <div onClick={() => handleSave(item.id)} className="cursor-pointer">
-                      <Icon icon={bookmark} />
-                    </div>
-                    <div onClick={() => showMoreMenu(index)}>
-                      <Icon icon={moreVertical} />
-                      <div className={more && index === threadIndex ? "more-3 active" : "more"}>
-                        <Link to={`/user/thread/${item.id}`}>
-                          <span className="cursor-pointer" onClick={handleShowFull}>
-                            Open
-                          </span>
-                        </Link>
-                        <span className="cursor-pointer" onClick={showPopupShare}>
-                          Share
-                        </span>
-                        <span className="cursor-pointer" onClick={showPopupReport}>
-                          Report
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div id="close-popup" className={popupShare ? "popupShare active" : "popupShare"}>
-                    <div>
-                      <div className="flex absolute inset-0 m-auto justify-center p-4">
-                        <PopupShare closePopupShare={closePopupShare} />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div id="close-popup" className={popupReport ? "popupReport active" : "popupReport"}>
-                    <div>
-                      <div className="flex absolute inset-0 m-auto justify-center p-4">
-                        <PopupReport closePopupReport={closePopupReport} />
-                      </div>
-                    </div>
-                  </div>
-                  {/* {showFull && <FullThread thread={item && index === threadIndex} onCancel={handleCloseFull} />} */}
-                </div>
-              ))
+              threads.map((item, index) => <Thread item={item} index={index} images={images} loading={loadingImageThread} photo={photoProfile} />)
             )}
           </div>
         </div>
