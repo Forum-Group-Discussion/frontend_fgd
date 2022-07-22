@@ -1,25 +1,23 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axiosInstance from "../../../networks/api";
+import axiosInstance from "../../networks/api";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import "../../UserPages/Home/Home.css";
-import gambarProfile from "../../../assets/img/home/dashicons_games.png";
+import "../../pages/UserPages/Home/Home.css";
 import { Icon } from "react-icons-kit";
 import { thumbsUp } from "react-icons-kit/feather/thumbsUp";
 import { thumbsDown } from "react-icons-kit/feather/thumbsDown";
 import { bookmark } from "react-icons-kit/feather/bookmark";
 import { commentingO } from "react-icons-kit/fa/commentingO";
 import { moreVertical } from "react-icons-kit/feather/moreVertical";
-import PopupShare from "../../UserPages/components/PopupShare";
-import PopupReport from "../../UserPages/components/PopupReport";
+import PopupShare from "../../pages/UserPages/components/PopupShare";
+import PopupReport from "../../pages/UserPages/components/PopupReport";
 import "react-loading-skeleton/dist/skeleton.css";
-import { getUserId } from "../../../utils/helpers";
-import ButtonFollow from "../../UserPages/components/ButtonFollow";
+import { getUserId } from "../../utils/helpers";
+import ButtonFollow from "../../pages/UserPages/components/ButtonFollow";
 import LoadingSkeleton from "../LoadingSkeleton";
-import ButtonUnfollow from "../../UserPages/components/ButtonUnfollow";
+import ButtonUnfollow from "../../pages/UserPages/components/ButtonUnfollow";
 
 function Thread({ index, item, images, loading, photo }) {
   const [more, setMore] = useState({

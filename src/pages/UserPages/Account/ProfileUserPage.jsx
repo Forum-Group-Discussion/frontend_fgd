@@ -19,7 +19,7 @@ import { useCallback } from "react";
 import axiosInstance from "../../../networks/api";
 import { getUserId } from "../../../utils/helpers";
 import { FaUserAlt } from "react-icons/fa";
-import Avatar from "../../components/Avatar";
+import Avatar from "../../../components/Avatar";
 
 export default function ProfileUserPage() {
   const dispatch = useDispatch();

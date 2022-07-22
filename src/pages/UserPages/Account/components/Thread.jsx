@@ -18,7 +18,7 @@ import { useParams } from "react-router-dom";
 import PopupReport from "../../components/PopupReport";
 import axiosInstance from "../../../../networks/api";
 import ButtonFollow from "../../components/ButtonFollow";
-import LoadingSkeleton from "../../../components/LoadingSkeleton";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import ButtonUnfollow from "../../components/ButtonUnfollow";
 
 export default function Thread({ threadUser }) {
@@ -310,7 +310,7 @@ export default function Thread({ threadUser }) {
 
   return (
     <>
-      {threadUser === true && threads.length > 0 ? (
+      {threadUser === true && threads?.filter((d) => d.users.id === parseInt(getUserId())).length > 0 ? (
         threads
           ?.filter((d) => d.users.id === parseInt(getUserId()))
           .map((item, index) => (
