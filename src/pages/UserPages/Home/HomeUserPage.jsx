@@ -6,8 +6,8 @@ import Navbar from "../components/Navbar";
 import TrendingSlider from "./components/trendingSlider";
 import axiosInstance from "../../../networks/api";
 import { useSelector } from "react-redux";
-import Thread from "../../components/Thread";
-import LoadingSkeleton from "../../components/LoadingSkeleton";
+import Thread from "../../../components/Thread";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
 export default function HomeUserPage() {
   const threads = useSelector((state) => state.thread.thread);
@@ -133,7 +133,7 @@ export default function HomeUserPage() {
                 </div>
               )
             ) : (
-              threads?.filter((d) => d.topic.id === filter).map((item, index) => <Thread item={item} index={index} images={images} loading={loadingImageThread} photo={photoProfile} />)
+              threads?.map((item, index) => <Thread item={item} index={index} images={images} loading={loadingImageThread} photo={photoProfile} />)
             )}
           </div>
         </div>

@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaUserAlt } from "react-icons/fa";
 import { useState, useEffect } from "react";
-import axiosInstance from "../../../networks/api";
-import { getUserId } from "../../../utils/helpers";
+import axiosInstance from "../../networks/api";
+import { getUserId } from "../../utils/helpers";
 
 function Avatar() {
   const [imgProfile, setImgProfile] = useState("");

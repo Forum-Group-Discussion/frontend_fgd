@@ -17,7 +17,7 @@ import axiosInstance from "../../../../networks/api";
 import { getUserId } from "../../../../utils/helpers";
 import ButtonFollow from "../../components/ButtonFollow";
 import ButtonUnfollow from "../../components/ButtonUnfollow";
-import LoadingSkeleton from "../../../components/LoadingSkeleton";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 
 export default function Save({ saveThread, loading, images, photo }) {
   const [more, setMore] = useState({
