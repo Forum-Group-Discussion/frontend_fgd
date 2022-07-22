@@ -33,7 +33,6 @@ export default function HomeUserPage() {
   const [images, setImages] = useState([]);
 
   const [photoProfile, setPhotoProfile] = useState([]);
-
   useEffect(() => {
     if (threads !== []) {
       threads?.forEach((d) => {
@@ -122,7 +121,7 @@ export default function HomeUserPage() {
               <LoadingSkeleton />
             ) : filter !== null ? (
               threads?.filter((d) => d.topic.id === filter).length > 0 ? (
-                threads.map((item, index) => <Thread item={item} index={index} images={images} loading={loadingImageThread} photo={photoProfile} />)
+                threads?.filter((d) => d.topic.id === filter).map((item, index) => <Thread item={item} index={index} images={images} loading={loadingImageThread} photo={photoProfile} />)
               ) : (
                 <div className="border border-solid border-[#d9d9d91a] rounded-xl h-60 py-10">
                   <div className="text-md xl:text-lg text-grey text-center mb-10">No threads yet</div>
@@ -134,7 +133,7 @@ export default function HomeUserPage() {
                 </div>
               )
             ) : (
-              threads.map((item, index) => <Thread item={item} index={index} images={images} loading={loadingImageThread} photo={photoProfile} />)
+              threads?.filter((d) => d.topic.id === filter).map((item, index) => <Thread item={item} index={index} images={images} loading={loadingImageThread} photo={photoProfile} />)
             )}
           </div>
         </div>
