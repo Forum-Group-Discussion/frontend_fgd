@@ -110,6 +110,7 @@ export default function CategoryUser() {
       confirmButtonText: "Yes, Suspend!",
       focusConfirm: false,
       focusCancel: true,
+<<<<<<< Updated upstream
     })
       .then((result) => {
         if (result.isConfirmed) {
@@ -137,6 +138,37 @@ export default function CategoryUser() {
         }
       });
   }
+=======
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosInstance
+          .put("v1/user/suspend/" + nameUser, !user.is_suspended)
+          .then((response) => {
+            Swal.fire({
+              toast: true,
+              icon: "success",
+              title: "Suspend Successfully",
+              animation: false,
+              background: "#222834",
+              color: "#18B015",
+              position: "bottom-end",
+              showConfirmButton: false,
+              timer: 4000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", Swal.stopTimer);
+                toast.addEventListener("mouseleave", Swal.resumeTimer);
+              },
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        setSuspen(!suspen);
+      }
+    });
+  };
+>>>>>>> Stashed changes
 
   const followYou = following?.filter((follow) => follow.id === getUserAPI?.id);
   const followMe = follower?.filter((follow) => follow.id === getUserAPI?.id);
@@ -167,6 +199,7 @@ export default function CategoryUser() {
                       Active since {account.active}
                     </div>
                   </div>
+<<<<<<< Updated upstream
                   <div id='user-stat' className="bg-dark text-white/50 text-sm sm:text-base">
                     {followYou?.length === 0 ?
                       <span className='text-white'>Following 0</span> :
@@ -184,6 +217,28 @@ export default function CategoryUser() {
                       < button onClick={() => handleSuspend(getUserAPI.id)} className='rounded-full bg-secondary-orange hover:bg-secondary-orange/80 px-4 sm:px-8 py-2'>unSuspend</button>
                       :
                       < button onClick={() => handleSuspend(getUserAPI.id)} className='rounded-full bg-secondary-orange hover:bg-secondary-orange/80 px-4 sm:px-8 py-2'>Suspend</button>}
+=======
+                  <div id="user-stat" className="bg-dark text-white/50 text-sm sm:text-base">
+                    {followYou?.length === 0 ? <span className="text-white">Following 0</span> : <span className="text-white">Following {following?.filter((follow) => follow.id === getUserAPI?.id).map((follow) => follow.following)}</span>} |
+                    {followMe?.length === 0 ? <span className="text-white ml-2">Follower 0</span> : <span className="text-white ml-2">Follower {follower?.filter((follow) => follow.id === getUserAPI?.id).map((follow) => follow.follower)}</span>}
+                  </div>
+                </div>
+                <div className="sm:col-span-5 md:col-span-2 mt-10 mx-auto md:mt-0">
+                  <div className="hidden md:block mb-5 text-xs sm:text-sm">Active since {account.active}</div>
+                  <div id="suspend-button">
+                    {getUserAPI?.is_suspended ? (
+                      <>
+                        <img src={True} />
+                        <button onClick={() => handleSuspend(getUserAPI.id)} className="rounded-full bg-secondary-orange hover:bg-secondary-orange/80 px-4 sm:px-8 py-2">
+                          unSuspend
+                        </button>
+                      </>
+                    ) : (
+                      <button onClick={() => handleSuspend(getUserAPI.id)} className="rounded-full bg-secondary-orange hover:bg-secondary-orange/80 px-4 sm:px-8 py-2">
+                        Suspend
+                      </button>
+                    )}
+>>>>>>> Stashed changes
                   </div>
                 </div>
               </div>

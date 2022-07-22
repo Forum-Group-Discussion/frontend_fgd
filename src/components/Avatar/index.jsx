@@ -1,22 +1,35 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FaUserAlt } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import axiosInstance from "../../networks/api";
 import { getUserId } from "../../utils/helpers";
 
-function Avatar() {
+function Avatar({ type }) {
   const [imgProfile, setImgProfile] = useState("");
+  const params = useParams();
   useEffect(() => {
-    axiosInstance
-      .get("v1/user/image/" + getUserId(), {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((res) => {
-        setImgProfile(res.data.data.image_base64);
-      });
+    if (type === "other") {
+      axiosInstance
+        .get("v1/user/image/" + params.id, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          setImgProfile(res.data.data.image_base64);
+        });
+    } else {
+      axiosInstance
+        .get("v1/user/image/" + getUserId(), {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          setImgProfile(res.data.data.image_base64);
+        });
+    }
   }, []);
   return (
     <div className="flex justify-between relative">

@@ -1,6 +1,7 @@
 import "./Topic.css";
 import Navbar from "../components/Navbar";
-import Thread from "./component/Thread.jsx";
+// import Thread from "./component/Thread.jsx";
+import Thread from "../../../components/Thread";
 import TrendAccount from "./component/TrendAccount";
 import { BiFilterAlt, BiFilter } from "react-icons/bi";
 import { IoIosClose } from "react-icons/io";
@@ -13,6 +14,7 @@ import { DATA_THREAD } from "../../../redux/threadSlice";
 
 export default function TopicPage() {
   const dispatch = useDispatch();
+  const threads = useSelector((state) => state.thread.thread);
   const [keyword, setKeyword] = useState("");
   const [topic, setTopic] = useState(new Array(5).fill(false));
   // Keterangan index = 0: Games, 1: Health, 2: Food&Travel, 3: Technology, 4: Education
@@ -89,6 +91,24 @@ export default function TopicPage() {
     if (isOpen) setOpen(false);
   };
 
+  const [resultSearch, setResultSearch] = useState([]);
+  const fetchSearch = () => {
+    axiosInstance.get("v1/thread/searchthreadbytitle?title=" + keyword).then((response) => {
+      setResultSearch(response.data.data);
+    });
+  };
+
+  const [threadByLike, setThreadByLike] = useState([]);
+  const fetchThreadByLike = () => {
+    axiosInstance.get("v1/thread/bylike").then((response) => {
+      setThreadByLike(response.data.data);
+    });
+    show();
+  };
+
+  const show = () => {
+    return threads.map((item, index) => <Thread item={item} index={index} />);
+  };
   // passing datanya di sini yak
   const res = () => {
     if (isFiltering === "yes") {
@@ -97,27 +117,23 @@ export default function TopicPage() {
           // buat filter trending acc
           return <TrendAccount />;
         } else if (trend === "thread") {
-          // buat filter trending thread
-          return <Thread />;
+          fetchThreadByLike();
         } else if (keyword !== "") {
           // buat hasil search
-          return <Thread />;
+          // return <Thread />;
+          fetchSearch();
         } else {
           // buat filter topic
-          return <Thread topic={topic} />;
+          // threads?.map((item, index) => {
+          //   <Thread item={item} index={index} images={images} photo={photoProfile} />;
+          // });
         }
       } else {
         // kalo hasilnya filter/search gaada
         return <div className="text-md xl:text-lg text-secondary-red">No results found</div>;
       }
     } else if (isFiltering === "no") {
-      return (
-        <>
-          <Thread />
-          <Thread />
-          <Thread />
-        </>
-      );
+      // threads?.map((item, index) => <Thread item={item} index={index} />);
     }
   };
 
@@ -266,8 +282,8 @@ export default function TopicPage() {
           </div>
           <div className="scrollbar bg-primary-grey rounded-xl w-full p-8 mt-8 sm:mt-16 overflow-x-hidden overflow-y-auto h-[99%]">
             <div className="text-white text-md xl:text-lg font-semibold mb-8">
-              {isFiltering === "yes" && "Result"}
-              {isFiltering === "no" && "Trending Today"}
+              {isFiltering === "yes" && resultSearch?.map((item, index) => <Thread item={item} index={index} />)}
+              {isFiltering === "no" && threads.map((item, index) => <Thread item={item} index={index} />)}
               {isFiltering === "process" && "Apply your filter or search"}
             </div>
             {res()}

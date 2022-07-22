@@ -19,7 +19,28 @@ import ButtonFollow from "../../pages/UserPages/components/ButtonFollow";
 import LoadingSkeleton from "../LoadingSkeleton";
 import ButtonUnfollow from "../../pages/UserPages/components/ButtonUnfollow";
 
-function Thread({ index, item, images, loading, photo }) {
+function Thread({ index, item }) {
+  const [images, setImages] = useState([]);
+
+  const [loadingImageThread, setLoadingImageThread] = useState(true);
+  const [photo, setPhoto] = useState([]);
+  useEffect(() => {
+    if (item !== []) {
+      axiosInstance
+        .get("v1/thread/photo/" + item.id, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          setImages((images) => [...images, res.data.data]);
+          setLoadingImageThread(false);
+        });
+      axiosInstance.get("v1/user/image/" + item.users.id).then((res) => {
+        setPhoto((photo) => [...photo, res.data.data]);
+      });
+    }
+  }, [item]);
   const [more, setMore] = useState({
     index: "",
     value: false,
@@ -211,7 +232,7 @@ function Thread({ index, item, images, loading, photo }) {
       <div className="mt-4 mb-4">
         <h3 className="text-sm sm:text-lg md:font-semibold text-white tracking-[1px]">{item.title}</h3>
       </div>
-      {loading ? <LoadingSkeleton /> : <div>{item.image !== null && <img src={`data:image/jpeg;base64,${images.filter((d) => d.id === item.id).map((d) => d.image_base64)}`} alt="gambar profile" />}</div>}
+      {loadingImageThread ? <LoadingSkeleton /> : <div>{item.image !== null && <img src={`data:image/jpeg;base64,${images.filter((d) => d.id === item.id).map((d) => d.image_base64)}`} alt="gambar profile" />}</div>}
       <div id="thread-icon" className="flex flex-1 justify-between mt-5">
         <div
           className="cursor-pointer"

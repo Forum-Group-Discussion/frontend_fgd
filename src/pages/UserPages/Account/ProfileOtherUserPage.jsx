@@ -1,20 +1,29 @@
 import Navbar from "../components/Navbar";
 import Thread from "./components/Thread";
+import Save from "./components/Save";
 import Activity from "./components/Activity";
 import Followers from "./components/Followers";
 import Following from "./components/Following";
 import "./Profile.css";
+import { BsCameraFill } from "react-icons/bs";
 import Banner from "../../../assets/img/account/banner.png";
 import Profile from "../../../assets/img/account/profile.png";
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import axiosInstance from "../../../networks/api";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { DATA_PROFILE } from "../../../redux/profileSlice";
 import { useCallback } from "react";
+import axiosInstance from "../../../networks/api";
+import { getUserId } from "../../../utils/helpers";
+import { FaUserAlt } from "react-icons/fa";
+import Avatar from "../../../components/Avatar";
 
 export default function ProfileOtherUserPage() {
   const params = useParams();
+  const dispatch = useDispatch();
   const [stat, setStat] = useState({ following: 105500, followers: 99900, threads: 100 });
   const [statconv, setStatconv] = useState({ following: "", followers: "", threads: "" });
   const [choose, setChoose] = useState("thread");
@@ -119,11 +128,6 @@ export default function ProfileOtherUserPage() {
         return (
           <div className="border border-solid border-[#d9d9d91a] rounded-xl h-60 py-10">
             <div className="text-md xl:text-lg text-grey text-center mb-10">This account doesn't have a thread yet</div>
-            <div className="flex w-full justify-center">
-              <Link to="/user/create" className="px-8 py-4 bg-secondary-orange rounded-xl text-white text-md xl:text-lg">
-                Create Here
-              </Link>
-            </div>
           </div>
         );
       }
@@ -148,12 +152,51 @@ export default function ProfileOtherUserPage() {
     }
   };
 
-  const [user, setUser] = useState();
+  const [loading, setLoading] = useState("");
+  const fetchData = useCallback(() => {
+    const response = axiosInstance
+      .get("v1/user/" + params.id)
+      .then((response) => {
+        dispatch(DATA_PROFILE(response.data.data));
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+    return response;
+  }, [dispatch]);
 
   useEffect(() => {
-    axiosInstance.get("v1/user/" + params.id).then((response) => {
-      setUser(response.data.data);
+    fetchData();
+  }, [fetchData]);
+
+  const [following, setFollowing] = useState(null);
+  useEffect(() => {
+    axiosInstance.get("v1/following").then((response) => {
+      setFollowing(response.data.data);
     });
+  }, []);
+
+  const [follower, setFollower] = useState(null);
+  useEffect(() => {
+    axiosInstance.get("v1/following/followers").then((response) => {
+      setFollower(response.data.data);
+    });
+  }, []);
+
+  const profile = useSelector((state) => state.profile.profile);
+
+  const [imgProfileBG, setImgProfileBG] = useState("");
+  useEffect(() => {
+    axiosInstance
+      .get("v1/user/imagebackground", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        setImgProfileBG(res.data.data.image_base64);
+      });
   }, []);
 
   return (
@@ -162,39 +205,28 @@ export default function ProfileOtherUserPage() {
       <section id="account" className="bg-primary-black p-[10%]">
         <div className="max-w-[1240px] mx-auto">
           <div id="acc-details" className="border-b-2 border-[#d9d9d91a] pb-[5%] text-white md:mx-[0] mx-auto">
-            <img src={Banner} alt="banner-pic" />
+            {imgProfileBG === null || imgProfileBG === "" ? <div className="h-[240px] w-full rounded-lg border-4 border-[#d9d9d91a]"></div> : <img src={`data:image/jpeg;base64,${imgProfileBG}`} className="h-[240px] w-full rounded-lg" alt="banner-pic" />}
             <div id="acc-details" className="grid gap-2 md:gap-y-5 mt-[-20%] sm:mt-[-7%] ml-[3%]">
-              <div className="flex justify-between relative">
-                <img id="profile-pic" src={Profile} alt="profile-pic" className="scale-50 ml-[-10%] sm:ml-0 sm:scale-100 aspect-square" />
-                {follow ? (
-                  <button onClick={handleFollow} className="bottom-0 md:-bottom-5 right-[3%] absolute text-md sm-text-xl md:text-2xl px-4 py-2 md:px-6 md:py-3 bg-primary-grey rounded-xl sm:rounded-2xl text-white">
-                    Followed
-                  </button>
-                ) : (
-                  <button onClick={handleFollow} className="bottom-0 md:-bottom-5 right-[3%] absolute text-md sm-text-xl md:text-2xl px-4 py-2 md:px-6 md:py-3 bg-secondary-orange rounded-xl sm:rounded-2xl text-white">
-                    Follow
-                  </button>
-                )}
-              </div>
+              <Avatar type="other" />
               <div id="username" className="mt-[-8%] sm:mt-[0%] text-xl sm:text-3xl md:text-4xl font-bold">
-                {user?.name}
+                {profile.name}
               </div>
               <div id="bio" className="text-md md:text-2xl">
-                Hello Found
+                {profile.bio}
               </div>
               <div id="stat" className="mt-2 mb-3 sm:mt-0 text-sm md:text-lg inline-flex gap-3 sm:gap-10 text-gray-400">
                 <button id="stat-following" onClick={handleShowFollowing} className="text-left">
-                  {statconv.following} Following
+                  {following?.filter((d) => d.type === "FOLLOW").length} Following
                 </button>
                 <button id="stat-followers" onClick={handleShowFollowers} className="text-left">
-                  {statconv.followers} Followers
+                  {follower?.filter((d) => d.type === "FOLLOW").length} Followers
                 </button>
                 <div id="stat-threads">{statconv.threads} Threads</div>
               </div>
             </div>
           </div>
           <div id="acc-button" className="my-[5%] mx-auto md:text-xl font-medium max-w-[500px]">
-            {choose === "thread" ? (
+            {choose === "thread" && (
               <div className="flex justify-around">
                 <button onClick={handleAction} value="thread" className="text-white">
                   Thread
@@ -203,7 +235,8 @@ export default function ProfileOtherUserPage() {
                   Activity
                 </button>
               </div>
-            ) : (
+            )}
+            {choose === "activity" && (
               <div className="flex justify-around">
                 <button onClick={handleAction} value="thread" className="text-gray-400">
                   Thread
@@ -213,10 +246,20 @@ export default function ProfileOtherUserPage() {
                 </button>
               </div>
             )}
+            {choose === "saved" && (
+              <div className="flex justify-around">
+                <button onClick={handleAction} value="thread" className="text-gray-400">
+                  Thread
+                </button>
+                <button onClick={handleAction} value="activity" className="text-gray-400">
+                  Activity
+                </button>
+              </div>
+            )}
           </div>
           {chooseFunction()}
-          {showFollowers && <Followers onCancel={handleCloseFollowers} page={page} />}
-          {showFollowing && <Following onCancel={handleCloseFollowing} page={page} />}
+          {showFollowers && <Followers onCancel={handleCloseFollowers} page={page} data={follower} />}
+          {showFollowing && <Following onCancel={handleCloseFollowing} page={page} data={following} />}
         </div>
       </section>
     </>
