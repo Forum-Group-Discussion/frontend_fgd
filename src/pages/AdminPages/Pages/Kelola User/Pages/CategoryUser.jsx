@@ -44,7 +44,7 @@ export default function CategoryUser() {
 
   const [follower, setFollower] = useState(null);
   useEffect(() => {
-    axiosInstance.get("v1/following/countuserfollowers").then((response) => {
+    axiosInstance.get("v1/following/countuserfollower").then((response) => {
       setFollower(response.data.data);
       console.log("follower", response.data.data)
     });
@@ -100,12 +100,7 @@ export default function CategoryUser() {
   }
 
   const handleSuspend = async (idx) => {
-    const user = getUserAPI?.find(user => user.id === idx)
-    console.log("user", user.id)
-    console.log("user", user)
-    console.log("idx", idx)
-    console.log("suspend", user.is_suspended)
-    console.log("get", getUserAPI.is_suspended)
+    console.log("suspend", getUserAPI?.is_suspended)
 
     Swal.fire({
       title: "Are you sure to suspend this account?",
@@ -122,7 +117,7 @@ export default function CategoryUser() {
     })
       .then((result) => {
         if (result.isConfirmed) {
-          axiosInstance.put("v1/user/suspend/" + user.id, !user.is_suspended)
+          axiosInstance.put("v1/user/suspend/" + nameUser, { is_suspended: !getUserAPI?.is_suspended })
             .then((response) => {
               Swal.fire({
                 toast: true,
@@ -143,7 +138,6 @@ export default function CategoryUser() {
             }).catch((error) => {
               console.log(error)
             })
-          setSuspen(!suspen)
         }
       });
 
@@ -180,14 +174,14 @@ export default function CategoryUser() {
                       <span className='text-white'>Following {following?.filter((follow) => follow.id === getUserAPI?.id).map(follow => follow.following)}</span>} |
                     {followMe?.length === 0 ?
                       <span className='text-white ml-2'>Follower 0</span> :
-                      <span className='text-white ml-2'>Follower {follower?.filter((follow) => follow.id === getUserAPI?.id).map(follow => follow.following)}</span>}
+                      <span className='text-white ml-2'>Follower {follower?.filter((follow) => follow.id === getUserAPI?.id).map(follow => follow.follower)}</span>}
                   </div>
                 </div>
                 <div className='sm:col-span-5 md:col-span-2 mt-10 mx-auto md:mt-0'>
                   <div className='hidden md:block mb-5 text-xs sm:text-sm'>Active since {account.active}</div>
                   <div id='suspend-button'>
                     {getUserAPI?.is_suspended ?
-                      // <img src={True} /> 
+                      // <img src={True} />
                       < button onClick={() => handleSuspend(getUserAPI.id)} className='rounded-full bg-secondary-orange hover:bg-secondary-orange/80 px-4 sm:px-8 py-2'>unSuspend</button>
                       :
                       < button onClick={() => handleSuspend(getUserAPI.id)} className='rounded-full bg-secondary-orange hover:bg-secondary-orange/80 px-4 sm:px-8 py-2'>Suspend</button>}

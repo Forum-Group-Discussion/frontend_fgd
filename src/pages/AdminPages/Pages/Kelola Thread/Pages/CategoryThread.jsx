@@ -4,6 +4,7 @@ import DeleteThread from "../../../Components/DeleteThread";
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+// import { Threads } from "../../../../components/Thread/index"
 
 export default function CategoryThread() {
   useEffect(() => {

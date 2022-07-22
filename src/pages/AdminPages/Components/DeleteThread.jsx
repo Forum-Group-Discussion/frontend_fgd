@@ -23,6 +23,7 @@ export default function DeleteThread({ page }) {
   useEffect(() => {
     axiosInstance.get("v1/thread/bytopic?topic=" + params.id).then((response) => {
       setThread(response.data.data);
+      console.log("threads", response.data.data)
     });
   }, []);
 
@@ -121,7 +122,7 @@ export default function DeleteThread({ page }) {
     setFull(false);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (idx) => {
     Swal.fire({
       title: "Are you sure to delete this thread?",
       icon: "warning",
@@ -136,21 +137,24 @@ export default function DeleteThread({ page }) {
       focusCancel: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          toast: true,
-          icon: "success",
-          title: "Delete Successfully",
-          animation: false,
-          background: "#222834",
-          color: "#18B015",
-          position: "bottom-end",
-          showConfirmButton: false,
-          timer: 4000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-          },
+        axiosInstance.delete("v1/thread/" + idx).then(() => {
+          Swal.fire({
+            toast: true,
+            icon: "success",
+            title: "Thread successfully deleted",
+            animation: false,
+            background: "#222834",
+            color: "#18B015",
+            position: "bottom-end",
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+              window.location.reload();
+            },
+          });
         });
       }
       setDelete(!Delete);
@@ -177,7 +181,7 @@ export default function DeleteThread({ page }) {
               {page === "thread" && (
                 <div className="flex flex-1 justify-end items-center">
                   {Delete ? (
-                    <button onClick={handleDelete} id="thread-button" className="text-sm sm:text-lg">
+                    <button onClick={() => handleDelete(item.id)} id="thread-button" className="text-sm sm:text-lg">
                       Delete
                     </button>
                   ) : (
@@ -189,7 +193,7 @@ export default function DeleteThread({ page }) {
             {Delete ? (
               <>
                 <div className="mt-4 mb-4">
-                  <h3 className="text-sm sm:text-lg md:font-semibold text-white tracking-[1px]">{thread.title}</h3>
+                  <h3 className="text-sm sm:text-lg md:font-semibold text-white tracking-[1px]">{item.title}</h3>
                 </div>
                 <div>
                   <img src={gambarThread} alt="gambar thread" />
@@ -227,7 +231,7 @@ export default function DeleteThread({ page }) {
               " "
             )}
           </div>
-          {Delete ? <Report /> : <div className="flex justify-center py-[190px]">Tidack ada Thread</div>}
+          {Delete ? <Report threadId={item.id} /> : <div className="flex justify-center py-[190px]">Tidack ada Thread</div>}
           <div id="close-popup" className={popupShare ? "popupShare active" : "popupShare"}>
             <div>
               <div className="flex absolute inset-0 m-auto justify-center p-4">

@@ -265,7 +265,7 @@ function Thread({ index, item, images, loading, photo }) {
       <div id="close-popup" className={popupReport ? "popupReport active" : "popupReport"}>
         <div>
           <div className="flex absolute inset-0 m-auto justify-center p-4">
-            <PopupReport closePopupReport={closePopupReport} />
+            <PopupReport closePopupReport={closePopupReport} reportId={item.id} />
           </div>
         </div>
       </div>
