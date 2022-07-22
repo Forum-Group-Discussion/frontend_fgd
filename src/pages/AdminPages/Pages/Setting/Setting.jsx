@@ -79,7 +79,7 @@ export default function Setting() {
   const [imgProfile, setImgProfile] = useState("");
   useEffect(() => {
     axiosInstance
-      .get("v1/user/image", {
+      .get("v1/user/image/" + getUserId(), {
         headers: {
           "Content-Type": "application/json",
         },
