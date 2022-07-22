@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import Jokowi from "../../../assets/img/Admin/JOK.png"
 import axiosInstance from "../../../networks/api";
 import { FaUserAlt } from "react-icons/fa";
+import { getUserId } from "../../../utils/helpers";
 
 function HomeAdminPage() {
   const user = useSelector((state) => state.user.name);
@@ -11,7 +12,7 @@ function HomeAdminPage() {
   const [imgProfile, setImgProfile] = useState("");
   useEffect(() => {
     axiosInstance
-      .get("v1/user/image", {
+      .get("v1/user/image/" + getUserId(), {
         headers: {
           "Content-Type": "application/json",
         },

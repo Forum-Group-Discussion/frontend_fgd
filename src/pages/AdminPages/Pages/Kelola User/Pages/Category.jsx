@@ -4,58 +4,7 @@ import Sidebar from "../../../Components/Sidebar";
 import { Link } from "react-router-dom";
 import Joko from "../../../../../assets/img/Admin/JOK.png"
 import Report from "../../../../../assets/img/Admin/Vector.png"
-
-const data = [
-  {
-    id: 1,
-    name: "HackedAccount",
-    totalReport: 14074939,
-    profpic: "https://media.baamboozle.com/uploads/images/185613/1618204459_7530_url.jpeg",
-    firstReport: "2 minutes ago"
-  },
-  {
-    id: 2,
-    name: "MysteriousMan",
-    totalReport: 9239,
-    profpic: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRetfRvJv6h-AJU55amZ5fXZYI9GkRIyi7wJQ&usqp=CAU",
-    firstReport: "2 minutes ago"
-  },
-  {
-    id: 3,
-    name: "Gogirl!!",
-    totalReport: 5090,
-    profpic: "https://pbs.twimg.com/profile_images/706521708858097664/Hr1aEuEN_400x400.jpg",
-    firstReport: "2 minutes ago"
-  },
-  {
-    id: 4,
-    name: "HackedAccount",
-    totalReport: 14074939,
-    profpic: "https://media.baamboozle.com/uploads/images/185613/1618204459_7530_url.jpeg",
-    firstReport: "2 minutes ago"
-  },
-  {
-    id: 5,
-    name: "MysteriousMan",
-    totalReport: 9239,
-    profpic: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRetfRvJv6h-AJU55amZ5fXZYI9GkRIyi7wJQ&usqp=CAU",
-    firstReport: "2 minutes ago"
-  },
-  {
-    id: 6,
-    name: "Gogirl!!",
-    totalReport: 5090,
-    profpic: "https://pbs.twimg.com/profile_images/706521708858097664/Hr1aEuEN_400x400.jpg",
-    firstReport: "2 minutes ago"
-  },
-  {
-    id: 7,
-    name: "MysteriousMan",
-    totalReport: 9239,
-    profpic: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRetfRvJv6h-AJU55amZ5fXZYI9GkRIyi7wJQ&usqp=CAU",
-    firstReport: "2 minutes ago"
-  },
-]
+import { FaUserAlt } from "react-icons/fa";
 
 export default function Category() {
   const [getAllUserAPI, setGetAllUserAPI] = useState([])
@@ -70,11 +19,26 @@ export default function Category() {
         console.log(error.response);
       });
     return response;
-  }, [getAllUserAPI]);
+  }, []);
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  const [photoProfile, setPhotoProfile] = useState([]);
+
+  // useEffect(() => {
+  //   getAllUserAPI?.forEach((d) => {
+  //     axiosInstance.get("v1/user/image/" + d.id, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     }).then((res) => {
+  //       setPhotoProfile((photoProfile) => [...photoProfile, res.data.data]);
+  //       setLoadingImageThread(false)
+  //     });
+  //   })
+  // }, [getAllUserAPI])
 
   return (
     <div id="category">
@@ -88,11 +52,14 @@ export default function Category() {
                 {getAllUserAPI?.map((item) => {
                   if (item.is_admin === false) {
                     return (
-                      <Link to={`/KelolaUser/Category/User/${item.name}`} key={item.id}>
+                      <Link to={`/KelolaUser/Category/User/${item.id}`} key={item.id}>
                         <div className="rounded-md border-gray-500/10 border-2 mb-5">
                           <div className="xl:px-20 md:px-10 lg:px-15 md:py-8 py-4 px-2 flex justify-between">
                             <div id="category-details" className="flex place-items-center">
-                              <img id="category-profpic" src="https://media.baamboozle.com/uploads/images/185613/1618204459_7530_url.jpeg" alt="Icon-game" className="rounded-full aspect-square w-8 sm:w-12 md:w-16 lg:w-20" />
+                              {/* <img id="category-profpic" src={`data:image/jpeg;base64,${photoProfile?.filter((d) => d.id === item.id).map((d) => d.image_base64)}`} alt="Icon-game" className="rounded-full aspect-square w-8 sm:w-12 md:w-16 lg:w-20" /> */}
+                              <div className="bg-primary-black rounded-full aspect-square w-8 sm:w-12 md:w-16 lg:w-20">
+                                <FaUserAlt style={{ width: "100%", height: "100%", borderRadius: "50%", padding: "6px" }} className="" />
+                              </div>
                               <div className="xl:ml-8 sm:ml-5 ml-2 max-w-[100px]">
                                 <div id="category-name" className="font-bold text-sm sm:text-base mb-2 truncate">{item.name}</div>
                                 <div id="category-sum-report" className="text-xs sm:text-base md:text-lg overflow-visible">

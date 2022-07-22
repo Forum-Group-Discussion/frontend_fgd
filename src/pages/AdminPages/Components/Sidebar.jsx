@@ -11,13 +11,13 @@ import "./style.css";
 import { useState } from "react";
 import { useEffect } from "react";
 
-export default function Sidebar(){
+export default function Sidebar() {
   const [nav, setNav] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    console.log(nav)
-  })
+  // useEffect(()=>{
+  //   console.log(nav)
+  // })
   const handleNav = () => {
     setNav(!nav);
   };
@@ -63,7 +63,7 @@ export default function Sidebar(){
       <div className="lg:hidden max-w-[1000px] w-[90%] mx-auto lg:max-w-0 lg:w-[100%] z-50">
         <div className="flex justify-center gap-6">
           <div id="nav-toggler" onClick={handleNav} className="lg:hidden flex flex-col justify-center">
-              <AiOutlineMenu size={25} className="fill-white"/>
+            <AiOutlineMenu size={25} className="fill-white" />
           </div>
           <ul id="nav-item" className={nav ? "bg-primary-grey text-white fixed left-0 w-[60%] sm:w-[40%] h-full border-r border-r-primary-grey ease-in-out duration-500 top-0 lg:hidden z-50" : "ease-in-out duration-500 fixed left-[-100%] z-50"}>
             <AiOutlineClose size={25} onClick={handleNav} className="fill-white absolute top-6 right-6" />
@@ -112,7 +112,7 @@ export default function Sidebar(){
         </div>
       </div>
       <div className="hidden lg:contents">
-        <HomeAdminPage/>
+        <HomeAdminPage />
         <div className="flex h-screen bg-primary-grey fixed top-0 w-[250px]">
           <div className="flex-col ">
             <div id="logo" className="p-5">

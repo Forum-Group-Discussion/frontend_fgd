@@ -26,7 +26,6 @@ export default function DeleteThread({ page }) {
     });
   }, []);
 
-  console.log(thread);
   const [more, setMore] = useState(false);
   const [popupShare, setPopupShare] = useState(false);
   const [popupReport, setPopupReport] = useState(false);
